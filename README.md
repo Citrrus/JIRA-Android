@@ -40,7 +40,7 @@ v3.0.3+ and the [Android SDK](http://developer.android.com/sdk/index.html)
 to be installed in your development environment. In addition you'll need to set
 the `ANDROID_HOME` environment variable to the location of your SDK:
 
-    export ANDROID_HOME=/home/roberto/tools/android-sdk
+    export ANDROID_HOME=/home/donnfelker/tools/android-sdk
 
 After satisfying those requirements, the build is pretty simple:
 
