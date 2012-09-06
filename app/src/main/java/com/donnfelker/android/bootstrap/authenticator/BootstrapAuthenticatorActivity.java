@@ -245,7 +245,7 @@ public class BootstrapAuthenticatorActivity extends
             public Boolean call() throws Exception {
 
                 final String query = String.format("%s=%s&%s=%s", PARAM_USERNAME, email, PARAM_PASSWORD, password);
-                // This works
+
                 HttpRequest request = get(URL_AUTH + "?" + query)
                         .header(HEADER_PARSE_APP_ID, PARSE_APP_ID)
                         .header(HEADER_PARSE_REST_API_KEY, PARSE_REST_API_KEY);
