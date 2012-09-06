@@ -9,7 +9,7 @@ Please see the [issues](https://github.com/donnfelker/android-bootstrap/issues) 
 to report any bugs or feature requests and to see the list of known issues.
 
 <a href="https://play.google.com/store/apps/details?id=com.donnfelker.android.bootstrap" alt="Download from Google Play (soon)">
-  <img src="http://f.cl.ly/items/3o3P1w1m3X2H3b0L1G1Z/Image%202012.09.05%2011:47:54%20AM.png">
+  <img src="http://f.cl.ly/items/000s3k2I2J1V281X2A1f/bootstrap-image.png">
 </a>
 
 ## License
