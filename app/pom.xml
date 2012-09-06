@@ -150,7 +150,7 @@
                                      Also, if you have a ci (Continuous Integration) profile, these values can be
                                      passed in via the build server. -->
                                     <keystore>${bootstrap.sign.keystore}</keystore>
-                                    <alias>${boostrap.sign.alias}</alias>
+                                    <alias>${bootstrap.sign.alias}</alias>
                                     <storepass>${bootstrap.sign.storepass}</storepass>
                                     <keypass>${bootstrap.sign.keypass}</keypass>
                                     <verbose>true</verbose>
