@@ -10,7 +10,7 @@
     <url>https://github.com/donnfelker/android-bootstrap</url>
 
     <parent>
-        <version>1.4</version>
+        <version>1.0</version>
         <groupId>com.donnfelker.android.bootstrap</groupId>
         <artifactId>android-bootstrap-parent</artifactId>
     </parent>

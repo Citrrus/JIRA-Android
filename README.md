@@ -12,6 +12,13 @@ to report any bugs or feature requests and to see the list of known issues.
   <img src="http://f.cl.ly/items/000s3k2I2J1V281X2A1f/bootstrap-image.png">
 </a>
 
+## Authentication
+Log into this demo app with the following credentials:
+
+user: demo@androidbootstrap.com
+
+password: android
+
 ## License
 
 * [Apache Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
