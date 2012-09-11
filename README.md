@@ -1,7 +1,7 @@
 # Android Bootstrap App
 
 This repository contains the source code for the [Android Bootstrap](http://www.androidbootstrap.com/)
-Android app available soon from [Google Play](https://play.google.com/store/apps/details?id=com.donnfelker.android.bootstrap).
+Android app available from [Google Play](https://play.google.com/store/apps/details?id=com.donnfelker.android.bootstrap).
 
 Please see the [issues](https://github.com/donnfelker/android-bootstrap/issues) section
 to report any bugs or feature requests and to see the list of known issues.
