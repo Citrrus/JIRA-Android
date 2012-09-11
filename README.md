@@ -77,9 +77,9 @@ and uses many great open-source libraries from the Android dev community:
 * [ActionBarSherlock](https://github.com/JakeWharton/ActionBarSherlock) for a
   consistent, great looking header across all Android platforms,
   [ViewPagerIndicator](https://github.com/JakeWharton/Android-ViewPagerIndicator)
-  for swiping between content, traffic, & referrer pages, and
-  [NineOldAndroids](https://github.com/JakeWharton/NineOldAndroids) for the
-  AirTraffic view animations - all from [Jake Wharton](http://jakewharton.com/).
+  for swiping between fragments and
+  [NineOldAndroids](https://github.com/JakeWharton/NineOldAndroids) for 
+  view animations - all from [Jake Wharton](http://jakewharton.com/).
 * [RoboGuice](http://code.google.com/p/roboguice/) for dependency-injection.
 * [Robotium](http://code.google.com/p/robotium/)
   for driving our app during integration tests.
