@@ -16,7 +16,7 @@
     </parent>
 
     <properties>
-        <abs.version>4.1.0</abs.version>
+        <abs.version>4.2.0</abs.version>
     </properties>
     <dependencies>
         <dependency>
@@ -77,7 +77,7 @@
         <dependency>
             <groupId>com.github.kevinsawicki</groupId>
             <artifactId>wishlist</artifactId>
-            <version>0.3</version>
+            <version>0.4</version>
             <type>apklib</type>
         </dependency>
         <dependency>
