@@ -68,6 +68,5 @@ public class LogoutService {
             super.onException(e);
             Log.e("LOGOUT_SERVICE", "Logout failed.", e.getCause());
         }
-    };
-
+    }
 }
