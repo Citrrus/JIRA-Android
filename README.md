@@ -12,7 +12,7 @@ Have a questions about Android Bootstrap? Ask away on the [android-bootstrap dis
   <img src="http://f.cl.ly/items/000s3k2I2J1V281X2A1f/bootstrap-image.png">
 </a>
 
-## HOW TO 
+## HOW TO
 Learn how to develop with IntelliJ and Maven. [Watch the how to video](http://www.youtube.com/watch?v=YbyzRNxcvZw&feature=youtube_gdata)
 
 ## Authentication
