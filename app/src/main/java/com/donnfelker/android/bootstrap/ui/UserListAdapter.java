@@ -53,9 +53,9 @@ public class UserListAdapter extends SingleTypeAdapter<User> {
     @Override
     protected void update(int position, User user) {
 
-        avatars.bind(imageView(R.id.iv_avatar), user);
+        avatars.bind(imageView(0), user);
 
-        setText(R.id.tv_name, String.format("%1$s %2$s", user.getFirstName(), user.getLastName()));
+        setText(1, String.format("%1$s %2$s", user.getFirstName(), user.getLastName()));
 
     }
 

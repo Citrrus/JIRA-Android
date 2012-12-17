@@ -37,8 +37,8 @@ public class NewsListAdapter extends AlternatingColorListAdapter<News> {
     protected void update(int position, News item) {
         super.update(position, item);
 
-        setText(R.id.tv_title, item.getTitle());
-        setText(R.id.tv_summary, item.getContent());
+        setText(0, item.getTitle());
+        setText(1, item.getContent());
         //setNumber(R.id.tv_date, item.getCreatedAt());
     }
 }
