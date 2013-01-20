@@ -11,6 +11,13 @@
     </item>
 
     <item
+        android:id="@+id/timer"
+        android:icon="@drawable/ic_action_timer"
+        android:showAsAction="always"
+        android:title="@string/timer">
+    </item>
+
+    <item
         android:id="@+id/logout"
         android:showAsAction="never"
         android:title="@string/logout_action" >
