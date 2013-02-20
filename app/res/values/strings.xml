@@ -2,7 +2,7 @@
 
 <resources>
 
-    <string name="app_name">Android Bootstrap</string>
+    <string name="app_name">Vapordex</string>
     <string name="content_column">Content</string>
     <string name="page_referrers">Referrers</string>
     <string name="refresh_action">Refresh</string>

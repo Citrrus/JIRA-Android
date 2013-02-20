@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <version>1.0</version>
-    <groupId>com.donnfelker.android.bootstrap</groupId>
-    <artifactId>android-bootstrap-parent</artifactId>
-    <name>Android Bootstrap parent</name>
+    <groupId>com.jondwillis.vapordex</groupId>
+    <artifactId>com-jondwillis-vapordex-parent</artifactId>
+    <name>Vapordex parent</name>
     <packaging>pom</packaging>
 
     <issueManagement>
-        <url>https://github.com/donnfelker/android-bootstrap/issues</url>
+        <url>https://github.com.jondwillis.vapordex/issues</url>
         <system>GitHub Issues</system>
     </issueManagement>
 
@@ -24,23 +24,22 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/donnfelker/android-bootstrap</url>
-        <connection>scm:git:git://github.com/donnfelker/android-bootstrap.git</connection>
-        <developerConnection>scm:git:git@github.com:donnfelker/android-bootstrap.git</developerConnection>
+        <url>https://github.com.jondwillis.vapordex</url>
+        <connection>scm:git:git://github.com.jondwillis.vapordex.git</connection>
+        <developerConnection>scm:git:git@github.com.jondwillis.vapordex.git</developerConnection>
     </scm>
 
     <developers>
         <developer>
-            <email>donn@donnfelker.com</email>
-            <name>Donn Felker</name>
-            <url>https://github.com/donnfelker</url>
-            <id>donnfelker</id>
+            <email>jondwillis@gmail.com</email>
+            <name>Jon Willis</name>
+            <url>https://github.com/jondwillis</url>
+            <id>jondwillis</id>
         </developer>
     </developers>
 
     <modules>
         <module>app</module>
-        <module>integration-tests</module>
     </modules>
 
     <properties>
@@ -69,4 +68,10 @@
             </plugins>
         </pluginManagement>
     </build>
+    <repositories>
+        <repository>
+            <id>citrrus-repo</id>
+            <url>https://github.com/Citrrus/maven-artifacts/raw/master/releases</url>
+        </repository>
+    </repositories>
 </project>
