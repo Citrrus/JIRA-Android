@@ -39,28 +39,30 @@ public abstract class BootstrapActivity extends RoboSherlockFragmentActivity {
     }
 
     protected BootstrapActivity fadeIn(final View view, final boolean animate) {
-        if (view != null)
+        if (view != null) {
             if (animate) {
                 Animation anim = AnimationUtils.loadAnimation(this,
                         R.anim.fade_in);
                 anim.setInterpolator(AnimationUtils.loadInterpolator(this, R.anim.linear_interpolator));
                 view.startAnimation(anim);
-            }
-            else
+            } else {
                 view.clearAnimation();
+            }
+        }
         return this;
     }
 
     protected BootstrapActivity fadeOut(final View view, final boolean animate) {
-        if (view != null)
+        if (view != null) {
             if (animate) {
                 Animation anim = AnimationUtils.loadAnimation(this,
                         R.anim.fade_out);
                 anim.setInterpolator(AnimationUtils.loadInterpolator(this, R.anim.linear_interpolator));
                 view.startAnimation(anim);
-            }
-            else
+            } else {
                 view.clearAnimation();
+            }
+        }
         return this;
     }
 

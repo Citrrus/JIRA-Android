@@ -1,4 +1,3 @@
-
 package com.jondwillis.vapordex.authenticator;
 
 import android.accounts.Account;
@@ -154,7 +153,7 @@ public class BootstrapAuthenticatorActivity extends
         passwordText.setOnEditorActionListener(new OnEditorActionListener() {
 
             public boolean onEditorAction(TextView v, int actionId,
-                    KeyEvent event) {
+                                          KeyEvent event) {
                 if (actionId == IME_ACTION_DONE && signinButton.isEnabled()) {
                     handleLogin(signinButton);
                     return true;
@@ -174,8 +173,9 @@ public class BootstrapAuthenticatorActivity extends
     private List<String> userEmailAccounts() {
         Account[] accounts = accountManager.getAccountsByType("com.google");
         List<String> emailAddresses = new ArrayList<String>(accounts.length);
-        for (Account account : accounts)
+        for (Account account : accounts) {
             emailAddresses.add(account.name);
+        }
         return emailAddresses;
     }
 
@@ -211,8 +211,9 @@ public class BootstrapAuthenticatorActivity extends
         dialog.setCancelable(true);
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             public void onCancel(DialogInterface dialog) {
-                if (authenticationTask != null)
+                if (authenticationTask != null) {
                     authenticationTask.cancel(true);
+                }
             }
         });
         return dialog;
@@ -227,11 +228,13 @@ public class BootstrapAuthenticatorActivity extends
      * @param view
      */
     public void handleLogin(View view) {
-        if (authenticationTask != null)
+        if (authenticationTask != null) {
             return;
+        }
 
-        if (requestNewAccount)
+        if (requestNewAccount) {
             email = emailText.getText().toString();
+        }
         password = passwordText.getText().toString();
         showProgress();
 
@@ -247,7 +250,7 @@ public class BootstrapAuthenticatorActivity extends
 
                 Log.d("Auth", "response=" + request.code());
 
-                if(request.ok()) {
+                if (request.ok()) {
                     final User model = new Gson().fromJson(Strings.toString(request.buffer()), User.class);
                     token = model.getSessionToken();
                 }
@@ -262,11 +265,12 @@ public class BootstrapAuthenticatorActivity extends
                 String message;
                 // A 404 is returned as an Exception with this message
                 if ("Received authentication challenge is null".equals(cause
-                        .getMessage()))
+                        .getMessage())) {
                     message = getResources().getString(
                             string.message_bad_credentials);
-                else
+                } else {
                     message = cause.getMessage();
+                }
 
                 Toaster.showLong(BootstrapAuthenticatorActivity.this, message);
             }
@@ -313,17 +317,19 @@ public class BootstrapAuthenticatorActivity extends
     protected void finishLogin() {
         final Account account = new Account(email, Constants.Auth.BOOTSTRAP_ACCOUNT_TYPE);
 
-        if (requestNewAccount)
+        if (requestNewAccount) {
             accountManager.addAccountExplicitly(account, password, null);
-        else
+        } else {
             accountManager.setPassword(account, password);
+        }
         final Intent intent = new Intent();
         authToken = token;
         intent.putExtra(KEY_ACCOUNT_NAME, email);
         intent.putExtra(KEY_ACCOUNT_TYPE, Constants.Auth.BOOTSTRAP_ACCOUNT_TYPE);
         if (authTokenType != null
-                && authTokenType.equals(Constants.Auth.AUTHTOKEN_TYPE))
+                && authTokenType.equals(Constants.Auth.AUTHTOKEN_TYPE)) {
             intent.putExtra(KEY_AUTHTOKEN, authToken);
+        }
         setAccountAuthenticatorResult(intent.getExtras());
         setResult(RESULT_OK, intent);
         finish();
@@ -351,19 +357,21 @@ public class BootstrapAuthenticatorActivity extends
      * @param result
      */
     public void onAuthenticationResult(boolean result) {
-        if (result)
-            if (!confirmCredentials)
+        if (result) {
+            if (!confirmCredentials) {
                 finishLogin();
-            else
+            } else {
                 finishConfirmCredentials(true);
-        else {
+            }
+        } else {
             Ln.d("onAuthenticationResult: failed to authenticate");
-            if (requestNewAccount)
+            if (requestNewAccount) {
                 Toaster.showLong(BootstrapAuthenticatorActivity.this,
                         string.message_auth_failed_new_account);
-            else
+            } else {
                 Toaster.showLong(BootstrapAuthenticatorActivity.this,
                         string.message_auth_failed);
+            }
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.jondwillis.vapordex.ui;
 
-import static com.jondwillis.vapordex.core.Constants.Extra.NEWS_ITEM;
 import android.accounts.OperationCanceledException;
 import android.app.Activity;
 import android.content.Intent;
@@ -8,20 +7,22 @@ import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.ListView;
-
+import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
+import com.google.inject.Inject;
 import com.jondwillis.vapordex.BootstrapServiceProvider;
 import com.jondwillis.vapordex.R;
 import com.jondwillis.vapordex.core.News;
-import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
-import com.google.inject.Inject;
 import com.jondwillis.vapordex.ui.view.NewsListAdapter;
 import com.jondwillis.vapordex.ui.view.ThrowableLoader;
 
 import java.util.List;
 
+import static com.jondwillis.vapordex.core.Constants.Extra.NEWS_ITEM;
+
 public class NewsListFragment extends ItemListFragment<News> {
 
-    @Inject protected BootstrapServiceProvider serviceProvider;
+    @Inject
+    protected BootstrapServiceProvider serviceProvider;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -60,8 +61,9 @@ public class NewsListFragment extends ItemListFragment<News> {
                     return serviceProvider.getService().getNews();
                 } catch (OperationCanceledException e) {
                     Activity activity = getActivity();
-                    if (activity != null)
+                    if (activity != null) {
                         activity.finish();
+                    }
                     return initialItems;
                 }
             }

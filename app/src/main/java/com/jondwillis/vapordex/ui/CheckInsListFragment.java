@@ -8,12 +8,11 @@ import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.ListView;
-
+import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
+import com.google.inject.Inject;
 import com.jondwillis.vapordex.BootstrapServiceProvider;
 import com.jondwillis.vapordex.R;
 import com.jondwillis.vapordex.core.CheckIn;
-import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
-import com.google.inject.Inject;
 import com.jondwillis.vapordex.ui.view.CheckInsListAdapter;
 import com.jondwillis.vapordex.ui.view.ThrowableLoader;
 
@@ -21,7 +20,8 @@ import java.util.List;
 
 public class CheckInsListFragment extends ItemListFragment<CheckIn> {
 
-    @Inject protected BootstrapServiceProvider serviceProvider;
+    @Inject
+    protected BootstrapServiceProvider serviceProvider;
 
     @Override
     protected void configureList(Activity activity, ListView listView) {
@@ -53,8 +53,9 @@ public class CheckInsListFragment extends ItemListFragment<CheckIn> {
                     return serviceProvider.getService().getCheckIns();
                 } catch (OperationCanceledException e) {
                     Activity activity = getActivity();
-                    if (activity != null)
+                    if (activity != null) {
                         activity.finish();
+                    }
                     return initialItems;
                 }
             }

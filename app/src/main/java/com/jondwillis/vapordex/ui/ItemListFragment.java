@@ -1,4 +1,3 @@
-
 package com.jondwillis.vapordex.ui;
 
 import android.app.Activity;
@@ -15,25 +14,23 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.jondwillis.vapordex.R;
-import com.jondwillis.vapordex.authenticator.LogoutService;
 import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
 import com.github.kevinsawicki.wishlist.Toaster;
 import com.github.kevinsawicki.wishlist.ViewUtils;
-import com.jondwillis.vapordex.R.id;
-import com.jondwillis.vapordex.R.layout;
 import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragment;
 import com.google.inject.Inject;
+import com.jondwillis.vapordex.R;
+import com.jondwillis.vapordex.R.id;
+import com.jondwillis.vapordex.R.layout;
+import com.jondwillis.vapordex.authenticator.LogoutService;
+import com.jondwillis.vapordex.ui.view.HeaderFooterListAdapter;
+import com.jondwillis.vapordex.ui.view.ThrowableLoader;
 
 import java.util.Collections;
 import java.util.List;
-
-import com.jondwillis.vapordex.ui.view.HeaderFooterListAdapter;
-import com.jondwillis.vapordex.ui.view.ThrowableLoader;
 
 /**
  * Base fragment for displaying a list of items that loads with a progress bar
@@ -44,13 +41,13 @@ import com.jondwillis.vapordex.ui.view.ThrowableLoader;
 public abstract class ItemListFragment<E> extends RoboSherlockFragment
         implements LoaderCallbacks<List<E>> {
 
-    @Inject protected LogoutService logoutService;
+    @Inject
+    protected LogoutService logoutService;
 
     private static final String FORCE_REFRESH = "forceRefresh";
 
     /**
-     * @param args
-     *            bundle passed to the loader by the LoaderManager
+     * @param args bundle passed to the loader by the LoaderManager
      * @return true if the bundle indicates a requested forced refresh of the
      *         items
      */
@@ -87,15 +84,16 @@ public abstract class ItemListFragment<E> extends RoboSherlockFragment
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (!items.isEmpty())
+        if (!items.isEmpty()) {
             setListShown(true, false);
+        }
 
         getLoaderManager().initLoader(0, null, this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         return inflater.inflate(layout.item_list, null);
     }
 
@@ -121,7 +119,7 @@ public abstract class ItemListFragment<E> extends RoboSherlockFragment
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
-                    int position, long id) {
+                                    int position, long id) {
                 onListItemClick((ListView) parent, view, position, id);
             }
         });
@@ -156,17 +154,18 @@ public abstract class ItemListFragment<E> extends RoboSherlockFragment
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (!isUsable())
+        if (!isUsable()) {
             return false;
+        }
         switch (item.getItemId()) {
-        case id.refresh:
-            forceRefresh();
-            return true;
-        case R.id.logout:
-            logout();
-            return true;
-        default:
-            return super.onOptionsItemSelected(item);
+            case id.refresh:
+                forceRefresh();
+                return true;
+            case R.id.logout:
+                logout();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -198,8 +197,9 @@ public abstract class ItemListFragment<E> extends RoboSherlockFragment
     }
 
     private void refresh(final Bundle args) {
-        if (!isUsable())
+        if (!isUsable()) {
             return;
+        }
 
         getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
 
@@ -278,10 +278,11 @@ public abstract class ItemListFragment<E> extends RoboSherlockFragment
      * @return exception or null if none provided
      */
     protected Exception getException(final Loader<List<E>> loader) {
-        if (loader instanceof ThrowableLoader)
+        if (loader instanceof ThrowableLoader) {
             return ((ThrowableLoader<List<E>>) loader).clearException();
-        else
+        } else {
             return null;
+        }
     }
 
     /**
@@ -309,11 +310,12 @@ public abstract class ItemListFragment<E> extends RoboSherlockFragment
      */
     @SuppressWarnings("unchecked")
     protected HeaderFooterListAdapter<SingleTypeAdapter<E>> getListAdapter() {
-        if (listView != null)
+        if (listView != null) {
             return (HeaderFooterListAdapter<SingleTypeAdapter<E>>) listView
                     .getAdapter();
-        else
+        } else {
             return null;
+        }
     }
 
     /**
@@ -323,18 +325,21 @@ public abstract class ItemListFragment<E> extends RoboSherlockFragment
      * @return this fragment
      */
     protected ItemListFragment<E> setListAdapter(final ListAdapter adapter) {
-        if (listView != null)
+        if (listView != null) {
             listView.setAdapter(adapter);
+        }
         return this;
     }
 
     private ItemListFragment<E> fadeIn(final View view, final boolean animate) {
-        if (view != null)
-            if (animate)
+        if (view != null) {
+            if (animate) {
                 view.startAnimation(AnimationUtils.loadAnimation(getActivity(),
                         android.R.anim.fade_in));
-            else
+            } else {
                 view.clearAnimation();
+            }
+        }
         return this;
     }
 
@@ -366,33 +371,39 @@ public abstract class ItemListFragment<E> extends RoboSherlockFragment
      * @return this fragment
      */
     public ItemListFragment<E> setListShown(final boolean shown,
-            final boolean animate) {
-        if (!isUsable())
+                                            final boolean animate) {
+        if (!isUsable()) {
             return this;
+        }
 
         if (shown == listShown) {
             if (shown)
-                // List has already been shown so hide/show the empty view with
-                // no fade effect
-                if (items.isEmpty())
+            // List has already been shown so hide/show the empty view with
+            // no fade effect
+            {
+                if (items.isEmpty()) {
                     hide(listView).show(emptyView);
-                else
+                } else {
                     hide(emptyView).show(listView);
+                }
+            }
             return this;
         }
 
         listShown = shown;
 
-        if (shown)
-            if (!items.isEmpty())
+        if (shown) {
+            if (!items.isEmpty()) {
                 hide(progressBar).hide(emptyView).fadeIn(listView, animate)
                         .show(listView);
-            else
+            } else {
                 hide(progressBar).hide(listView).fadeIn(emptyView, animate)
                         .show(emptyView);
-        else
+            }
+        } else {
             hide(listView).hide(emptyView).fadeIn(progressBar, animate)
                     .show(progressBar);
+        }
 
         return this;
     }
@@ -404,8 +415,9 @@ public abstract class ItemListFragment<E> extends RoboSherlockFragment
      * @return this fragment
      */
     protected ItemListFragment<E> setEmptyText(final String message) {
-        if (emptyView != null)
+        if (emptyView != null) {
             emptyView.setText(message);
+        }
         return this;
     }
 
@@ -416,8 +428,9 @@ public abstract class ItemListFragment<E> extends RoboSherlockFragment
      * @return this fragment
      */
     protected ItemListFragment<E> setEmptyText(final int resId) {
-        if (emptyView != null)
+        if (emptyView != null) {
             emptyView.setText(resId);
+        }
         return this;
     }
 

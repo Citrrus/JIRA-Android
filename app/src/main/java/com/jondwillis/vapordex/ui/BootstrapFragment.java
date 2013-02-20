@@ -22,38 +22,42 @@ public class BootstrapFragment extends RoboSherlockDialogFragment {
     }
 
     public BootstrapFragment fadeIn(final View view, final boolean animate) {
-        if (view != null)
+        if (view != null) {
             if (animate) {
                 Animation anim = AnimationUtils.loadAnimation(getActivity(),
                         android.R.anim.fade_in);
-                anim.setInterpolator(AnimationUtils.loadInterpolator(getActivity(), android.R.anim.linear_interpolator));
+                anim.setInterpolator(AnimationUtils.loadInterpolator(getActivity(),
+                        android.R.anim.linear_interpolator));
                 view.startAnimation(anim);
-            }
-            else
+            } else {
                 view.clearAnimation();
+            }
+        }
         return this;
     }
 
     public BootstrapFragment fadeOut(final View view, final boolean animate) {
-        if (view != null)
+        if (view != null) {
             if (animate) {
                 Animation anim = AnimationUtils.loadAnimation(getActivity(),
                         android.R.anim.fade_out);
-                anim.setInterpolator(AnimationUtils.loadInterpolator(getActivity(), android.R.anim.linear_interpolator));
+                anim.setInterpolator(AnimationUtils.loadInterpolator(getActivity(),
+                        android.R.anim.linear_interpolator));
                 view.startAnimation(anim);
-            }
-            else
+            } else {
                 view.clearAnimation();
+            }
+        }
         return this;
     }
 
     public BootstrapFragment show(final View view) {
-            ViewUtils.setGone(view, false);
+        ViewUtils.setGone(view, false);
         return this;
     }
 
     public BootstrapFragment hide(final View view) {
-            ViewUtils.setGone(view, true);
+        ViewUtils.setGone(view, true);
         return this;
     }
 }

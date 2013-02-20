@@ -23,7 +23,7 @@ public class DialogUtils {
     }
 
     public static void showFragmentDialog(FragmentManager mgr, DialogFragment df, boolean hidePrevious) {
-        if(hidePrevious) {
+        if (hidePrevious) {
             hideFragmentDialog(mgr);
         }
 
@@ -42,22 +42,22 @@ public class DialogUtils {
 
         // sync up our artificial stack
         List<String> tagsToRemove = new ArrayList<String>();
-        for(String tag : dialogDeque) {
-            if(mgr.findFragmentByTag(tag) == null) {
+        for (String tag : dialogDeque) {
+            if (mgr.findFragmentByTag(tag) == null) {
                 tagsToRemove.add(tag);
             }
         }
         dialogDeque.removeAll(tagsToRemove);
 
         try {
-            if(!dialogDeque.isEmpty()) {
-            DialogFragment prev = (DialogFragment)mgr.findFragmentByTag(dialogDeque.takeFirst());
+            if (!dialogDeque.isEmpty()) {
+                DialogFragment prev = (DialogFragment) mgr.findFragmentByTag(dialogDeque.takeFirst());
                 if (prev != null) {
                     ft.remove(prev);
                     prev.dismiss();
                 }
             }
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
 
         }
 

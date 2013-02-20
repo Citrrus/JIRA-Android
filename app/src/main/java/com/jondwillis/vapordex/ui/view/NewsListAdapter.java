@@ -1,7 +1,6 @@
 package com.jondwillis.vapordex.ui.view;
 
 import android.view.LayoutInflater;
-
 import com.jondwillis.vapordex.R;
 import com.jondwillis.vapordex.core.News;
 
@@ -14,7 +13,7 @@ public class NewsListAdapter extends AlternatingColorListAdapter<News> {
      * @param selectable
      */
     public NewsListAdapter(LayoutInflater inflater, List<News> items,
-                               boolean selectable) {
+                           boolean selectable) {
         super(R.layout.news_list_item, inflater, items, selectable);
     }
 
@@ -28,8 +27,8 @@ public class NewsListAdapter extends AlternatingColorListAdapter<News> {
 
     @Override
     protected int[] getChildViewIds() {
-        return new int[] { R.id.tv_title, R.id.tv_summary,
-                R.id.tv_date };
+        return new int[]{R.id.tv_title, R.id.tv_summary,
+                R.id.tv_date};
     }
 
     @Override

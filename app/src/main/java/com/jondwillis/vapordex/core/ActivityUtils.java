@@ -26,7 +26,7 @@ public class ActivityUtils {
 
     /**
      * Finish the given activity and start a home activity class.
-     * <p>
+     * <p/>
      * This mirror the behavior of the home action bar button that clears the
      * current activity and starts or brings another activity to the top.
      *
@@ -43,14 +43,16 @@ public class ActivityUtils {
     public static void newClearTask(Activity activity, Class<?> homeActivityClass) {
         activity.finish();
         Intent intent = new Intent(activity, homeActivityClass);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent
+                .FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
     }
 
     public static void goHomeAfterLogin(Activity loginActivity) {
         loginActivity.finish();
         Intent intent = new Intent(loginActivity, NewsActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent
+                .FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("fromLogin", true);
         loginActivity.startActivity(intent);
     }

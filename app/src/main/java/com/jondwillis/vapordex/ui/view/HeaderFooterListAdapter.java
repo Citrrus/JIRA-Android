@@ -1,4 +1,3 @@
-
 package com.jondwillis.vapordex.ui.view;
 
 import android.view.View;
@@ -37,7 +36,7 @@ public class HeaderFooterListAdapter<E extends BaseAdapter> extends
     }
 
     private HeaderFooterListAdapter(ArrayList<FixedViewInfo> headerViewInfos,
-            ArrayList<FixedViewInfo> footerViewInfos, ListView view, E adapter) {
+                                    ArrayList<FixedViewInfo> footerViewInfos, ListView view, E adapter) {
         super(headerViewInfos, footerViewInfos, adapter);
 
         headers = headerViewInfos;
@@ -49,9 +48,9 @@ public class HeaderFooterListAdapter<E extends BaseAdapter> extends
     /**
      * Add non-selectable header view with no data
      *
-     * @see #addHeader(View, Object, boolean)
      * @param view
      * @return this adapter
+     * @see #addHeader(View, Object, boolean)
      */
     public HeaderFooterListAdapter<E> addHeader(View view) {
         return addHeader(view, null, false);
@@ -66,7 +65,7 @@ public class HeaderFooterListAdapter<E extends BaseAdapter> extends
      * @return this adapter
      */
     public HeaderFooterListAdapter<E> addHeader(View view, Object data,
-            boolean isSelectable) {
+                                                boolean isSelectable) {
         FixedViewInfo info = list.new FixedViewInfo();
         info.view = view;
         info.data = data;
@@ -80,9 +79,9 @@ public class HeaderFooterListAdapter<E extends BaseAdapter> extends
     /**
      * Add non-selectable footer view with no data
      *
-     * @see #addFooter(View, Object, boolean)
      * @param view
      * @return this adapter
+     * @see #addFooter(View, Object, boolean)
      */
     public HeaderFooterListAdapter<E> addFooter(View view) {
         return addFooter(view, null, false);
@@ -97,7 +96,7 @@ public class HeaderFooterListAdapter<E extends BaseAdapter> extends
      * @return this adapter
      */
     public HeaderFooterListAdapter<E> addFooter(View view, Object data,
-            boolean isSelectable) {
+                                                boolean isSelectable) {
         FixedViewInfo info = list.new FixedViewInfo();
         info.view = view;
         info.data = data;
@@ -111,8 +110,9 @@ public class HeaderFooterListAdapter<E extends BaseAdapter> extends
     @Override
     public boolean removeHeader(View v) {
         boolean removed = super.removeHeader(v);
-        if (removed)
+        if (removed) {
             wrapped.notifyDataSetChanged();
+        }
         return removed;
     }
 
@@ -126,11 +126,13 @@ public class HeaderFooterListAdapter<E extends BaseAdapter> extends
         if (!headers.isEmpty()) {
             FixedViewInfo[] infos = headers.toArray(new FixedViewInfo[headers
                     .size()]);
-            for (FixedViewInfo info : infos)
+            for (FixedViewInfo info : infos) {
                 removed = super.removeHeader(info.view) || removed;
+            }
         }
-        if (removed)
+        if (removed) {
             wrapped.notifyDataSetChanged();
+        }
         return removed;
     }
 
@@ -144,19 +146,22 @@ public class HeaderFooterListAdapter<E extends BaseAdapter> extends
         if (!footers.isEmpty()) {
             FixedViewInfo[] infos = footers.toArray(new FixedViewInfo[footers
                     .size()]);
-            for (FixedViewInfo info : infos)
+            for (FixedViewInfo info : infos) {
                 removed = super.removeFooter(info.view) || removed;
+            }
         }
-        if (removed)
+        if (removed) {
             wrapped.notifyDataSetChanged();
+        }
         return removed;
     }
 
     @Override
     public boolean removeFooter(View v) {
         boolean removed = super.removeFooter(v);
-        if (removed)
+        if (removed) {
             wrapped.notifyDataSetChanged();
+        }
         return removed;
     }
 

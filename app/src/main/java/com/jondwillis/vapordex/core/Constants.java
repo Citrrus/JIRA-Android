@@ -1,5 +1,3 @@
-
-
 package com.jondwillis.vapordex.core;
 
 /**
@@ -8,27 +6,25 @@ package com.jondwillis.vapordex.core;
 public class Constants {
 
     public static class Auth {
-        private Auth() {}
-
         /**
          * Account type id
          */
         public static final String BOOTSTRAP_ACCOUNT_TYPE = "com.jondwillis.vapordex";
-
         /**
          * Account name
          */
         public static final String BOOTSTRAP_ACCOUNT_NAME = "Vapordex";
-
         /**
          * Provider id
          */
         public static final String BOOTSTRAP_PROVIDER_AUTHORITY = "com.jondwillis.vapordex.sync";
-
         /**
          * Auth token type
          */
         public static final String AUTHTOKEN_TYPE = BOOTSTRAP_ACCOUNT_TYPE;
+
+        private Auth() {
+        }
     }
 
     /**
@@ -36,35 +32,26 @@ public class Constants {
      * Thanks to the nice people at Parse for creating such a nice system for us to use for bootstrap!
      */
     public static class Http {
-        private Http() {}
-
-
-
         /**
          * Base URL for all requests
          */
         public static final String URL_BASE = "https://api.parse.com";
-
         /**
          * Authentication URL
          */
         public static final String URL_AUTH = URL_BASE + "/1/login";
-
         /**
          * List Users URL
          */
         public static final String URL_USERS = URL_BASE + "/1/users";
-
         /**
          * List News URL
          */
         public static final String URL_NEWS = URL_BASE + "/1/classes/News";
-
         /**
          * List Checkin's URL
          */
         public static final String URL_CHECKINS = URL_BASE + "/1/classes/Locations";
-
         public static final String PARSE_CLIENT_API_KEY = "BWve0w8nqaSAiy2UNosDRpPHXgql0cAxWSm8e856";
         public static final String PARSE_APP_ID = "DoXVS12rS9NAhPJYfQYEya7fU7OPGZP79Mdx2qCS";
         public static final String PARSE_REST_API_KEY = "EMnSZqSluWeP9TXSiBmR14RfJBzcQvy07QWa4yAY";
@@ -75,33 +62,37 @@ public class Constants {
         public static final String PASSWORD = "password";
         public static final String SESSION_TOKEN = "sessionToken";
 
+        private Http() {
+        }
+
 
     }
 
-
     public static class Extra {
-        private Extra() {}
-
         public static final String NEWS_ITEM = "news_item";
-
         public static final String USER = "user";
+
+        private Extra() {
+        }
 
     }
 
     public static class Intent {
-        private Intent() {}
-
         /**
          * Action prefix for all intents created
          */
         public static final String INTENT_PREFIX = "com.jondwillis.vapordex.";
 
+        private Intent() {
+        }
+
     }
 
-    public static class Notification{
-        private Notification() {}
-
+    public static class Notification {
         public static final int TIMER_NOTIFICATION_ID = 1000; // Why 1000? Why not? :)
+
+        private Notification() {
+        }
     }
 
 }

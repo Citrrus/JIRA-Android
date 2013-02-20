@@ -21,8 +21,9 @@ public class Toaster {
 
     private static void show(final Activity activity, final int resId,
                              final int duration) {
-        if (activity == null)
+        if (activity == null) {
             return;
+        }
 
         final Context context = activity.getApplication();
         activity.runOnUiThread(new Runnable() {
@@ -38,10 +39,12 @@ public class Toaster {
 
     private static void show(final Activity activity, final String message,
                              final int duration) {
-        if (activity == null)
+        if (activity == null) {
             return;
-        if (TextUtils.isEmpty(message))
+        }
+        if (TextUtils.isEmpty(message)) {
             return;
+        }
 
         final Context context = activity.getApplication();
         activity.runOnUiThread(new Runnable() {
@@ -130,8 +133,9 @@ public class Toaster {
      */
     public static void showLong(final Activity activity, final int resId,
                                 final Object... args) {
-        if (activity == null)
+        if (activity == null) {
             return;
+        }
 
         String message = activity.getString(resId);
         showLong(activity, message, args);
@@ -146,8 +150,9 @@ public class Toaster {
      */
     public static void showShort(final Activity activity, final int resId,
                                  final Object... args) {
-        if (activity == null)
+        if (activity == null) {
             return;
+        }
 
         String message = activity.getString(resId);
         showShort(activity, message, args);

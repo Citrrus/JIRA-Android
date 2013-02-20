@@ -9,14 +9,12 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
-
+import com.google.inject.Inject;
 import com.jondwillis.vapordex.R;
 import com.jondwillis.vapordex.ui.BootstrapTimerActivity;
-import com.google.inject.Inject;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
-
 import roboguice.service.RoboService;
 import roboguice.util.Ln;
 
@@ -24,8 +22,10 @@ import static com.jondwillis.vapordex.core.Constants.Notification.TIMER_NOTIFICA
 
 public class TimerService extends RoboService {
 
-    @Inject protected Bus BUS;
-    @Inject private NotificationManager notificationManager;
+    @Inject
+    protected Bus BUS;
+    @Inject
+    private NotificationManager notificationManager;
 
     private boolean timerRunning = false;
     private boolean timerStarted;
@@ -66,14 +66,15 @@ public class TimerService extends RoboService {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        if(timerStarted == false) {
+        if (timerStarted == false) {
 
             timerStarted = true;
 
             startTimer();
 
             // Run as foreground service: http://stackoverflow.com/a/3856940/5210
-            // Another example: https://github.com/commonsguy/cw-android/blob/master/Notifications/FakePlayer/src/com/commonsware/android/fakeplayerfg/PlayerService.java
+            // Another example: https://github.com/commonsguy/cw-android/blob/master/Notifications/FakePlayer/src/com
+            // /commonsware/android/fakeplayerfg/PlayerService.java
             startForeground(TIMER_NOTIFICATION_ID, getNotification(getString(R.string.timer_running)));
         }
 
@@ -131,8 +132,9 @@ public class TimerService extends RoboService {
         base = SystemClock.elapsedRealtime();
 
         // If coming from a paused state, then find our true base.
-        if(pausedBaseTime > 0)
+        if (pausedBaseTime > 0) {
             base = base - pausedBaseTime;
+        }
 
         isPaused = false;
 
@@ -173,7 +175,6 @@ public class TimerService extends RoboService {
     }
 
 
-
     private void notifyTimerRunning() {
         updateNotification(getString(R.string.timer_running));
         produceTimerIsPausedEvent();
@@ -187,6 +188,7 @@ public class TimerService extends RoboService {
 
     /**
      * Creates a notification to show in the notification bar
+     *
      * @param message the message to display in the notification bar
      * @return a new {@link Notification}
      */

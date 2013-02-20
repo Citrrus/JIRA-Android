@@ -7,7 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
+import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
+import com.google.inject.Inject;
 import com.jondwillis.vapordex.R;
 import com.jondwillis.vapordex.event.PauseTimerEvent;
 import com.jondwillis.vapordex.event.ResumeTimerEvent;
@@ -15,22 +16,25 @@ import com.jondwillis.vapordex.event.StopTimerEvent;
 import com.jondwillis.vapordex.event.TimerPausedEvent;
 import com.jondwillis.vapordex.event.TimerService;
 import com.jondwillis.vapordex.event.TimerTickEvent;
-import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
-import com.google.inject.Inject;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
-
 import roboguice.inject.InjectView;
 
 public class BootstrapTimerActivity extends RoboSherlockFragmentActivity implements View.OnClickListener {
 
-    @Inject protected Bus BUS;
+    @Inject
+    protected Bus BUS;
 
-    @InjectView(R.id.chronometer) protected TextView chronometer;
-    @InjectView(R.id.start) protected Button start;
-    @InjectView(R.id.stop) protected Button stop;
-    @InjectView(R.id.pause) protected Button pause;
-    @InjectView(R.id.resume) protected Button resume;
+    @InjectView(R.id.chronometer)
+    protected TextView chronometer;
+    @InjectView(R.id.start)
+    protected Button start;
+    @InjectView(R.id.stop)
+    protected Button stop;
+    @InjectView(R.id.pause)
+    protected Button pause;
+    @InjectView(R.id.resume)
+    protected Button resume;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +67,7 @@ public class BootstrapTimerActivity extends RoboSherlockFragmentActivity impleme
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()) {
+        switch (v.getId()) {
             case R.id.start:
                 startTimer();
                 break;
@@ -83,7 +87,7 @@ public class BootstrapTimerActivity extends RoboSherlockFragmentActivity impleme
      * Starts the timer service
      */
     private void startTimer() {
-        if(isTimerServiceRunning() == false) {
+        if (isTimerServiceRunning() == false) {
             final Intent i = new Intent(this, TimerService.class);
             startService(i);
 
@@ -116,12 +120,12 @@ public class BootstrapTimerActivity extends RoboSherlockFragmentActivity impleme
 
     @Subscribe
     public void onTimerPausedEvent(TimerPausedEvent event) {
-        if(event.isTimerIsPaused()) {
+        if (event.isTimerIsPaused()) {
             resume.setVisibility(View.VISIBLE);
             stop.setVisibility(View.VISIBLE);
             pause.setVisibility(View.GONE);
             start.setVisibility(View.GONE);
-        } else if(isTimerServiceRunning()) {
+        } else if (isTimerServiceRunning()) {
             pause.setVisibility(View.VISIBLE);
             stop.setVisibility(View.VISIBLE);
             resume.setVisibility(View.GONE);
@@ -131,6 +135,7 @@ public class BootstrapTimerActivity extends RoboSherlockFragmentActivity impleme
 
     /**
      * Called by {@link Bus} when a tick event occurs.
+     *
      * @param event The event
      */
     @Subscribe
@@ -139,9 +144,9 @@ public class BootstrapTimerActivity extends RoboSherlockFragmentActivity impleme
     }
 
 
-
     /**
      * Called by {@link Bus} when a tick event occurs.
+     *
      * @param event The event
      */
     @Subscribe
@@ -152,6 +157,7 @@ public class BootstrapTimerActivity extends RoboSherlockFragmentActivity impleme
 
     /**
      * Called by {@link Bus} when a tick event occurs.
+     *
      * @param event The event
      */
     @Subscribe
@@ -162,6 +168,7 @@ public class BootstrapTimerActivity extends RoboSherlockFragmentActivity impleme
 
     /**
      * Called by {@link Bus} when a tick event occurs.
+     *
      * @param event The event
      */
     @Subscribe
@@ -175,6 +182,7 @@ public class BootstrapTimerActivity extends RoboSherlockFragmentActivity impleme
 
     /**
      * Checks to see if the timer service is running or not.
+     *
      * @return true if the service is running otherwise false.
      */
     private boolean isTimerServiceRunning() {
@@ -189,6 +197,7 @@ public class BootstrapTimerActivity extends RoboSherlockFragmentActivity impleme
 
     /**
      * Sets the formatted time
+     *
      * @param millis the elapsed time
      */
     private void setFormattedTime(long millis) {
@@ -198,6 +207,7 @@ public class BootstrapTimerActivity extends RoboSherlockFragmentActivity impleme
 
     /**
      * Formats the time to look like "HH:MM:SS"
+     *
      * @param millis The number of elapsed milliseconds
      * @return A formatted time value
      */
@@ -215,15 +225,18 @@ public class BootstrapTimerActivity extends RoboSherlockFragmentActivity impleme
         String minutesD = String.valueOf(minutes);
         String hoursD = String.valueOf(hours);
 
-        if (seconds < 10)
+        if (seconds < 10) {
             secondsD = "0" + seconds;
-        if (minutes < 10)
+        }
+        if (minutes < 10) {
             minutesD = "0" + minutes;
-        if (hours < 10)
+        }
+        if (hours < 10) {
             hoursD = "0" + hours;
+        }
 
         // HH:MM:SS
-        return String.format("%1$s:%2$s:%3$s" , hoursD , minutesD , secondsD);
+        return String.format("%1$s:%2$s:%3$s", hoursD, minutesD, secondsD);
 
     }
 

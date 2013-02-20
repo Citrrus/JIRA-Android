@@ -1,9 +1,6 @@
-
 package com.jondwillis.vapordex.ui.view;
 
 import android.content.Context;
-
-import com.jondwillis.vapordex.ui.view.AsyncLoader;
 import roboguice.util.Ln;
 
 /**

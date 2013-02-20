@@ -1,5 +1,3 @@
-
-
 package com.jondwillis.vapordex.ui.view;
 
 import android.text.Editable;

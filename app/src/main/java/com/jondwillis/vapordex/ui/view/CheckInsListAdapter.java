@@ -1,13 +1,10 @@
 package com.jondwillis.vapordex.ui.view;
 
 import android.view.LayoutInflater;
-
 import com.jondwillis.vapordex.R;
 import com.jondwillis.vapordex.core.CheckIn;
 
 import java.util.List;
-
-import com.jondwillis.vapordex.ui.view.AlternatingColorListAdapter;
 
 public class CheckInsListAdapter extends AlternatingColorListAdapter<CheckIn> {
     /**
@@ -16,7 +13,7 @@ public class CheckInsListAdapter extends AlternatingColorListAdapter<CheckIn> {
      * @param selectable
      */
     public CheckInsListAdapter(LayoutInflater inflater, List<CheckIn> items,
-                           boolean selectable) {
+                               boolean selectable) {
         super(R.layout.checkin_list_item, inflater, items, selectable);
     }
 
@@ -30,7 +27,7 @@ public class CheckInsListAdapter extends AlternatingColorListAdapter<CheckIn> {
 
     @Override
     protected int[] getChildViewIds() {
-        return new int[] { R.id.tv_name, R.id.tv_date };
+        return new int[]{R.id.tv_name, R.id.tv_date};
     }
 
     @Override

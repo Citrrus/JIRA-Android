@@ -1,8 +1,6 @@
 package com.jondwillis.vapordex.core;
 
 
-
-import static java.util.Locale.US;
 import android.text.TextUtils;
 
 import java.io.UnsupportedEncodingException;
@@ -10,6 +8,8 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+
+import static java.util.Locale.US;
 
 /**
  * Helper to get a gravatar hash for an email
@@ -44,8 +44,9 @@ public class GravatarUtils {
 
         String hashed = new BigInteger(1, digested).toString(16);
         int padding = HASH_LENGTH - hashed.length();
-        if (padding == 0)
+        if (padding == 0) {
             return hashed;
+        }
 
         char[] zeros = new char[padding];
         Arrays.fill(zeros, '0');
@@ -60,8 +61,9 @@ public class GravatarUtils {
      * @return hash
      */
     public static String getHash(String email) {
-        if (TextUtils.isEmpty(email))
+        if (TextUtils.isEmpty(email)) {
             return null;
+        }
         email = email.trim().toLowerCase(US);
         return email.length() > 0 ? digest(email) : null;
     }

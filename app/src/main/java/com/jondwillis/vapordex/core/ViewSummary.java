@@ -1,4 +1,3 @@
-
 package com.jondwillis.vapordex.core;
 
 import java.io.Serializable;

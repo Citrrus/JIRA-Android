@@ -46,11 +46,13 @@ import java.util.Map;
  *
  * @author Marcus Better
  */
-public class RoboSherlockAccountAuthenticatorFragmentActivity extends SherlockAccountAuthenticatorFragmentActivity implements RoboContext {
+public class RoboSherlockAccountAuthenticatorFragmentActivity extends SherlockAccountAuthenticatorFragmentActivity
+        implements RoboContext {
     protected EventManager eventManager;
     protected HashMap<Key<?>, Object> scopedObjects = new HashMap<Key<?>, Object>();
 
-    @Inject ContentViewListener ignored; // BUG find a better place to put this
+    @Inject
+    ContentViewListener ignored; // BUG find a better place to put this
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +88,7 @@ public class RoboSherlockAccountAuthenticatorFragmentActivity extends SherlockAc
     }
 
     @Override
-    protected void onNewIntent( Intent intent ) {
+    protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         eventManager.fire(new OnNewIntentEvent());
     }

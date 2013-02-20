@@ -2,11 +2,10 @@ package com.jondwillis.vapordex.ui.view;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-
+import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
 import com.jondwillis.vapordex.R;
 import com.jondwillis.vapordex.core.AvatarLoader;
 import com.jondwillis.vapordex.core.User;
-import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -47,7 +46,7 @@ public class UserListAdapter extends SingleTypeAdapter<User> {
 
     @Override
     protected int[] getChildViewIds() {
-        return new int[] { R.id.iv_avatar, R.id.tv_name };
+        return new int[]{R.id.iv_avatar, R.id.tv_name};
     }
 
     @Override

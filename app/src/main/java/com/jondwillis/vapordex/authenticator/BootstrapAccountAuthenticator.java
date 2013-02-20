@@ -1,13 +1,5 @@
-
 package com.jondwillis.vapordex.authenticator;
 
-import static android.accounts.AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE;
-import static android.accounts.AccountManager.KEY_ACCOUNT_NAME;
-import static android.accounts.AccountManager.KEY_ACCOUNT_TYPE;
-import static android.accounts.AccountManager.KEY_AUTHTOKEN;
-import static android.accounts.AccountManager.KEY_BOOLEAN_RESULT;
-import static android.accounts.AccountManager.KEY_INTENT;
-import static com.jondwillis.vapordex.authenticator.BootstrapAuthenticatorActivity.PARAM_AUTHTOKEN_TYPE;
 import android.accounts.AbstractAccountAuthenticator;
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorResponse;
@@ -17,8 +9,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-
 import com.jondwillis.vapordex.core.Constants;
+
+import static android.accounts.AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE;
+import static android.accounts.AccountManager.KEY_ACCOUNT_NAME;
+import static android.accounts.AccountManager.KEY_ACCOUNT_TYPE;
+import static android.accounts.AccountManager.KEY_AUTHTOKEN;
+import static android.accounts.AccountManager.KEY_BOOLEAN_RESULT;
+import static android.accounts.AccountManager.KEY_INTENT;
+import static com.jondwillis.vapordex.authenticator.BootstrapAuthenticatorActivity.PARAM_AUTHTOKEN_TYPE;
 
 class BootstrapAccountAuthenticator extends AbstractAccountAuthenticator {
 
@@ -39,7 +38,7 @@ class BootstrapAccountAuthenticator extends AbstractAccountAuthenticator {
      */
     @Override
     public Bundle addAccount(AccountAuthenticatorResponse response, String accountType, String authTokenType,
-            String[] requiredFeatures, Bundle options) throws NetworkErrorException {
+                             String[] requiredFeatures, Bundle options) throws NetworkErrorException {
         final Intent intent = new Intent(context, BootstrapAuthenticatorActivity.class);
         intent.putExtra(PARAM_AUTHTOKEN_TYPE, authTokenType);
         intent.putExtra(KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
@@ -62,6 +61,7 @@ class BootstrapAccountAuthenticator extends AbstractAccountAuthenticator {
      * This method gets called when the
      * {@link com.jondwillis.vapordex.authenticator.ApiKeyProvider#getAuthKey()} methods gets invoked.
      * This happens on a different process, so debugging it can be a beast.
+     *
      * @param response
      * @param account
      * @param authTokenType
@@ -71,7 +71,7 @@ class BootstrapAccountAuthenticator extends AbstractAccountAuthenticator {
      */
     @Override
     public Bundle getAuthToken(AccountAuthenticatorResponse response, Account account, String authTokenType,
-            Bundle options) throws NetworkErrorException {
+                               Bundle options) throws NetworkErrorException {
 
         Log.d("AccountAuthenticator", "Attempting to get authToken");
 
@@ -98,7 +98,7 @@ class BootstrapAccountAuthenticator extends AbstractAccountAuthenticator {
 
     @Override
     public Bundle updateCredentials(AccountAuthenticatorResponse response, Account account, String authTokenType,
-            Bundle options) {
+                                    Bundle options) {
         return null;
     }
 }

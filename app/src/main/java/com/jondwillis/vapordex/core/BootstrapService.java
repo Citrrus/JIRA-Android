@@ -1,13 +1,4 @@
-
 package com.jondwillis.vapordex.core;
-
-import static com.jondwillis.vapordex.core.Constants.Http.HEADER_PARSE_APP_ID;
-import static com.jondwillis.vapordex.core.Constants.Http.HEADER_PARSE_REST_API_KEY;
-import static com.jondwillis.vapordex.core.Constants.Http.PARSE_APP_ID;
-import static com.jondwillis.vapordex.core.Constants.Http.PARSE_REST_API_KEY;
-import static com.jondwillis.vapordex.core.Constants.Http.URL_CHECKINS;
-import static com.jondwillis.vapordex.core.Constants.Http.URL_NEWS;
-import static com.jondwillis.vapordex.core.Constants.Http.URL_USERS;
 
 import com.github.kevinsawicki.http.HttpRequest;
 import com.github.kevinsawicki.http.HttpRequest.HttpRequestException;
@@ -19,6 +10,14 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
+
+import static com.jondwillis.vapordex.core.Constants.Http.HEADER_PARSE_APP_ID;
+import static com.jondwillis.vapordex.core.Constants.Http.HEADER_PARSE_REST_API_KEY;
+import static com.jondwillis.vapordex.core.Constants.Http.PARSE_APP_ID;
+import static com.jondwillis.vapordex.core.Constants.Http.PARSE_REST_API_KEY;
+import static com.jondwillis.vapordex.core.Constants.Http.URL_CHECKINS;
+import static com.jondwillis.vapordex.core.Constants.Http.URL_NEWS;
+import static com.jondwillis.vapordex.core.Constants.Http.URL_USERS;
 
 /**
  * Bootstrap API service
@@ -37,7 +36,8 @@ public class BootstrapService {
      * api and all json values are lower case with an underscore, like this "first_name" instead of "firstName".
      * You can configure GSON as such below.
      *
-     * public static final Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd").setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES).create();
+     * public static final Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd").setFieldNamingPolicy
+     * (LOWER_CASE_WITH_UNDERSCORES).create();
      *
      */
 
@@ -117,8 +117,9 @@ public class BootstrapService {
      * @throws IOException
      */
     protected HttpRequest execute(HttpRequest request) throws IOException {
-        if (!configure(request).ok())
+        if (!configure(request).ok()) {
             throw new IOException("Unexpected response code: " + request.code());
+        }
         return request;
     }
 
@@ -126,22 +127,24 @@ public class BootstrapService {
         request.connectTimeout(TIMEOUT).readTimeout(TIMEOUT);
         request.userAgent(userAgentProvider.get());
 
-        if(isPostOrPut(request))
-            request.contentType(Constants.Http.CONTENT_TYPE_JSON); // All PUT & POST requests to Parse.com api must be in JSON - https://www.parse.com/docs/rest#general-requests
+        if (isPostOrPut(request)) {
+            request.contentType(Constants.Http.CONTENT_TYPE_JSON); // All PUT & POST requests to Parse.com api must
+        }
+        // be in JSON - https://www.parse.com/docs/rest#general-requests
 
         return addCredentialsTo(request);
     }
 
     private boolean isPostOrPut(HttpRequest request) {
         return request.getConnection().getRequestMethod().equals(HttpRequest.METHOD_POST)
-               || request.getConnection().getRequestMethod().equals(HttpRequest.METHOD_PUT);
+                || request.getConnection().getRequestMethod().equals(HttpRequest.METHOD_PUT);
 
     }
 
     private HttpRequest addCredentialsTo(HttpRequest request) {
 
         // Required params for
-        request.header(HEADER_PARSE_REST_API_KEY, PARSE_REST_API_KEY );
+        request.header(HEADER_PARSE_REST_API_KEY, PARSE_REST_API_KEY);
         request.header(HEADER_PARSE_APP_ID, PARSE_APP_ID);
 
         /**
@@ -149,7 +152,7 @@ public class BootstrapService {
          * logged in. In the bootstrap sample this is where we are saving the session id as the token.
          * If you actually had received a token you'd take the "apiKey" (aka: token) and add it to the
          * header or form values before you make your requests.
-          */
+         */
 
         /**
          * Add the user name and password to the request here if your service needs username or password for each
@@ -185,8 +188,9 @@ public class BootstrapService {
         try {
             HttpRequest request = execute(HttpRequest.get(URL_USERS));
             UsersWrapper response = fromJson(request, UsersWrapper.class);
-            if (response != null && response.results != null)
+            if (response != null && response.results != null) {
                 return response.results;
+            }
             return Collections.emptyList();
         } catch (HttpRequestException e) {
             throw e.getCause();
@@ -203,8 +207,9 @@ public class BootstrapService {
         try {
             HttpRequest request = execute(HttpRequest.get(URL_NEWS));
             NewsWrapper response = fromJson(request, NewsWrapper.class);
-            if (response != null && response.results != null)
+            if (response != null && response.results != null) {
                 return response.results;
+            }
             return Collections.emptyList();
         } catch (HttpRequestException e) {
             throw e.getCause();
@@ -221,8 +226,9 @@ public class BootstrapService {
         try {
             HttpRequest request = execute(HttpRequest.get(URL_CHECKINS));
             CheckInWrapper response = fromJson(request, CheckInWrapper.class);
-            if (response != null && response.results != null)
+            if (response != null && response.results != null) {
                 return response.results;
+            }
             return Collections.emptyList();
         } catch (HttpRequestException e) {
             throw e.getCause();

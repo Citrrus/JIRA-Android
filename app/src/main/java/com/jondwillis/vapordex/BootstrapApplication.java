@@ -1,18 +1,15 @@
-
-
 package com.jondwillis.vapordex;
 
-import static android.os.Build.VERSION.SDK_INT;
-import static android.os.Build.VERSION_CODES.FROYO;
 import android.app.Application;
 import android.app.Instrumentation;
 import android.content.Context;
-
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.inject.Injector;
 import com.google.inject.Stage;
-
 import roboguice.RoboGuice;
+
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.FROYO;
 
 /**
  * Vapordex application
@@ -24,8 +21,9 @@ public class BootstrapApplication extends Application {
      */
     public BootstrapApplication() {
         // Disable http.keepAlive on Froyo and below
-        if (SDK_INT <= FROYO)
+        if (SDK_INT <= FROYO) {
             HttpRequest.keepAlive(false);
+        }
     }
 
     /**
@@ -58,6 +56,7 @@ public class BootstrapApplication extends Application {
     /**
      * Sets the application injector. Using the {@link RoboGuice#newDefaultRoboModule} as well as a
      * custom binding module {@link BootstrapModule} to set up your application module
+     *
      * @param application
      * @return
      */

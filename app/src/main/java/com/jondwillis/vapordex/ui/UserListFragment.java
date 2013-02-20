@@ -1,6 +1,5 @@
 package com.jondwillis.vapordex.ui;
 
-import static com.jondwillis.vapordex.core.Constants.Extra.USER;
 import android.accounts.OperationCanceledException;
 import android.app.Activity;
 import android.content.Intent;
@@ -8,23 +7,26 @@ import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.ListView;
-
+import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
+import com.google.inject.Inject;
 import com.jondwillis.vapordex.BootstrapServiceProvider;
 import com.jondwillis.vapordex.R;
 import com.jondwillis.vapordex.core.AvatarLoader;
 import com.jondwillis.vapordex.core.User;
-import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
-import com.google.inject.Inject;
 import com.jondwillis.vapordex.ui.view.ThrowableLoader;
 import com.jondwillis.vapordex.ui.view.UserListAdapter;
 
 import java.util.Collections;
 import java.util.List;
 
-public class UserListFragment  extends ItemListFragment<User> {
+import static com.jondwillis.vapordex.core.Constants.Extra.USER;
 
-    @Inject private BootstrapServiceProvider serviceProvider;
-    @Inject private AvatarLoader avatars;
+public class UserListFragment extends ItemListFragment<User> {
+
+    @Inject
+    private BootstrapServiceProvider serviceProvider;
+    @Inject
+    private AvatarLoader avatars;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -41,9 +43,8 @@ public class UserListFragment  extends ItemListFragment<User> {
         listView.setDividerHeight(0);
 
         getListAdapter().addHeader(activity.getLayoutInflater()
-                        .inflate(R.layout.user_list_item_labels, null));
+                .inflate(R.layout.user_list_item_labels, null));
     }
-
 
 
     @Override
@@ -55,14 +56,16 @@ public class UserListFragment  extends ItemListFragment<User> {
 
                 try {
                     List<User> latest = serviceProvider.getService().getUsers();
-                    if (latest != null)
+                    if (latest != null) {
                         return latest;
-                    else
+                    } else {
                         return Collections.emptyList();
+                    }
                 } catch (OperationCanceledException e) {
                     Activity activity = getActivity();
-                    if (activity != null)
+                    if (activity != null) {
                         activity.finish();
+                    }
                     return initialItems;
                 }
             }

@@ -1,12 +1,10 @@
-
 package com.jondwillis.vapordex;
 
 import android.accounts.AccountsException;
-
+import com.google.inject.Inject;
 import com.jondwillis.vapordex.authenticator.ApiKeyProvider;
 import com.jondwillis.vapordex.core.BootstrapService;
 import com.jondwillis.vapordex.core.UserAgentProvider;
-import com.google.inject.Inject;
 
 import java.io.IOException;
 
@@ -15,12 +13,14 @@ import java.io.IOException;
  */
 public class BootstrapServiceProvider {
 
-    @Inject private ApiKeyProvider keyProvider;
-    @Inject private UserAgentProvider userAgentProvider;
+    @Inject
+    private ApiKeyProvider keyProvider;
+    @Inject
+    private UserAgentProvider userAgentProvider;
 
     /**
      * Get service for configured key provider
-     * <p>
+     * <p/>
      * This method gets an auth key and so it blocks and shouldn't be called on the main thread.
      *
      * @return bootstrap service

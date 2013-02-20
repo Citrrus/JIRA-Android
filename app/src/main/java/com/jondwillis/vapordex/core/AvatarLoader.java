@@ -1,8 +1,5 @@
 package com.jondwillis.vapordex.core;
 
-import static android.graphics.Bitmap.CompressFormat.PNG;
-import static android.graphics.Bitmap.Config.ARGB_8888;
-import static android.view.View.VISIBLE;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,11 +8,11 @@ import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
-
 import com.actionbarsherlock.app.ActionBar;
-import com.jondwillis.vapordex.R;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.inject.Inject;
+import com.jondwillis.vapordex.R;
+import roboguice.util.RoboAsyncTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -26,7 +23,9 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
 
-import roboguice.util.RoboAsyncTask;
+import static android.graphics.Bitmap.CompressFormat.PNG;
+import static android.graphics.Bitmap.Config.ARGB_8888;
+import static android.view.View.VISIBLE;
 
 /**
  * Avatar utilities
@@ -89,8 +88,9 @@ public class AvatarLoader {
         loadingAvatar = context.getResources().getDrawable(R.drawable.gravatar_icon);
 
         avatarDir = new File(context.getCacheDir(), "avatars/" + context.getPackageName());
-        if (!avatarDir.isDirectory())
+        if (!avatarDir.isDirectory()) {
             avatarDir.mkdirs();
+        }
 
         float density = context.getResources().getDisplayMetrics().density;
         cornerRadius = CORNER_RADIUS_IN_DIP * density;
@@ -109,13 +109,14 @@ public class AvatarLoader {
     protected BitmapDrawable getImage(final User user) {
         File avatarFile = new File(avatarDir, user.getObjectId());
 
-        if (!avatarFile.exists() || avatarFile.length() == 0)
+        if (!avatarFile.exists() || avatarFile.length() == 0) {
             return null;
+        }
 
         Bitmap bitmap = decode(avatarFile);
-        if (bitmap != null)
+        if (bitmap != null) {
             return new BitmapDrawable(context.getResources(), bitmap);
-        else {
+        } else {
             avatarFile.delete();
             return null;
         }
@@ -162,11 +163,13 @@ public class AvatarLoader {
     protected BitmapDrawable fetchAvatar(final String url, final String userId) {
         File rawAvatar = new File(avatarDir, userId + "-raw");
         HttpRequest request = HttpRequest.get(url);
-        if (request.ok())
+        if (request.ok()) {
             request.receive(rawAvatar);
+        }
 
-        if (!rawAvatar.exists() || rawAvatar.length() == 0)
+        if (!rawAvatar.exists() || rawAvatar.length() == 0) {
             return null;
+        }
 
         Bitmap bitmap = decode(rawAvatar);
         if (bitmap == null) {
@@ -184,20 +187,22 @@ public class AvatarLoader {
         FileOutputStream output = null;
         try {
             output = new FileOutputStream(roundedAvatar);
-            if (bitmap.compress(PNG, 100, output))
+            if (bitmap.compress(PNG, 100, output)) {
                 return new BitmapDrawable(context.getResources(), bitmap);
-            else
+            } else {
                 return null;
+            }
         } catch (IOException e) {
             Log.d(TAG, "Exception writing rounded avatar", e);
             return null;
         } finally {
-            if (output != null)
+            if (output != null) {
                 try {
                     output.close();
                 } catch (IOException e) {
                     // Ignored
                 }
+            }
             rawAvatar.delete();
         }
     }
@@ -222,16 +227,19 @@ public class AvatarLoader {
      */
     public AvatarLoader bind(final ActionBar actionBar,
                              final AtomicReference<User> userReference) {
-        if (userReference == null)
+        if (userReference == null) {
             return this;
+        }
 
         final User user = userReference.get();
-        if (user == null)
+        if (user == null) {
             return this;
+        }
 
         final String avatarUrl = user.getAvatarUrl();
-        if (TextUtils.isEmpty(avatarUrl))
+        if (TextUtils.isEmpty(avatarUrl)) {
             return this;
+        }
 
         final String userId = user.getObjectId();
 
@@ -246,17 +254,19 @@ public class AvatarLoader {
             @Override
             public BitmapDrawable call() throws Exception {
                 final BitmapDrawable image = getImage(user);
-                if (image != null)
+                if (image != null) {
                     return image;
-                else
+                } else {
                     return fetchAvatar(avatarUrl, userId.toString());
+                }
             }
 
             @Override
             protected void onSuccess(BitmapDrawable image) throws Exception {
                 final User current = userReference.get();
-                if (current != null && userId.equals(current.getObjectId()))
+                if (current != null && userId.equals(current.getObjectId())) {
                     actionBar.setLogo(image);
+                }
             }
         }.execute();
 
@@ -276,18 +286,20 @@ public class AvatarLoader {
     }
 
     private String getAvatarUrl(String id) {
-        if (!TextUtils.isEmpty(id))
+        if (!TextUtils.isEmpty(id)) {
             return "https://secure.gravatar.com/avatar/" + id + "?d=404";
-        else
+        } else {
             return null;
+        }
     }
 
     private String getAvatarUrl(User user) {
         String avatarUrl = user.getAvatarUrl();
         if (TextUtils.isEmpty(avatarUrl)) {
             String gravatarId = user.getGravatarId();
-            if (TextUtils.isEmpty(gravatarId))
+            if (TextUtils.isEmpty(gravatarId)) {
                 gravatarId = GravatarUtils.getHash(user.getUsername());
+            }
             avatarUrl = getAvatarUrl(gravatarId);
         }
         return avatarUrl;
@@ -305,19 +317,22 @@ public class AvatarLoader {
      * @return this helper
      */
     public AvatarLoader bind(final ImageView view, final User user) {
-        if (user == null)
+        if (user == null) {
             return setImage(loadingAvatar, view);
+        }
 
         String avatarUrl = getAvatarUrl(user);
 
-        if (TextUtils.isEmpty(avatarUrl))
+        if (TextUtils.isEmpty(avatarUrl)) {
             return setImage(loadingAvatar, view);
+        }
 
         final String userId = user.getObjectId();
 
         BitmapDrawable loadedImage = loaded.get(userId);
-        if (loadedImage != null)
+        if (loadedImage != null) {
             return setImage(loadedImage, view);
+        }
 
         setImage(loadingAvatar, view, userId);
 
@@ -326,24 +341,28 @@ public class AvatarLoader {
 
             @Override
             public BitmapDrawable call() throws Exception {
-                if (!userId.equals(view.getTag(R.id.iv_avatar)))
+                if (!userId.equals(view.getTag(R.id.iv_avatar))) {
                     return null;
+                }
 
                 final BitmapDrawable image = getImage(user);
-                if (image != null)
+                if (image != null) {
                     return image;
-                else
+                } else {
                     return fetchAvatar(loadUrl, userId.toString());
+                }
             }
 
             @Override
             protected void onSuccess(final BitmapDrawable image)
                     throws Exception {
-                if (image == null)
+                if (image == null) {
                     return;
+                }
                 loaded.put(userId, image);
-                if (userId.equals(view.getTag(R.id.iv_avatar)))
+                if (userId.equals(view.getTag(R.id.iv_avatar))) {
                     setImage(image, view);
+                }
             }
 
         }.execute();

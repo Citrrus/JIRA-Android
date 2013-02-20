@@ -5,22 +5,18 @@ import android.accounts.AccountManager;
 import android.accounts.AccountManagerFuture;
 import android.content.Context;
 import android.util.Log;
-
-import com.jondwillis.vapordex.core.Constants;
 import com.google.inject.Inject;
-
-import java.util.concurrent.Callable;
-import java.util.concurrent.Executor;
-
+import com.jondwillis.vapordex.core.Constants;
 import roboguice.inject.ContextSingleton;
 import roboguice.util.RoboAsyncTask;
 
 @ContextSingleton
 public class LogoutService {
 
-    @Inject protected Context context;
-    @Inject protected AccountManager accountManager;
-
+    @Inject
+    protected Context context;
+    @Inject
+    protected AccountManager accountManager;
 
 
     public void logout(final Runnable onSuccess) {
@@ -40,11 +36,12 @@ public class LogoutService {
         @Override
         public Boolean call() throws Exception {
 
-            final Account[] accounts = AccountManager.get(context).getAccountsByType(Constants.Auth.BOOTSTRAP_ACCOUNT_TYPE);
-            if(accounts.length > 0) {
+            final Account[] accounts = AccountManager.get(context).getAccountsByType(Constants.Auth
+                    .BOOTSTRAP_ACCOUNT_TYPE);
+            if (accounts.length > 0) {
                 AccountManagerFuture<Boolean> removeAccountFuture = AccountManager.get(context).removeAccount
                         (accounts[0], null, null);
-                if(removeAccountFuture.getResult() == true) {
+                if (removeAccountFuture.getResult() == true) {
                     return true;
                 } else {
                     return false;
