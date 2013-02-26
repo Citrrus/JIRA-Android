@@ -1,4 +1,4 @@
-package com.jondwillis.vapordex.ui;/*
+package com.jondwillis.vapordex.ui.activity;/*
  * Copyright 2009 Michael Burton
  *
  * Licensed under the Apache License, Version 2.0 (the "License");

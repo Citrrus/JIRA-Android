@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import com.jondwillis.vapordex.core.Constants;
+import com.jondwillis.vapordex.ui.activity.AuthenticatorActivity;
 
 import static android.accounts.AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE;
 import static android.accounts.AccountManager.KEY_ACCOUNT_NAME;
@@ -17,7 +18,7 @@ import static android.accounts.AccountManager.KEY_ACCOUNT_TYPE;
 import static android.accounts.AccountManager.KEY_AUTHTOKEN;
 import static android.accounts.AccountManager.KEY_BOOLEAN_RESULT;
 import static android.accounts.AccountManager.KEY_INTENT;
-import static com.jondwillis.vapordex.authenticator.BootstrapAuthenticatorActivity.PARAM_AUTHTOKEN_TYPE;
+import static com.jondwillis.vapordex.ui.activity.AuthenticatorActivity.PARAM_AUTHTOKEN_TYPE;
 
 class BootstrapAccountAuthenticator extends AbstractAccountAuthenticator {
 
@@ -39,7 +40,7 @@ class BootstrapAccountAuthenticator extends AbstractAccountAuthenticator {
     @Override
     public Bundle addAccount(AccountAuthenticatorResponse response, String accountType, String authTokenType,
                              String[] requiredFeatures, Bundle options) throws NetworkErrorException {
-        final Intent intent = new Intent(context, BootstrapAuthenticatorActivity.class);
+        final Intent intent = new Intent(context, AuthenticatorActivity.class);
         intent.putExtra(PARAM_AUTHTOKEN_TYPE, authTokenType);
         intent.putExtra(KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
         final Bundle bundle = new Bundle();

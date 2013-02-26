@@ -11,7 +11,7 @@ import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import com.google.inject.Inject;
 import com.jondwillis.vapordex.R;
-import com.jondwillis.vapordex.ui.BootstrapTimerActivity;
+import com.jondwillis.vapordex.ui.activity.BootstrapTimerActivity;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;

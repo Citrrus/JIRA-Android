@@ -1,4 +1,4 @@
-package com.jondwillis.vapordex.ui;
+package com.jondwillis.vapordex.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;

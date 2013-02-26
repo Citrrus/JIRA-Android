@@ -1,4 +1,4 @@
-package com.jondwillis.vapordex.ui;
+package com.jondwillis.vapordex.ui.fragment;
 
 import android.accounts.OperationCanceledException;
 import android.app.Activity;
@@ -12,6 +12,7 @@ import com.google.inject.Inject;
 import com.jondwillis.vapordex.BootstrapServiceProvider;
 import com.jondwillis.vapordex.R;
 import com.jondwillis.vapordex.core.News;
+import com.jondwillis.vapordex.ui.activity.NewsActivity;
 import com.jondwillis.vapordex.ui.view.NewsListAdapter;
 import com.jondwillis.vapordex.ui.view.ThrowableLoader;
 

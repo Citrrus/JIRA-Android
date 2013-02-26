@@ -1,4 +1,4 @@
-package com.jondwillis.vapordex.ui;
+package com.jondwillis.vapordex.ui.activity;
 
 import android.accounts.AccountAuthenticatorResponse;
 import android.accounts.AccountManager;

@@ -17,7 +17,7 @@ package com.jondwillis.vapordex.core;
 
 import android.app.Activity;
 import android.content.Intent;
-import com.jondwillis.vapordex.ui.NewsActivity;
+import com.jondwillis.vapordex.ui.activity.NewsActivity;
 
 /**
  * Utilities for an {@link android.app.Activity}

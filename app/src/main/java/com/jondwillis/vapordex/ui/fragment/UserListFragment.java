@@ -1,4 +1,4 @@
-package com.jondwillis.vapordex.ui;
+package com.jondwillis.vapordex.ui.fragment;
 
 import android.accounts.OperationCanceledException;
 import android.app.Activity;
@@ -13,6 +13,7 @@ import com.jondwillis.vapordex.BootstrapServiceProvider;
 import com.jondwillis.vapordex.R;
 import com.jondwillis.vapordex.core.AvatarLoader;
 import com.jondwillis.vapordex.core.User;
+import com.jondwillis.vapordex.ui.activity.UserActivity;
 import com.jondwillis.vapordex.ui.view.ThrowableLoader;
 import com.jondwillis.vapordex.ui.view.UserListAdapter;
 

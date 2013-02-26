@@ -28,7 +28,7 @@
     <string name="label_sign_in">Sign In</string>
     <string name="message_signing_in">Signing in…</string>
     <string name="blank_field_warning">Please populate this field</string>
-    <string name="signup_link">New to Bootstrap? &lt;a href=http://www.androidbootstrap.com>Click here&lt;/a> to learn more.</string>
+    <string name="signup_link">New to Vapordex? &lt;a href>Sign up now&lt;/a>!</string>
     <string name="message_bad_credentials">Email Address or Password is incorrect</string>
     <string name="message_auth_failed">Please enter a valid password</string>
     <string name="message_auth_failed_new_account">Please enter a valid email address &amp; password</string>

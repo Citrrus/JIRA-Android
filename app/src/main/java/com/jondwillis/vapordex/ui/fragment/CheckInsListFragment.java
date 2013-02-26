@@ -1,4 +1,4 @@
-package com.jondwillis.vapordex.ui;
+package com.jondwillis.vapordex.ui.fragment;
 
 import android.accounts.OperationCanceledException;
 import android.app.Activity;

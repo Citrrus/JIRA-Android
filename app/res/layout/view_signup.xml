@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main_background"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:id="@android:id/primary">
 
     <TextView
         android:id="@+id/tv_signup"

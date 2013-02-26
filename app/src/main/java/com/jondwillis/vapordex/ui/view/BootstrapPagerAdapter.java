@@ -6,9 +6,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.jondwillis.vapordex.R;
-import com.jondwillis.vapordex.ui.CheckInsListFragment;
-import com.jondwillis.vapordex.ui.NewsListFragment;
-import com.jondwillis.vapordex.ui.UserListFragment;
+import com.jondwillis.vapordex.ui.fragment.CheckInsListFragment;
+import com.jondwillis.vapordex.ui.fragment.NewsListFragment;
+import com.jondwillis.vapordex.ui.fragment.UserListFragment;
 
 /**
  * Pager adapter

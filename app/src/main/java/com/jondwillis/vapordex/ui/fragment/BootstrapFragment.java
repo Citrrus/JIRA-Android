@@ -1,4 +1,4 @@
-package com.jondwillis.vapordex.ui;
+package com.jondwillis.vapordex.ui.fragment;
 
 import android.os.Bundle;
 import android.view.View;

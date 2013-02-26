@@ -1,4 +1,4 @@
-package com.jondwillis.vapordex.authenticator;
+package com.jondwillis.vapordex.ui.activity;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -7,46 +7,29 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.Html;
-import android.text.TextWatcher;
-import android.text.method.LinkMovementMethod;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.View.OnKeyListener;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.github.kevinsawicki.wishlist.Toaster;
-import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockAccountAuthenticatorActivity;
 import com.google.gson.Gson;
-import com.jondwillis.vapordex.R.id;
-import com.jondwillis.vapordex.R.layout;
-import com.jondwillis.vapordex.R.string;
+import com.google.inject.Inject;
+import com.jondwillis.vapordex.R;
 import com.jondwillis.vapordex.core.Constants;
 import com.jondwillis.vapordex.core.User;
-import com.jondwillis.vapordex.ui.view.TextWatcherAdapter;
-import roboguice.inject.InjectView;
+import com.jondwillis.vapordex.event.FlipToSigninEvent;
+import com.jondwillis.vapordex.event.SignInEvent;
+import com.jondwillis.vapordex.ui.fragment.LoginFragment;
+import com.jondwillis.vapordex.ui.fragment.SignupFragment;
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 import roboguice.util.Ln;
 import roboguice.util.RoboAsyncTask;
 import roboguice.util.Strings;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.R.layout.simple_dropdown_item_1line;
 import static android.accounts.AccountManager.KEY_ACCOUNT_NAME;
 import static android.accounts.AccountManager.KEY_ACCOUNT_TYPE;
 import static android.accounts.AccountManager.KEY_AUTHTOKEN;
 import static android.accounts.AccountManager.KEY_BOOLEAN_RESULT;
-import static android.view.KeyEvent.ACTION_DOWN;
-import static android.view.KeyEvent.KEYCODE_ENTER;
-import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
 import static com.github.kevinsawicki.http.HttpRequest.get;
 import static com.jondwillis.vapordex.core.Constants.Http.HEADER_PARSE_APP_ID;
 import static com.jondwillis.vapordex.core.Constants.Http.HEADER_PARSE_REST_API_KEY;
@@ -57,8 +40,9 @@ import static com.jondwillis.vapordex.core.Constants.Http.URL_AUTH;
 /**
  * Activity to authenticate the user against an API (example API on Parse.com)
  */
-public class BootstrapAuthenticatorActivity extends
-        RoboSherlockAccountAuthenticatorActivity {
+public class AuthenticatorActivity extends
+        RoboSherlockAccountAuthenticatorFragmentActivity
+        implements FragmentManager.OnBackStackChangedListener {
 
     /**
      * PARAM_CONFIRMCREDENTIALS
@@ -83,16 +67,8 @@ public class BootstrapAuthenticatorActivity extends
 
     private AccountManager accountManager;
 
-    @InjectView(id.et_email)
-    private AutoCompleteTextView emailText;
-
-    @InjectView(id.et_password)
-    private EditText passwordText;
-
-    @InjectView(id.b_signin)
-    private Button signinButton;
-
-    private TextWatcher watcher = validationTextWatcher();
+    @Inject
+    private Bus BUS;
 
     private RoboAsyncTask<Boolean> authenticationTask;
     private String authToken;
@@ -121,9 +97,11 @@ public class BootstrapAuthenticatorActivity extends
      */
     protected boolean requestNewAccount = false;
 
+
+
     @Override
-    public void onCreate(Bundle bundle) {
-        super.onCreate(bundle);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         accountManager = AccountManager.get(this);
         final Intent intent = getIntent();
@@ -133,80 +111,38 @@ public class BootstrapAuthenticatorActivity extends
         confirmCredentials = intent.getBooleanExtra(PARAM_CONFIRMCREDENTIALS,
                 false);
 
-        setContentView(layout.login_activity);
+        setContentView(R.layout.view_fragment);
 
-        emailText.setAdapter(new ArrayAdapter<String>(this,
-                simple_dropdown_item_1line, userEmailAccounts()));
-
-        passwordText.setOnKeyListener(new OnKeyListener() {
-
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event != null && ACTION_DOWN == event.getAction()
-                        && keyCode == KEYCODE_ENTER && signinButton.isEnabled()) {
-                    handleLogin(signinButton);
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        passwordText.setOnEditorActionListener(new OnEditorActionListener() {
-
-            public boolean onEditorAction(TextView v, int actionId,
-                                          KeyEvent event) {
-                if (actionId == IME_ACTION_DONE && signinButton.isEnabled()) {
-                    handleLogin(signinButton);
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        emailText.addTextChangedListener(watcher);
-        passwordText.addTextChangedListener(watcher);
-
-        TextView signupText = (TextView) findViewById(id.tv_signup);
-        signupText.setMovementMethod(LinkMovementMethod.getInstance());
-        signupText.setText(Html.fromHtml(getString(string.signup_link)));
-    }
-
-    private List<String> userEmailAccounts() {
-        Account[] accounts = accountManager.getAccountsByType("com.google");
-        List<String> emailAddresses = new ArrayList<String>(accounts.length);
-        for (Account account : accounts) {
-            emailAddresses.add(account.name);
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.fragment_container, new LoginFragment())
+                    .commit();
+        } else {
+            mShowingBack = (getFragmentManager().getBackStackEntryCount() > 0);
         }
-        return emailAddresses;
-    }
 
-    private TextWatcher validationTextWatcher() {
-        return new TextWatcherAdapter() {
-            public void afterTextChanged(Editable gitDirEditText) {
-                updateUIWithValidation();
-            }
-
-        };
+        // Monitor back stack changes to ensure the action bar shows the appropriate
+        // button (either "photo" or "info").
+        getSupportFragmentManager().addOnBackStackChangedListener(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        updateUIWithValidation();
+        BUS.register(this);
     }
 
-    private void updateUIWithValidation() {
-        boolean populated = populated(emailText) && populated(passwordText);
-        signinButton.setEnabled(populated);
-    }
-
-    private boolean populated(EditText editText) {
-        return editText.length() > 0;
+    @Override
+    protected void onPause() {
+        super.onPause();
+        BUS.unregister(this);
     }
 
     @Override
     protected Dialog onCreateDialog(int id) {
         final ProgressDialog dialog = new ProgressDialog(this);
-        dialog.setMessage(getText(string.message_signing_in));
+        dialog.setMessage(getText(R.string.message_signing_in));
         dialog.setIndeterminate(true);
         dialog.setCancelable(true);
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -219,23 +155,16 @@ public class BootstrapAuthenticatorActivity extends
         return dialog;
     }
 
-    /**
-     * Handles onClick event on the Submit button. Sends username/password to
-     * the server for authentication.
-     * <p/>
-     * Specified by android:onClick="handleLogin" in the layout xml
-     *
-     * @param view
-     */
-    public void handleLogin(View view) {
+    @Subscribe
+    public void onSignInEvent(SignInEvent event) {
         if (authenticationTask != null) {
             return;
         }
 
         if (requestNewAccount) {
-            email = emailText.getText().toString();
+            email = event.getEmail().toString();
         }
-        password = passwordText.getText().toString();
+        password = event.getPassword().toString();
         showProgress();
 
         authenticationTask = new RoboAsyncTask<Boolean>(this) {
@@ -267,12 +196,12 @@ public class BootstrapAuthenticatorActivity extends
                 if ("Received authentication challenge is null".equals(cause
                         .getMessage())) {
                     message = getResources().getString(
-                            string.message_bad_credentials);
+                            R.string.message_bad_credentials);
                 } else {
                     message = cause.getMessage();
                 }
 
-                Toaster.showLong(BootstrapAuthenticatorActivity.this, message);
+                Toaster.showLong(AuthenticatorActivity.this, message);
             }
 
             @Override
@@ -366,12 +295,64 @@ public class BootstrapAuthenticatorActivity extends
         } else {
             Ln.d("onAuthenticationResult: failed to authenticate");
             if (requestNewAccount) {
-                Toaster.showLong(BootstrapAuthenticatorActivity.this,
-                        string.message_auth_failed_new_account);
+                Toaster.showLong(AuthenticatorActivity.this,
+                        R.string.message_auth_failed_new_account);
             } else {
-                Toaster.showLong(BootstrapAuthenticatorActivity.this,
-                        string.message_auth_failed);
+                Toaster.showLong(AuthenticatorActivity.this,
+                        R.string.message_auth_failed);
             }
         }
+    }
+
+
+    private boolean mShowingBack = false;
+
+    @Subscribe
+    public void onFlipToSigninEvent(FlipToSigninEvent event) {
+        if (mShowingBack) {
+            getFragmentManager().popBackStack();
+            return;
+        }
+
+        // Flip to the back.
+
+        mShowingBack = true;
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(mShowingBack);
+
+        // Create and commit a new fragment transaction that adds the fragment for the back of
+        // the card, uses custom animations, and is part of the fragment manager's back stack.
+
+        getSupportFragmentManager()
+                .beginTransaction()
+
+                        // Replace the default fragment animations with animator resources representing
+                        // rotations when switching to the back of the card, as well as animator
+                        // resources representing rotations when flipping back to the front (e.g. when
+                        // the system Back button is pressed).
+                .setCustomAnimations(
+                        R.anim.card_flip_right_in, R.anim.card_flip_right_out,
+                        R.anim.card_flip_left_in, R.anim.card_flip_left_out)
+
+                        // Replace any fragments currently in the container view with a fragment
+                        // representing the next page (indicated by the just-incremented currentPage
+                        // variable).
+                .replace(R.id.fragment_container, new SignupFragment())
+
+                        // Add this transaction to the back stack, allowing users to press Back
+                        // to get to the front of the card.
+                .addToBackStack(null)
+
+                        // Commit the transaction.
+                .commit();
+    }
+
+    @Override
+    public void onBackStackChanged() {
+        mShowingBack = (getFragmentManager().getBackStackEntryCount() > 0);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(mShowingBack);
+
+        // When the back stack changes, invalidate the options menu (action bar).
+        invalidateOptionsMenu();
     }
 }
