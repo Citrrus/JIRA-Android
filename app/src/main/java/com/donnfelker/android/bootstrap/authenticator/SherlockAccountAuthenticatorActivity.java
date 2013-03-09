@@ -1,6 +1,9 @@
 package com.donnfelker.android.bootstrap.authenticator;
 
 /*
+ * Originally from:
+ * https://github.com/rtyley/roboguice-sherlock/blob/master/src/main/java/com/github/rtyley/android/sherlock/android/accounts/SherlockAccountAuthenticatorActivity.java
+ *
  * Copyright (C) 2009 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
