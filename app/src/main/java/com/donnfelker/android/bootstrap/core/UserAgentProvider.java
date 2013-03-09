@@ -6,15 +6,17 @@ import android.content.pm.PackageInfo;
 import android.os.Build;
 import android.telephony.TelephonyManager;
 
-import com.google.inject.Inject;
-import com.google.inject.Provider;
+import com.donnfelker.android.bootstrap.util.Ln;
+import com.donnfelker.android.bootstrap.util.Strings;
+
+import javax.inject.Inject;
+import javax.inject.Provider;
+
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import roboguice.util.Ln;
-import roboguice.util.Strings;
 
 public class UserAgentProvider implements Provider<String> {
     @Inject protected Application app;

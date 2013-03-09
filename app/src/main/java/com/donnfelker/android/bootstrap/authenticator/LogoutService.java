@@ -7,15 +7,16 @@ import android.content.Context;
 import android.util.Log;
 
 import com.donnfelker.android.bootstrap.core.Constants;
-import com.google.inject.Inject;
+import com.donnfelker.android.bootstrap.util.SafeAsyncTask;
+
+import javax.inject.Inject;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
 
-import roboguice.inject.ContextSingleton;
-import roboguice.util.RoboAsyncTask;
 
-@ContextSingleton
+// TODO-dagger: Mark this a s singleton of some sort, maybe.
+// @ContextSingleton
 public class LogoutService {
 
     @Inject protected Context context;
@@ -28,12 +29,13 @@ public class LogoutService {
         new LogoutTask(context, onSuccess).execute();
     }
 
-    private static class LogoutTask extends RoboAsyncTask<Boolean> {
+    private static class LogoutTask extends SafeAsyncTask<Boolean> {
 
+        private final Context context;
         private Runnable onSuccess;
 
         protected LogoutTask(Context context, Runnable onSuccess) {
-            super(context);
+            this.context = context;
             this.onSuccess = onSuccess;
         }
 

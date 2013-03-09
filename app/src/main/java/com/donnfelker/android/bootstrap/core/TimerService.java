@@ -3,6 +3,7 @@ package com.donnfelker.android.bootstrap.core;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
@@ -12,17 +13,16 @@ import android.support.v4.app.NotificationCompat;
 
 import com.donnfelker.android.bootstrap.R;
 import com.donnfelker.android.bootstrap.ui.BootstrapTimerActivity;
-import com.google.inject.Inject;
+import javax.inject.Inject;
+
+import com.donnfelker.android.bootstrap.util.Ln;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
 
-import roboguice.service.RoboService;
-import roboguice.util.Ln;
-
 import static com.donnfelker.android.bootstrap.core.Constants.Notification.TIMER_NOTIFICATION_ID;
 
-public class TimerService extends RoboService {
+public class TimerService extends Service {
 
     @Inject protected Bus BUS;
     @Inject private NotificationManager notificationManager;

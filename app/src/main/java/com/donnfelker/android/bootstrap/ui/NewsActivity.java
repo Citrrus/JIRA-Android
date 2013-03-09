@@ -7,12 +7,11 @@ import android.widget.TextView;
 import com.donnfelker.android.bootstrap.R;
 import com.donnfelker.android.bootstrap.core.News;
 
-import roboguice.inject.InjectExtra;
-import roboguice.inject.InjectView;
+import butterknife.InjectView;
 
 public class NewsActivity extends BootstrapActivity {
 
-    @InjectExtra(NEWS_ITEM) protected News newsItem;
+    protected News newsItem;
 
     @InjectView(R.id.tv_title) protected TextView title;
     @InjectView(R.id.tv_content) protected TextView content;
@@ -22,6 +21,10 @@ public class NewsActivity extends BootstrapActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.news);
+
+        if(getIntent() != null && getIntent().getExtras() != null) {
+            newsItem = (News) getIntent().getExtras().getSerializable(NEWS_ITEM);
+        }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);

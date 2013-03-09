@@ -1,15 +1,12 @@
 package com.donnfelker.android.bootstrap.ui;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 
 import com.donnfelker.android.bootstrap.R;
 import com.donnfelker.android.bootstrap.core.CheckIn;
-import com.donnfelker.android.bootstrap.core.News;
 
 import java.util.List;
 
-import roboguice.util.Strings;
 
 public class CheckInsListAdapter extends AlternatingColorListAdapter<CheckIn> {
     /**

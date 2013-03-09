@@ -14,8 +14,9 @@ import android.widget.ImageView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.donnfelker.android.bootstrap.R;
+import com.donnfelker.android.bootstrap.util.SafeAsyncTask;
 import com.github.kevinsawicki.http.HttpRequest;
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -26,7 +27,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
 
-import roboguice.util.RoboAsyncTask;
 
 /**
  * Avatar utilities
@@ -40,13 +40,13 @@ public class AvatarLoader {
     private static final int CACHE_SIZE = 75;
 
     private static abstract class FetchAvatarTask extends
-            RoboAsyncTask<BitmapDrawable> {
+            SafeAsyncTask<BitmapDrawable> {
 
         private static final Executor EXECUTOR = Executors
                 .newFixedThreadPool(1);
 
         private FetchAvatarTask(Context context) {
-            super(context, EXECUTOR);
+            super(EXECUTOR);
         }
 
         @Override

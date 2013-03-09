@@ -6,7 +6,7 @@ import android.accounts.AccountsException;
 import com.donnfelker.android.bootstrap.authenticator.ApiKeyProvider;
 import com.donnfelker.android.bootstrap.core.BootstrapService;
 import com.donnfelker.android.bootstrap.core.UserAgentProvider;
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 import java.io.IOException;
 

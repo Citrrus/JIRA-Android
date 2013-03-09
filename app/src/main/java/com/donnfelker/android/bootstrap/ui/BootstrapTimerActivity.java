@@ -15,14 +15,13 @@ import com.donnfelker.android.bootstrap.core.StopTimerEvent;
 import com.donnfelker.android.bootstrap.core.TimerPausedEvent;
 import com.donnfelker.android.bootstrap.core.TimerService;
 import com.donnfelker.android.bootstrap.core.TimerTickEvent;
-import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
-import com.google.inject.Inject;
+import javax.inject.Inject;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
-import roboguice.inject.InjectView;
+import butterknife.InjectView;
 
-public class BootstrapTimerActivity extends RoboSherlockFragmentActivity implements View.OnClickListener {
+public class BootstrapTimerActivity extends BootstrapFragmentActivity implements View.OnClickListener {
 
     @Inject protected Bus BUS;
 

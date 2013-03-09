@@ -13,7 +13,7 @@ import com.donnfelker.android.bootstrap.BootstrapServiceProvider;
 import com.donnfelker.android.bootstrap.R;
 import com.donnfelker.android.bootstrap.core.News;
 import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 import java.util.List;
 

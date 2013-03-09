@@ -40,23 +40,22 @@ import android.widget.TextView.OnEditorActionListener;
 
 import com.donnfelker.android.bootstrap.core.Constants;
 import com.donnfelker.android.bootstrap.core.User;
+import com.donnfelker.android.bootstrap.util.Ln;
+import com.donnfelker.android.bootstrap.util.SafeAsyncTask;
+import com.donnfelker.android.bootstrap.util.Strings;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.github.kevinsawicki.wishlist.Toaster;
 import com.donnfelker.android.bootstrap.R.id;
 import com.donnfelker.android.bootstrap.R.layout;
 import com.donnfelker.android.bootstrap.R.string;
 import com.donnfelker.android.bootstrap.ui.TextWatcherAdapter;
-import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockAccountAuthenticatorActivity;
 import com.google.gson.Gson;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import roboguice.inject.InjectView;
-import roboguice.util.Ln;
-import roboguice.util.RoboAsyncTask;
-import roboguice.util.Strings;
+import butterknife.InjectView;
 
 import static com.donnfelker.android.bootstrap.core.Constants.Http.USERNAME;
 import static com.donnfelker.android.bootstrap.core.Constants.Http.PASSWORD;
@@ -64,8 +63,7 @@ import static com.donnfelker.android.bootstrap.core.Constants.Http.PASSWORD;
 /**
  * Activity to authenticate the user against an API (example API on Parse.com)
  */
-public class BootstrapAuthenticatorActivity extends
-        RoboSherlockAccountAuthenticatorActivity {
+public class BootstrapAuthenticatorActivity extends SherlockAccountAuthenticatorActivity {
 
     /**
      * PARAM_CONFIRMCREDENTIALS
@@ -90,18 +88,13 @@ public class BootstrapAuthenticatorActivity extends
 
     private AccountManager accountManager;
 
-    @InjectView(id.et_email)
-    private AutoCompleteTextView emailText;
-
-    @InjectView(id.et_password)
-    private EditText passwordText;
-
-    @InjectView(id.b_signin)
-    private Button signinButton;
+    @InjectView(id.et_email) private AutoCompleteTextView emailText;
+    @InjectView(id.et_password) private EditText passwordText;
+    @InjectView(id.b_signin) private Button signinButton;
 
     private TextWatcher watcher = validationTextWatcher();
 
-    private RoboAsyncTask<Boolean> authenticationTask;
+    private SafeAsyncTask<Boolean> authenticationTask;
     private String authToken;
     private String authTokenType;
 
@@ -241,7 +234,7 @@ public class BootstrapAuthenticatorActivity extends
         password = passwordText.getText().toString();
         showProgress();
 
-        authenticationTask = new RoboAsyncTask<Boolean>(this) {
+        authenticationTask = new SafeAsyncTask<Boolean>() {
             public Boolean call() throws Exception {
 
                 final String query = String.format("%s=%s&%s=%s", PARAM_USERNAME, email, PARAM_PASSWORD, password);

@@ -16,7 +16,7 @@ import com.donnfelker.android.bootstrap.core.AvatarLoader;
 import com.donnfelker.android.bootstrap.core.News;
 import com.donnfelker.android.bootstrap.core.User;
 import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 import java.util.Collections;
 import java.util.List;

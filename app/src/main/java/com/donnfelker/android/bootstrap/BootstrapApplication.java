@@ -9,10 +9,6 @@ import android.app.Instrumentation;
 import android.content.Context;
 
 import com.github.kevinsawicki.http.HttpRequest;
-import com.google.inject.Injector;
-import com.google.inject.Stage;
-
-import roboguice.RoboGuice;
 
 /**
  * Android Bootstrap application
@@ -38,12 +34,7 @@ public class BootstrapApplication extends Application {
         attachBaseContext(context);
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
 
-        setApplicationInjector(this);
-    }
 
     /**
      * Create main application
@@ -55,14 +46,5 @@ public class BootstrapApplication extends Application {
         attachBaseContext(instrumentation.getTargetContext());
     }
 
-    /**
-     * Sets the application injector. Using the {@link RoboGuice#newDefaultRoboModule} as well as a
-     * custom binding module {@link BootstrapModule} to set up your application module
-     * @param application
-     * @return
-     */
-    public static Injector setApplicationInjector(Application application) {
-        return RoboGuice.setBaseApplicationInjector(application, Stage.DEVELOPMENT, RoboGuice.newDefaultRoboModule
-                (application), new BootstrapModule());
-    }
+
 }

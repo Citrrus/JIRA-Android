@@ -11,7 +11,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.donnfelker.android.bootstrap.core.Constants;
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 import java.io.IOException;
 

@@ -4,7 +4,8 @@ package com.donnfelker.android.bootstrap.ui;
 import android.content.Context;
 import android.util.Log;
 
-import roboguice.util.Ln;
+import com.donnfelker.android.bootstrap.util.Ln;
+
 
 /**
  * Loader that support throwing an exception when loading in the background

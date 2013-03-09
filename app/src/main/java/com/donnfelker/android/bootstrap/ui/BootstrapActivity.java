@@ -4,13 +4,23 @@ import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
 import android.content.Intent;
 
+import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
-import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockActivity;
+
+import butterknife.Views;
 
 /**
  * Base activity for a Bootstrap activity which does not use fragments.
  */
-public abstract class BootstrapActivity extends RoboSherlockActivity {
+public abstract class BootstrapActivity extends SherlockActivity {
+
+    @Override
+    public void setContentView(int layoutResId) {
+        super.setContentView(layoutResId);
+
+        // Used to inject views with the Butterknife library
+        Views.inject(this);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
