@@ -4,17 +4,33 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 import com.squareup.otto.Bus;
 
+import javax.inject.Singleton;
+
+import dagger.Module;
+import dagger.Provides;
+
 /**
- * Module for setting up custom bindings in RoboGuice.
+ * Dagger module for setting up provides statements.
  */
-public class BootstrapModule extends AbstractModule {
+@Module
+(
+        complete = false,
 
-    @Override
-    protected void configure() {
+        entryPoints = {
+            BootstrapApplication.class
+        },
 
-        // We want Otto to be bound as a singleton as one instance only needs
-        // to be present in this app
-        bind(Bus.class).in(Singleton.class);
+        includes = {
+                AndroidModule.class
+        }
+)
+public class BootstrapModule  {
+
+    @Singleton
+    @Provides
+    Bus provideOttoBus() {
+
+        return new Bus();
 
     }
 
