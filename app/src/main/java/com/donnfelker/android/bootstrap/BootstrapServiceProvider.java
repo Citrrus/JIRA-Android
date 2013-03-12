@@ -2,6 +2,7 @@
 package com.donnfelker.android.bootstrap;
 
 import android.accounts.AccountsException;
+import android.app.Activity;
 
 import com.donnfelker.android.bootstrap.authenticator.ApiKeyProvider;
 import com.donnfelker.android.bootstrap.core.BootstrapService;
@@ -27,7 +28,7 @@ public class BootstrapServiceProvider {
      * @throws IOException
      * @throws AccountsException
      */
-    public BootstrapService getService() throws IOException, AccountsException {
+    public BootstrapService getService(Activity activity) throws IOException, AccountsException {
         return new BootstrapService(keyProvider.getAuthKey(), userAgentProvider);
     }
 }

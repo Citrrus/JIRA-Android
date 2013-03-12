@@ -11,15 +11,18 @@ import android.widget.ListView;
 
 import com.donnfelker.android.bootstrap.BootstrapServiceProvider;
 import com.donnfelker.android.bootstrap.R;
+import com.donnfelker.android.bootstrap.authenticator.LogoutService;
 import com.donnfelker.android.bootstrap.core.News;
 import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
 import javax.inject.Inject;
 
+import java.util.Collections;
 import java.util.List;
 
 public class NewsListFragment extends ItemListFragment<News> {
 
     @Inject protected BootstrapServiceProvider serviceProvider;
+    @Inject protected LogoutService logoutService;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -41,6 +44,11 @@ public class NewsListFragment extends ItemListFragment<News> {
     }
 
     @Override
+    LogoutService getLogoutService() {
+        return logoutService;
+    }
+
+    @Override
     public void onDestroyView() {
         setListAdapter(null);
 
@@ -55,7 +63,12 @@ public class NewsListFragment extends ItemListFragment<News> {
             @Override
             public List<News> loadData() throws Exception {
                 try {
-                    return serviceProvider.getService().getNews();
+                    if(getActivity() != null) {
+                        return serviceProvider.getService(getActivity()).getNews();
+                    } else {
+                        return Collections.emptyList();
+                    }
+
                 } catch (OperationCanceledException e) {
                     Activity activity = getActivity();
                     if (activity != null)

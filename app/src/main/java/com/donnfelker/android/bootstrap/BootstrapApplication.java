@@ -15,10 +15,15 @@ import com.github.kevinsawicki.http.HttpRequest;
  */
 public class BootstrapApplication extends Application {
 
+    private static BootstrapApplication instance;
+
     /**
      * Create main application
      */
     public BootstrapApplication() {
+
+        instance = this;
+
         // Disable http.keepAlive on Froyo and below
         if (SDK_INT <= FROYO)
             HttpRequest.keepAlive(false);
@@ -47,4 +52,7 @@ public class BootstrapApplication extends Application {
     }
 
 
+    public static BootstrapApplication getInstance() {
+        return instance;
+    }
 }

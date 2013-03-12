@@ -1,7 +1,6 @@
 
 package com.donnfelker.android.bootstrap.ui;
 
-import android.accounts.AccountManager;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -22,18 +21,15 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.donnfelker.android.bootstrap.R;
+import com.donnfelker.android.bootstrap.R.id;
+import com.donnfelker.android.bootstrap.R.layout;
 import com.donnfelker.android.bootstrap.authenticator.LogoutService;
 import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
 import com.github.kevinsawicki.wishlist.Toaster;
 import com.github.kevinsawicki.wishlist.ViewUtils;
-import com.donnfelker.android.bootstrap.R.id;
-import com.donnfelker.android.bootstrap.R.layout;
-import com.donnfelker.android.bootstrap.R.menu;
-import javax.inject.Inject;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 
 
@@ -45,8 +41,6 @@ import java.util.concurrent.Callable;
  */
 public abstract class ItemListFragment<E> extends SherlockFragment
         implements LoaderCallbacks<List<E>> {
-
-    @Inject protected LogoutService logoutService;
 
     private static final String FORCE_REFRESH = "forceRefresh";
 
@@ -172,8 +166,10 @@ public abstract class ItemListFragment<E> extends SherlockFragment
         }
     }
 
+    abstract LogoutService getLogoutService();
+
     private void logout() {
-        logoutService.logout(new Runnable() {
+        getLogoutService().logout(new Runnable() {
             @Override
             public void run() {
                 // Calling a refresh will force the service to look for a logged in user

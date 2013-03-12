@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.donnfelker.android.bootstrap.BootstrapServiceProvider;
 import com.donnfelker.android.bootstrap.R;
+import com.donnfelker.android.bootstrap.authenticator.LogoutService;
 import com.donnfelker.android.bootstrap.core.AvatarLoader;
 import com.donnfelker.android.bootstrap.core.News;
 import com.donnfelker.android.bootstrap.core.User;
@@ -25,6 +26,7 @@ public class UserListFragment  extends ItemListFragment<User> {
 
     @Inject private BootstrapServiceProvider serviceProvider;
     @Inject private AvatarLoader avatars;
+    @Inject protected LogoutService logoutService;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -44,6 +46,10 @@ public class UserListFragment  extends ItemListFragment<User> {
                         .inflate(R.layout.user_list_item_labels, null));
     }
 
+    @Override
+    LogoutService getLogoutService() {
+        return logoutService;
+    }
 
 
     @Override
@@ -54,7 +60,11 @@ public class UserListFragment  extends ItemListFragment<User> {
             public List<User> loadData() throws Exception {
 
                 try {
-                    List<User> latest = serviceProvider.getService().getUsers();
+                    List<User> latest = null;
+
+                    if(getActivity() != null)
+                        latest = serviceProvider.getService(getActivity()).getUsers();
+
                     if (latest != null)
                         return latest;
                     else

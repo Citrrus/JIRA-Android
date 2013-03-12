@@ -1,7 +1,18 @@
 package com.donnfelker.android.bootstrap;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Singleton;
+import android.accounts.AccountManager;
+import android.content.Context;
+
+import com.donnfelker.android.bootstrap.authenticator.LogoutService;
+import com.donnfelker.android.bootstrap.core.CheckIn;
+import com.donnfelker.android.bootstrap.ui.BootstrapTimerActivity;
+import com.donnfelker.android.bootstrap.ui.CarouselActivity;
+import com.donnfelker.android.bootstrap.ui.CheckInsListFragment;
+import com.donnfelker.android.bootstrap.ui.ItemListFragment;
+import com.donnfelker.android.bootstrap.ui.NewsActivity;
+import com.donnfelker.android.bootstrap.ui.NewsListFragment;
+import com.donnfelker.android.bootstrap.ui.UserActivity;
+import com.donnfelker.android.bootstrap.ui.UserListFragment;
 import com.squareup.otto.Bus;
 
 import javax.inject.Singleton;
@@ -11,18 +22,23 @@ import dagger.Provides;
 
 /**
  * Dagger module for setting up provides statements.
+ * Register all of your entry points below.
  */
 @Module
 (
         complete = false,
 
         entryPoints = {
-            BootstrapApplication.class
-        },
-
-        includes = {
-                AndroidModule.class
+                BootstrapApplication.class,
+                CarouselActivity.class,
+                BootstrapTimerActivity.class,
+                CheckInsListFragment.class,
+                NewsActivity.class,
+                NewsListFragment.class,
+                UserActivity.class,
+                UserListFragment.class
         }
+
 )
 public class BootstrapModule  {
 
@@ -32,6 +48,12 @@ public class BootstrapModule  {
 
         return new Bus();
 
+    }
+
+    @Provides
+    @Singleton
+    LogoutService provideLogoutService(final Context context, final AccountManager accountManager) {
+        return new LogoutService(context, accountManager);
     }
 
 }

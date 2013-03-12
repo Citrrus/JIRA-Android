@@ -11,18 +11,20 @@ import com.donnfelker.android.bootstrap.util.SafeAsyncTask;
 
 import javax.inject.Inject;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.Executor;
 
-
-// TODO-dagger: Mark this a s singleton of some sort, maybe.
-// @ContextSingleton
+/**
+ * Class used for logging a user out.
+ */
 public class LogoutService {
 
-    @Inject protected Context context;
-    @Inject protected AccountManager accountManager;
+    protected Context context;
+    protected AccountManager accountManager;
 
-
+    @Inject
+    public LogoutService(Context context, AccountManager accountManager) {
+        this.context = context;
+        this.accountManager = accountManager;
+    }
 
     public void logout(final Runnable onSuccess) {
 

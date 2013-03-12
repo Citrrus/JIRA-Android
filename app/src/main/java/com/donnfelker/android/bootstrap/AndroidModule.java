@@ -1,20 +1,35 @@
 package com.donnfelker.android.bootstrap;
 
+import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.view.inputmethod.InputMethodManager;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 
-@Module(
+/**
+ * Module for all Android related provisions
+ */
+@Module
+(
         complete = false
 )
 public class AndroidModule {
+
+    @Provides
+    @Singleton
+    Context provideAppContext()
+    {
+        return BootstrapApplication.getInstance().getApplicationContext();
+    }
 
     @Provides
     SharedPreferences provideDefaultSharedPreferences(final Context context)
@@ -53,5 +68,19 @@ public class AndroidModule {
         return (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
+    @Provides
+    ApplicationInfo provideApplicationInfo(final Context context) {
+        return context.getApplicationInfo();
+    }
+
+    @Provides
+    AccountManager provideAccountManager(final Context context) {
+        return AccountManager.get(context);
+    }
+
+    @Provides
+    ClassLoader provideClassLoader(final Context context) {
+        return context.getClassLoader();
+    }
 
 }

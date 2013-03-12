@@ -11,16 +11,19 @@ import android.widget.ListView;
 
 import com.donnfelker.android.bootstrap.BootstrapServiceProvider;
 import com.donnfelker.android.bootstrap.R;
+import com.donnfelker.android.bootstrap.authenticator.LogoutService;
 import com.donnfelker.android.bootstrap.core.CheckIn;
 import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
 import javax.inject.Inject;
 
 import javax.inject.Inject;
+import java.util.Collections;
 import java.util.List;
 
 public class CheckInsListFragment extends ItemListFragment<CheckIn> {
 
     @Inject protected BootstrapServiceProvider serviceProvider;
+    @Inject protected LogoutService logoutService;
 
     @Override
     protected void configureList(Activity activity, ListView listView) {
@@ -32,6 +35,11 @@ public class CheckInsListFragment extends ItemListFragment<CheckIn> {
         getListAdapter()
                 .addHeader(activity.getLayoutInflater()
                         .inflate(R.layout.checkins_list_item_labels, null));
+    }
+
+    @Override
+    LogoutService getLogoutService() {
+        return logoutService;
     }
 
     @Override
@@ -49,7 +57,12 @@ public class CheckInsListFragment extends ItemListFragment<CheckIn> {
             @Override
             public List<CheckIn> loadData() throws Exception {
                 try {
-                    return serviceProvider.getService().getCheckIns();
+                    if(getActivity() != null) {
+                        return serviceProvider.getService(getActivity()).getCheckIns();
+                    } else {
+                        return Collections.emptyList();
+                    }
+
                 } catch (OperationCanceledException e) {
                     Activity activity = getActivity();
                     if (activity != null)

@@ -20,7 +20,6 @@ import java.io.IOException;
  */
 public class ApiKeyProvider {
 
-    @Inject private Activity activity;
     @Inject private AccountManager accountManager;
 
     /**
@@ -30,7 +29,7 @@ public class ApiKeyProvider {
      * @throws AccountsException
      * @throws IOException
      */
-    public String getAuthKey() throws AccountsException, IOException {
+    public String getAuthKey(Activity activity) throws AccountsException, IOException {
         AccountManagerFuture<Bundle> accountManagerFuture = accountManager.getAuthTokenByFeatures(Constants.Auth.BOOTSTRAP_ACCOUNT_TYPE,
                 Constants.Auth.AUTHTOKEN_TYPE, new String[0], activity, null, null, null, null);
 
