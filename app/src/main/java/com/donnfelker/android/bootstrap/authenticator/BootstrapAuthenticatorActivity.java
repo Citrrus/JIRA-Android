@@ -88,9 +88,9 @@ public class BootstrapAuthenticatorActivity extends SherlockAccountAuthenticator
 
     private AccountManager accountManager;
 
-    @InjectView(id.et_email) private AutoCompleteTextView emailText;
-    @InjectView(id.et_password) private EditText passwordText;
-    @InjectView(id.b_signin) private Button signinButton;
+    @InjectView(id.et_email) AutoCompleteTextView emailText;
+    @InjectView(id.et_password) EditText passwordText;
+    @InjectView(id.b_signin) Button signinButton;
 
     private TextWatcher watcher = validationTextWatcher();
 
