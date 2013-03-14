@@ -24,8 +24,8 @@ import java.util.List;
 
 public class UserListFragment  extends ItemListFragment<User> {
 
-    @Inject private BootstrapServiceProvider serviceProvider;
-    @Inject private AvatarLoader avatars;
+    @Inject BootstrapServiceProvider serviceProvider;
+    @Inject AvatarLoader avatars;
     @Inject protected LogoutService logoutService;
 
     @Override

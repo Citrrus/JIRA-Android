@@ -25,7 +25,7 @@ import static com.donnfelker.android.bootstrap.core.Constants.Notification.TIMER
 public class TimerService extends Service {
 
     @Inject protected Bus BUS;
-    @Inject private NotificationManager notificationManager;
+    @Inject NotificationManager notificationManager;
 
     private boolean timerRunning = false;
     private boolean timerStarted;

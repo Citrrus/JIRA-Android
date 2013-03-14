@@ -17,7 +17,7 @@
 
     <properties>
         <abs.version>4.2.0</abs.version>
-        <dagger.version>0.9</dagger.version>
+        <dagger.version>1.0-SNAPSHOT</dagger.version>
     </properties>
     <dependencies>
         <dependency>
@@ -32,12 +32,12 @@
             <version>2.2.2</version>
         </dependency>
         <dependency>
-            <groupId>com.squareup</groupId>
+            <groupId>com.squareup.dagger</groupId>
             <artifactId>dagger</artifactId>
             <version>${dagger.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.squareup</groupId>
+            <groupId>com.squareup.dagger</groupId>
             <artifactId>dagger-compiler</artifactId>
             <version>${dagger.version}</version>
             <optional>true</optional>
@@ -45,7 +45,7 @@
         <dependency>
             <groupId>com.jakewharton</groupId>
             <artifactId>butterknife</artifactId>
-            <version>1.2.0</version>
+            <version>1.2.2</version>
         </dependency>
         <dependency>
             <groupId>com.actionbarsherlock</groupId>
@@ -118,7 +118,7 @@
                 <artifactId>android-maven-plugin</artifactId>
                 <dependencies>
                     <dependency>
-                        <groupId>com.squareup</groupId>
+                        <groupId>com.squareup.dagger</groupId>
                         <artifactId>dagger-compiler</artifactId>
                         <version>${dagger.version}</version>
                     </dependency>

@@ -23,8 +23,8 @@ import butterknife.InjectView;
  */
 public class CarouselActivity extends BootstrapFragmentActivity {
 
-    @InjectView(id.tpi_header) private TitlePageIndicator indicator;
-    @InjectView(id.vp_pages) private ViewPager pager;
+    @InjectView(id.tpi_header) TitlePageIndicator indicator;
+    @InjectView(id.vp_pages) ViewPager pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

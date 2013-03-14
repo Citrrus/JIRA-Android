@@ -16,8 +16,8 @@ import java.io.IOException;
  */
 public class BootstrapServiceProvider {
 
-    @Inject private ApiKeyProvider keyProvider;
-    @Inject private UserAgentProvider userAgentProvider;
+    @Inject ApiKeyProvider keyProvider;
+    @Inject UserAgentProvider userAgentProvider;
 
     /**
      * Get service for configured key provider
