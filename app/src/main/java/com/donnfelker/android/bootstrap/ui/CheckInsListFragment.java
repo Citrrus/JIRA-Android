@@ -27,10 +27,16 @@ public class CheckInsListFragment extends ItemListFragment<CheckIn> {
     @Inject protected LogoutService logoutService;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        BootstrapApplication.getInstance().inject(this);
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        BootstrapApplication.getInstance().inject(this);
+
     }
 
     @Override

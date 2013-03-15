@@ -29,13 +29,20 @@ public class UserListFragment  extends ItemListFragment<User> {
     @Inject AvatarLoader avatars;
     @Inject LogoutService logoutService;
 
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        BootstrapApplication.getInstance().inject(this);
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         setEmptyText(R.string.no_users);
 
-        BootstrapApplication.getInstance().inject(this);
+
     }
 
     @Override

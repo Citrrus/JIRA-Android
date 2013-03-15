@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.donnfelker.android.bootstrap.BootstrapApplication;
 import com.donnfelker.android.bootstrap.R;
 import com.donnfelker.android.bootstrap.core.PauseTimerEvent;
 import com.donnfelker.android.bootstrap.core.ResumeTimerEvent;
@@ -37,6 +38,8 @@ public class BootstrapTimerActivity extends BootstrapFragmentActivity implements
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.bootstrap_timer);
+
+        BootstrapApplication.getInstance().inject(this);
 
         Views.inject(this);
 

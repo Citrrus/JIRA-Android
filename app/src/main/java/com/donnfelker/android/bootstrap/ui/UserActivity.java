@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.donnfelker.android.bootstrap.BootstrapApplication;
 import com.donnfelker.android.bootstrap.R;
 import com.donnfelker.android.bootstrap.core.AvatarLoader;
 import com.donnfelker.android.bootstrap.core.User;
 import javax.inject.Inject;
 
 import butterknife.InjectView;
+import butterknife.Views;
 
 public class UserActivity extends BootstrapActivity {
 
@@ -26,6 +28,8 @@ public class UserActivity extends BootstrapActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.user_view);
+
+        BootstrapApplication.getInstance().inject(this);
 
         if(getIntent() != null && getIntent().getExtras() != null) {
             user = (User) getIntent().getExtras().getSerializable(USER);

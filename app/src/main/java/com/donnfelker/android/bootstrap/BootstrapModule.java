@@ -6,6 +6,7 @@ import android.content.Context;
 import com.donnfelker.android.bootstrap.authenticator.BootstrapAuthenticatorActivity;
 import com.donnfelker.android.bootstrap.authenticator.LogoutService;
 import com.donnfelker.android.bootstrap.core.CheckIn;
+import com.donnfelker.android.bootstrap.core.TimerService;
 import com.donnfelker.android.bootstrap.ui.BootstrapTimerActivity;
 import com.donnfelker.android.bootstrap.ui.CarouselActivity;
 import com.donnfelker.android.bootstrap.ui.CheckInsListFragment;
@@ -38,7 +39,8 @@ import dagger.Provides;
                 NewsActivity.class,
                 NewsListFragment.class,
                 UserActivity.class,
-                UserListFragment.class
+                UserListFragment.class,
+                TimerService.class
         }
 
 )

@@ -1,6 +1,7 @@
 package com.donnfelker.android.bootstrap;
 
 import android.accounts.AccountManager;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
@@ -81,6 +82,11 @@ public class AndroidModule {
     @Provides
     ClassLoader provideClassLoader(final Context context) {
         return context.getClassLoader();
+    }
+
+    @Provides
+    NotificationManager provideNotificationManager(final Context context) {
+        return (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
 }
