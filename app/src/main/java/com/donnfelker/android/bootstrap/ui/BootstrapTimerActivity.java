@@ -20,10 +20,11 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import butterknife.InjectView;
+import butterknife.Views;
 
 public class BootstrapTimerActivity extends BootstrapFragmentActivity implements View.OnClickListener {
 
-    @Inject protected Bus BUS;
+    @Inject Bus BUS;
 
     @InjectView(R.id.chronometer) protected TextView chronometer;
     @InjectView(R.id.start) protected Button start;
@@ -36,6 +37,8 @@ public class BootstrapTimerActivity extends BootstrapFragmentActivity implements
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.bootstrap_timer);
+
+        Views.inject(this);
 
         setTitle(R.string.timer);
 

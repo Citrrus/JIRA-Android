@@ -17,6 +17,7 @@ import com.donnfelker.android.bootstrap.R.id;
 import com.viewpagerindicator.TitlePageIndicator;
 
 import butterknife.InjectView;
+import butterknife.Views;
 
 /**
  * Activity to view the carousel and view pager indicator with fragments.
@@ -33,6 +34,8 @@ public class CarouselActivity extends BootstrapFragmentActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.carousel_view);
+
+        Views.inject(this);
 
         pager.setAdapter(new BootstrapPagerAdapter(getResources(), getSupportFragmentManager()));
 

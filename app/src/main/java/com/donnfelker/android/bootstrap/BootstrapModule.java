@@ -3,6 +3,7 @@ package com.donnfelker.android.bootstrap;
 import android.accounts.AccountManager;
 import android.content.Context;
 
+import com.donnfelker.android.bootstrap.authenticator.BootstrapAuthenticatorActivity;
 import com.donnfelker.android.bootstrap.authenticator.LogoutService;
 import com.donnfelker.android.bootstrap.core.CheckIn;
 import com.donnfelker.android.bootstrap.ui.BootstrapTimerActivity;
@@ -30,6 +31,7 @@ import dagger.Provides;
 
         entryPoints = {
                 BootstrapApplication.class,
+                BootstrapAuthenticatorActivity.class,
                 CarouselActivity.class,
                 BootstrapTimerActivity.class,
                 CheckInsListFragment.class,
@@ -45,9 +47,7 @@ public class BootstrapModule  {
     @Singleton
     @Provides
     Bus provideOttoBus() {
-
         return new Bus();
-
     }
 
     @Provides

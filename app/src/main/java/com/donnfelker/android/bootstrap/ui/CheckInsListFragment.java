@@ -9,6 +9,7 @@ import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.ListView;
 
+import com.donnfelker.android.bootstrap.BootstrapApplication;
 import com.donnfelker.android.bootstrap.BootstrapServiceProvider;
 import com.donnfelker.android.bootstrap.R;
 import com.donnfelker.android.bootstrap.authenticator.LogoutService;
@@ -24,6 +25,13 @@ public class CheckInsListFragment extends ItemListFragment<CheckIn> {
 
     @Inject protected BootstrapServiceProvider serviceProvider;
     @Inject protected LogoutService logoutService;
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        BootstrapApplication.getInstance().inject(this);
+    }
 
     @Override
     protected void configureList(Activity activity, ListView listView) {

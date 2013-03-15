@@ -10,6 +10,7 @@ import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.ListView;
 
+import com.donnfelker.android.bootstrap.BootstrapApplication;
 import com.donnfelker.android.bootstrap.BootstrapServiceProvider;
 import com.donnfelker.android.bootstrap.R;
 import com.donnfelker.android.bootstrap.authenticator.LogoutService;
@@ -26,13 +27,15 @@ public class UserListFragment  extends ItemListFragment<User> {
 
     @Inject BootstrapServiceProvider serviceProvider;
     @Inject AvatarLoader avatars;
-    @Inject protected LogoutService logoutService;
+    @Inject LogoutService logoutService;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         setEmptyText(R.string.no_users);
+
+        BootstrapApplication.getInstance().inject(this);
     }
 
     @Override

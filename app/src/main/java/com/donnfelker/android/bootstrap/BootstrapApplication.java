@@ -10,19 +10,20 @@ import android.content.Context;
 
 import com.github.kevinsawicki.http.HttpRequest;
 
+import dagger.ObjectGraph;
+
 /**
  * Android Bootstrap application
  */
 public class BootstrapApplication extends Application {
 
     private static BootstrapApplication instance;
+    ObjectGraph objectGraph;
 
     /**
      * Create main application
      */
     public BootstrapApplication() {
-
-        instance = this;
 
         // Disable http.keepAlive on Froyo and below
         if (SDK_INT <= FROYO)
@@ -37,8 +38,24 @@ public class BootstrapApplication extends Application {
     public BootstrapApplication(final Context context) {
         this();
         attachBaseContext(context);
+
     }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        instance = this;
+        // Perform Injection
+        objectGraph = ObjectGraph.create(getRootModule());
+        objectGraph.inject(this);
+        objectGraph.injectStatics();
+
+    }
+
+    private Object getRootModule() {
+        return new RootModule();
+    }
 
 
     /**
@@ -50,6 +67,12 @@ public class BootstrapApplication extends Application {
         this();
         attachBaseContext(instrumentation.getTargetContext());
     }
+
+    public void inject(Object object)
+    {
+        objectGraph.inject(object);
+    }
+
 
 
     public static BootstrapApplication getInstance() {
