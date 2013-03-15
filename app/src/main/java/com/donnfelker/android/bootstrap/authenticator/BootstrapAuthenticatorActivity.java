@@ -56,6 +56,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.InjectView;
+import butterknife.Views;
 
 import static com.donnfelker.android.bootstrap.core.Constants.Http.USERNAME;
 import static com.donnfelker.android.bootstrap.core.Constants.Http.PASSWORD;
@@ -134,6 +135,8 @@ public class BootstrapAuthenticatorActivity extends SherlockAccountAuthenticator
                 false);
 
         setContentView(layout.login_activity);
+
+        Views.inject(this);
 
         emailText.setAdapter(new ArrayAdapter<String>(this,
                 simple_dropdown_item_1line, userEmailAccounts()));

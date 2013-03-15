@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
+import com.donnfelker.android.bootstrap.BootstrapApplication;
 import com.donnfelker.android.bootstrap.R;
 import com.donnfelker.android.bootstrap.R.id;
 
@@ -36,6 +37,7 @@ public class CarouselActivity extends BootstrapFragmentActivity {
         setContentView(R.layout.carousel_view);
 
         Views.inject(this);
+        BootstrapApplication.getInstance().inject(this);
 
         pager.setAdapter(new BootstrapPagerAdapter(getResources(), getSupportFragmentManager()));
 
