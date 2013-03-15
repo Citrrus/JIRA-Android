@@ -36,9 +36,6 @@ public class CarouselActivity extends BootstrapFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.carousel_view);
 
-        Views.inject(this);
-        BootstrapApplication.getInstance().inject(this);
-
         pager.setAdapter(new BootstrapPagerAdapter(getResources(), getSupportFragmentManager()));
 
         indicator.setViewPager(pager);

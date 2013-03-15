@@ -39,10 +39,6 @@ public class BootstrapTimerActivity extends BootstrapFragmentActivity implements
 
         setContentView(R.layout.bootstrap_timer);
 
-        BootstrapApplication.getInstance().inject(this);
-
-        Views.inject(this);
-
         setTitle(R.string.timer);
 
         start.setOnClickListener(this);

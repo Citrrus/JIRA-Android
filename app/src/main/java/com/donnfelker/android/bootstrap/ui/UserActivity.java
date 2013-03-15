@@ -29,8 +29,6 @@ public class UserActivity extends BootstrapActivity {
 
         setContentView(R.layout.user_view);
 
-        BootstrapApplication.getInstance().inject(this);
-
         if(getIntent() != null && getIntent().getExtras() != null) {
             user = (User) getIntent().getExtras().getSerializable(USER);
         }

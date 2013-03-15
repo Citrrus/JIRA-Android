@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.donnfelker.android.bootstrap.BootstrapApplication;
 
 import butterknife.Views;
 
@@ -17,6 +18,9 @@ public abstract class BootstrapActivity extends SherlockActivity {
     @Override
     public void setContentView(int layoutResId) {
         super.setContentView(layoutResId);
+
+
+        BootstrapApplication.getInstance().inject(this);
 
         // Used to inject views with the Butterknife library
         Views.inject(this);
