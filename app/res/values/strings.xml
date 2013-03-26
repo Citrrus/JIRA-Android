@@ -2,7 +2,7 @@
 
 <resources>
 
-    <string name="app_name">Vapordex</string>
+    <string name="app_name">JIRA</string>
     <string name="content_column">Content</string>
     <string name="page_referrers">Referrers</string>
     <string name="refresh_action">Refresh</string>
@@ -28,7 +28,7 @@
     <string name="label_sign_in">Sign In</string>
     <string name="message_signing_in">Signing in…</string>
     <string name="blank_field_warning">Please populate this field</string>
-    <string name="signup_link">New to Vapordex? &lt;a href>Sign up now&lt;/a>!</string>
+    <string name="signup_link">New to JIRA? &lt;a href>Sign up now&lt;/a>!</string>
     <string name="message_bad_credentials">Email Address or Password is incorrect</string>
     <string name="message_auth_failed">Please enter a valid password</string>
     <string name="message_auth_failed_new_account">Please enter a valid email address &amp; password</string>

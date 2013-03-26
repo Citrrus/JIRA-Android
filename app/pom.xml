@@ -4,15 +4,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>vapordex-android</artifactId>
+    <artifactId>jira-android</artifactId>
     <packaging>apk</packaging>
-    <name>Vapordex</name>
-    <url>https://github.com/jondwillis/vapordex-android</url>
+    <name>JIRA</name>
+    <url>https://github.com.citrrus.jira-android</url>
 
     <parent>
         <version>1.0</version>
-        <groupId>com.jondwillis.vapordex</groupId>
-        <artifactId>com-jondwillis-vapordex-parent</artifactId>
+        <groupId>com.citrrus.jira</groupId>
+        <artifactId>com.citrrus.jira-parent</artifactId>
     </parent>
 
     <properties>

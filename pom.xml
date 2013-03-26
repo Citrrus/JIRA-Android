@@ -4,13 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <version>1.0</version>
-    <groupId>com.jondwillis.vapordex</groupId>
-    <artifactId>com-jondwillis-vapordex-parent</artifactId>
-    <name>Vapordex parent</name>
+    <groupId>com.citrrus.jira</groupId>
+    <artifactId>com.citrrus.jira-parent</artifactId>
+    <name>JIRA parent</name>
     <packaging>pom</packaging>
 
     <issueManagement>
-        <url>https://github.com.jondwillis.vapordex/issues</url>
+        <url>https://github.com.citrrus.jira/issues</url>
         <system>GitHub Issues</system>
     </issueManagement>
 
@@ -23,9 +23,9 @@
     </licenses>
 
     <scm>
-        <url>https://github.com.jondwillis.vapordex</url>
-        <connection>scm:git:git://github.com.jondwillis.vapordex.git</connection>
-        <developerConnection>scm:git:git@github.com.jondwillis.vapordex.git</developerConnection>
+        <url>https://github.com.citrrus.jira</url>
+        <connection>scm:git:git://github.com.citrrus.jira.git</connection>
+        <developerConnection>scm:git:git@github.com.citrrus.jira.git</developerConnection>
     </scm>
 
     <developers>
