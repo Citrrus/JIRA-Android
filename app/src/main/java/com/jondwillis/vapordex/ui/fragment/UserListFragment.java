@@ -8,15 +8,17 @@ import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.ListView;
 import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
-import com.google.inject.Inject;
+import com.jondwillis.vapordex.BootstrapApplication;
 import com.jondwillis.vapordex.BootstrapServiceProvider;
 import com.jondwillis.vapordex.R;
+import com.jondwillis.vapordex.authenticator.LogoutService;
 import com.jondwillis.vapordex.core.AvatarLoader;
 import com.jondwillis.vapordex.core.User;
 import com.jondwillis.vapordex.ui.activity.UserActivity;
 import com.jondwillis.vapordex.ui.view.ThrowableLoader;
 import com.jondwillis.vapordex.ui.view.UserListAdapter;
 
+import javax.inject.Inject;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,10 +26,16 @@ import static com.jondwillis.vapordex.core.Constants.Extra.USER;
 
 public class UserListFragment extends ItemListFragment<User> {
 
-    @Inject
-    private BootstrapServiceProvider serviceProvider;
-    @Inject
-    private AvatarLoader avatars;
+    @Inject BootstrapServiceProvider serviceProvider;
+    @Inject AvatarLoader avatars;
+    @Inject LogoutService logoutService;
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        BootstrapApplication.getInstance().inject(this);
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -47,6 +55,10 @@ public class UserListFragment extends ItemListFragment<User> {
                 .inflate(R.layout.user_list_item_labels, null));
     }
 
+    @Override
+    LogoutService getLogoutService() {
+        return logoutService;
+    }
 
     @Override
     public Loader<List<User>> onCreateLoader(int id, Bundle args) {
@@ -56,7 +68,12 @@ public class UserListFragment extends ItemListFragment<User> {
             public List<User> loadData() throws Exception {
 
                 try {
-                    List<User> latest = serviceProvider.getService().getUsers();
+                    List<User> latest = null;
+
+                    if(getActivity() != null) {
+                        latest = serviceProvider.getService(getActivity()).getUsers();
+                    }
+
                     if (latest != null) {
                         return latest;
                     } else {
@@ -71,7 +88,6 @@ public class UserListFragment extends ItemListFragment<User> {
                 }
             }
         };
-
     }
 
     public void onListItemClick(ListView l, View v, int position, long id) {

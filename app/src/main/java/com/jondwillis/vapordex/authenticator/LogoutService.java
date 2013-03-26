@@ -5,31 +5,38 @@ import android.accounts.AccountManager;
 import android.accounts.AccountManagerFuture;
 import android.content.Context;
 import android.util.Log;
-import com.google.inject.Inject;
 import com.jondwillis.vapordex.core.Constants;
-import roboguice.inject.ContextSingleton;
-import roboguice.util.RoboAsyncTask;
+import com.jondwillis.vapordex.util.SafeAsyncTask;
 
-@ContextSingleton
+import javax.inject.Inject;
+
+/**
+ * Class used for logging a user out.
+ */
 public class LogoutService {
 
     @Inject
     protected Context context;
-    @Inject
     protected AccountManager accountManager;
 
+    @Inject
+    public LogoutService(Context context, AccountManager accountManager) {
+        this.context = context;
+        this.accountManager = accountManager;
+    }
 
     public void logout(final Runnable onSuccess) {
 
         new LogoutTask(context, onSuccess).execute();
     }
 
-    private static class LogoutTask extends RoboAsyncTask<Boolean> {
+    private static class LogoutTask extends SafeAsyncTask<Boolean> {
 
+        private final Context context;
         private Runnable onSuccess;
 
         protected LogoutTask(Context context, Runnable onSuccess) {
-            super(context);
+            this.context = context;
             this.onSuccess = onSuccess;
         }
 

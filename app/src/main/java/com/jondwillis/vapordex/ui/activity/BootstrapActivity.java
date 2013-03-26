@@ -1,20 +1,36 @@
 package com.jondwillis.vapordex.ui.activity;
 
 import android.R;
+import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import butterknife.Views;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.github.kevinsawicki.wishlist.ViewUtils;
-import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.jondwillis.vapordex.BootstrapApplication;
 import com.jondwillis.vapordex.core.ActivityUtils;
 
 /**
  * Base activity for a Bootstrap activity which does not use fragments.
  */
-public abstract class BootstrapActivity extends RoboSherlockFragmentActivity {
+public abstract class BootstrapActivity extends SherlockFragmentActivity {
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        BootstrapApplication.getInstance().inject(this);
+    }
+
+    @Override
+    public void setContentView(int layoutResId) {
+        super.setContentView(layoutResId);
+
+        Views.inject(this);
+    }
     @Override
     protected void onStart() {
         super.onStart();

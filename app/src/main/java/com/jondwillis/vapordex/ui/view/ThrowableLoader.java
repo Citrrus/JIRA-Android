@@ -1,7 +1,8 @@
 package com.jondwillis.vapordex.ui.view;
 
 import android.content.Context;
-import roboguice.util.Ln;
+
+import com.jondwillis.vapordex.util.Ln;
 
 /**
  * Loader that support throwing an exception when loading in the background

@@ -1,3 +1,4 @@
+
 package com.jondwillis.vapordex.ui.activity;
 
 import android.accounts.Account;
@@ -7,42 +8,51 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
+import android.text.Editable;
+import android.text.Html;
+import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnKeyListener;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
+import butterknife.InjectView;
+import butterknife.Views;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.github.kevinsawicki.wishlist.Toaster;
 import com.google.gson.Gson;
-import com.google.inject.Inject;
 import com.jondwillis.vapordex.R;
+import com.jondwillis.vapordex.authenticator.SherlockAccountAuthenticatorActivity;
 import com.jondwillis.vapordex.core.Constants;
 import com.jondwillis.vapordex.core.User;
-import com.jondwillis.vapordex.event.FlipToSigninEvent;
-import com.jondwillis.vapordex.event.SignInEvent;
-import com.jondwillis.vapordex.ui.fragment.LoginFragment;
-import com.jondwillis.vapordex.ui.fragment.SignupFragment;
-import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
-import roboguice.util.Ln;
-import roboguice.util.RoboAsyncTask;
-import roboguice.util.Strings;
+import com.jondwillis.vapordex.ui.view.TextWatcherAdapter;
+import com.jondwillis.vapordex.util.Ln;
+import com.jondwillis.vapordex.util.SafeAsyncTask;
+import com.jondwillis.vapordex.util.Strings;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.R.layout.simple_dropdown_item_1line;
 import static android.accounts.AccountManager.KEY_ACCOUNT_NAME;
 import static android.accounts.AccountManager.KEY_ACCOUNT_TYPE;
 import static android.accounts.AccountManager.KEY_AUTHTOKEN;
 import static android.accounts.AccountManager.KEY_BOOLEAN_RESULT;
+import static android.view.KeyEvent.ACTION_DOWN;
+import static android.view.KeyEvent.KEYCODE_ENTER;
+import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
 import static com.github.kevinsawicki.http.HttpRequest.get;
-import static com.jondwillis.vapordex.core.Constants.Http.HEADER_PARSE_APP_ID;
-import static com.jondwillis.vapordex.core.Constants.Http.HEADER_PARSE_REST_API_KEY;
-import static com.jondwillis.vapordex.core.Constants.Http.PARSE_APP_ID;
-import static com.jondwillis.vapordex.core.Constants.Http.PARSE_REST_API_KEY;
-import static com.jondwillis.vapordex.core.Constants.Http.URL_AUTH;
 
 /**
  * Activity to authenticate the user against an API (example API on Parse.com)
  */
-public class AuthenticatorActivity extends
-        RoboSherlockAccountAuthenticatorFragmentActivity
-        implements FragmentManager.OnBackStackChangedListener {
+public class BootstrapAuthenticatorActivity extends SherlockAccountAuthenticatorActivity {
 
     /**
      * PARAM_CONFIRMCREDENTIALS
@@ -67,10 +77,13 @@ public class AuthenticatorActivity extends
 
     private AccountManager accountManager;
 
-    @Inject
-    private Bus BUS;
+    @InjectView(R.id.et_email) AutoCompleteTextView emailText;
+    @InjectView(R.id.et_password) EditText passwordText;
+    @InjectView(R.id.b_signin) Button signinButton;
 
-    private RoboAsyncTask<Boolean> authenticationTask;
+    private TextWatcher watcher = validationTextWatcher();
+
+    private SafeAsyncTask<Boolean> authenticationTask;
     private String authToken;
     private String authTokenType;
 
@@ -97,11 +110,9 @@ public class AuthenticatorActivity extends
      */
     protected boolean requestNewAccount = false;
 
-
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
 
         accountManager = AccountManager.get(this);
         final Intent intent = getIntent();
@@ -111,32 +122,75 @@ public class AuthenticatorActivity extends
         confirmCredentials = intent.getBooleanExtra(PARAM_CONFIRMCREDENTIALS,
                 false);
 
-        setContentView(R.layout.view_fragment);
+        setContentView(R.layout.view_login);
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.fragment_container, new LoginFragment())
-                    .commit();
-        } else {
-            mShowingBack = (getFragmentManager().getBackStackEntryCount() > 0);
-        }
+        Views.inject(this);
 
-        // Monitor back stack changes to ensure the action bar shows the appropriate
-        // button (either "photo" or "info").
-        getSupportFragmentManager().addOnBackStackChangedListener(this);
+        emailText.setAdapter(new ArrayAdapter<String>(this,
+                simple_dropdown_item_1line, userEmailAccounts()));
+
+        passwordText.setOnKeyListener(new OnKeyListener() {
+
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event != null && ACTION_DOWN == event.getAction()
+                        && keyCode == KEYCODE_ENTER && signinButton.isEnabled()) {
+                    handleLogin(signinButton);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        passwordText.setOnEditorActionListener(new OnEditorActionListener() {
+
+            public boolean onEditorAction(TextView v, int actionId,
+                                          KeyEvent event) {
+                if (actionId == IME_ACTION_DONE && signinButton.isEnabled()) {
+                    handleLogin(signinButton);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        emailText.addTextChangedListener(watcher);
+        passwordText.addTextChangedListener(watcher);
+
+        TextView signupText = (TextView) findViewById(R.id.tv_signup);
+        signupText.setMovementMethod(LinkMovementMethod.getInstance());
+        signupText.setText(Html.fromHtml(getString(R.string.signup_link)));
+    }
+
+    private List<String> userEmailAccounts() {
+        Account[] accounts = accountManager.getAccountsByType("com.google");
+        List<String> emailAddresses = new ArrayList<String>(accounts.length);
+        for (Account account : accounts)
+            emailAddresses.add(account.name);
+        return emailAddresses;
+    }
+
+    private TextWatcher validationTextWatcher() {
+        return new TextWatcherAdapter() {
+            public void afterTextChanged(Editable gitDirEditText) {
+                updateUIWithValidation();
+            }
+
+        };
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        BUS.register(this);
+        updateUIWithValidation();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        BUS.unregister(this);
+    private void updateUIWithValidation() {
+        boolean populated = populated(emailText) && populated(passwordText);
+        signinButton.setEnabled(populated);
+    }
+
+    private boolean populated(EditText editText) {
+        return editText.length() > 0;
     }
 
     @Override
@@ -147,39 +201,43 @@ public class AuthenticatorActivity extends
         dialog.setCancelable(true);
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             public void onCancel(DialogInterface dialog) {
-                if (authenticationTask != null) {
+                if (authenticationTask != null)
                     authenticationTask.cancel(true);
-                }
             }
         });
         return dialog;
     }
 
-    @Subscribe
-    public void onSignInEvent(SignInEvent event) {
-        if (authenticationTask != null) {
+    /**
+     * Handles onClick event on the Submit button. Sends username/password to
+     * the server for authentication.
+     * <p/>
+     * Specified by android:onClick="handleLogin" in the layout xml
+     *
+     * @param view
+     */
+    public void handleLogin(View view) {
+        if (authenticationTask != null)
             return;
-        }
 
-        if (requestNewAccount) {
-            email = event.getEmail().toString();
-        }
-        password = event.getPassword().toString();
+        if (requestNewAccount)
+            email = emailText.getText().toString();
+        password = passwordText.getText().toString();
         showProgress();
 
-        authenticationTask = new RoboAsyncTask<Boolean>(this) {
+        authenticationTask = new SafeAsyncTask<Boolean>() {
             public Boolean call() throws Exception {
 
                 final String query = String.format("%s=%s&%s=%s", PARAM_USERNAME, email, PARAM_PASSWORD, password);
 
-                HttpRequest request = get(URL_AUTH + "?" + query)
-                        .header(HEADER_PARSE_APP_ID, PARSE_APP_ID)
-                        .header(HEADER_PARSE_REST_API_KEY, PARSE_REST_API_KEY);
+                HttpRequest request = get(Constants.Http.URL_AUTH + "?" + query)
+                        .header(Constants.Http.HEADER_PARSE_APP_ID, Constants.Http.PARSE_APP_ID)
+                        .header(Constants.Http.HEADER_PARSE_REST_API_KEY, Constants.Http.PARSE_REST_API_KEY);
 
 
                 Log.d("Auth", "response=" + request.code());
 
-                if (request.ok()) {
+                if(request.ok()) {
                     final User model = new Gson().fromJson(Strings.toString(request.buffer()), User.class);
                     token = model.getSessionToken();
                 }
@@ -194,14 +252,13 @@ public class AuthenticatorActivity extends
                 String message;
                 // A 404 is returned as an Exception with this message
                 if ("Received authentication challenge is null".equals(cause
-                        .getMessage())) {
+                        .getMessage()))
                     message = getResources().getString(
                             R.string.message_bad_credentials);
-                } else {
+                else
                     message = cause.getMessage();
-                }
 
-                Toaster.showLong(AuthenticatorActivity.this, message);
+                Toaster.showLong(BootstrapAuthenticatorActivity.this, message);
             }
 
             @Override
@@ -246,19 +303,17 @@ public class AuthenticatorActivity extends
     protected void finishLogin() {
         final Account account = new Account(email, Constants.Auth.BOOTSTRAP_ACCOUNT_TYPE);
 
-        if (requestNewAccount) {
+        if (requestNewAccount)
             accountManager.addAccountExplicitly(account, password, null);
-        } else {
+        else
             accountManager.setPassword(account, password);
-        }
         final Intent intent = new Intent();
         authToken = token;
         intent.putExtra(KEY_ACCOUNT_NAME, email);
         intent.putExtra(KEY_ACCOUNT_TYPE, Constants.Auth.BOOTSTRAP_ACCOUNT_TYPE);
         if (authTokenType != null
-                && authTokenType.equals(Constants.Auth.AUTHTOKEN_TYPE)) {
+                && authTokenType.equals(Constants.Auth.AUTHTOKEN_TYPE))
             intent.putExtra(KEY_AUTHTOKEN, authToken);
-        }
         setAccountAuthenticatorResult(intent.getExtras());
         setResult(RESULT_OK, intent);
         finish();
@@ -286,73 +341,19 @@ public class AuthenticatorActivity extends
      * @param result
      */
     public void onAuthenticationResult(boolean result) {
-        if (result) {
-            if (!confirmCredentials) {
+        if (result)
+            if (!confirmCredentials)
                 finishLogin();
-            } else {
+            else
                 finishConfirmCredentials(true);
-            }
-        } else {
+        else {
             Ln.d("onAuthenticationResult: failed to authenticate");
-            if (requestNewAccount) {
-                Toaster.showLong(AuthenticatorActivity.this,
+            if (requestNewAccount)
+                Toaster.showLong(BootstrapAuthenticatorActivity.this,
                         R.string.message_auth_failed_new_account);
-            } else {
-                Toaster.showLong(AuthenticatorActivity.this,
+            else
+                Toaster.showLong(BootstrapAuthenticatorActivity.this,
                         R.string.message_auth_failed);
-            }
         }
-    }
-
-
-    private boolean mShowingBack = false;
-
-    @Subscribe
-    public void onFlipToSigninEvent(FlipToSigninEvent event) {
-        if (mShowingBack) {
-            getFragmentManager().popBackStack();
-            return;
-        }
-
-        // Flip to the back.
-
-        mShowingBack = true;
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(mShowingBack);
-
-        // Create and commit a new fragment transaction that adds the fragment for the back of
-        // the card, uses custom animations, and is part of the fragment manager's back stack.
-
-        getSupportFragmentManager()
-                .beginTransaction()
-
-                        // Replace the default fragment animations with animator resources representing
-                        // rotations when switching to the back of the card, as well as animator
-                        // resources representing rotations when flipping back to the front (e.g. when
-                        // the system Back button is pressed).
-                .setCustomAnimations(
-                        R.anim.card_flip_right_in, R.anim.card_flip_right_out,
-                        R.anim.card_flip_left_in, R.anim.card_flip_left_out)
-
-                        // Replace any fragments currently in the container view with a fragment
-                        // representing the next page (indicated by the just-incremented currentPage
-                        // variable).
-                .replace(R.id.fragment_container, new SignupFragment())
-
-                        // Add this transaction to the back stack, allowing users to press Back
-                        // to get to the front of the card.
-                .addToBackStack(null)
-
-                        // Commit the transaction.
-                .commit();
-    }
-
-    @Override
-    public void onBackStackChanged() {
-        mShowingBack = (getFragmentManager().getBackStackEntryCount() > 0);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(mShowingBack);
-
-        // When the back stack changes, invalidate the options menu (action bar).
-        invalidateOptionsMenu();
     }
 }

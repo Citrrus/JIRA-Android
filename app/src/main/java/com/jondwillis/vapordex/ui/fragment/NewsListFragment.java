@@ -8,28 +8,40 @@ import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.ListView;
 import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
-import com.google.inject.Inject;
+import com.jondwillis.vapordex.BootstrapApplication;
 import com.jondwillis.vapordex.BootstrapServiceProvider;
 import com.jondwillis.vapordex.R;
+import com.jondwillis.vapordex.authenticator.LogoutService;
 import com.jondwillis.vapordex.core.News;
 import com.jondwillis.vapordex.ui.activity.NewsActivity;
 import com.jondwillis.vapordex.ui.view.NewsListAdapter;
 import com.jondwillis.vapordex.ui.view.ThrowableLoader;
 
+import javax.inject.Inject;
+import java.util.Collections;
 import java.util.List;
 
 import static com.jondwillis.vapordex.core.Constants.Extra.NEWS_ITEM;
 
 public class NewsListFragment extends ItemListFragment<News> {
 
-    @Inject
-    protected BootstrapServiceProvider serviceProvider;
+    @Inject protected BootstrapServiceProvider serviceProvider;
+    @Inject protected LogoutService logoutService;
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        BootstrapApplication.getInstance().inject(this);
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         setEmptyText(R.string.no_news);
+
+
     }
 
     @Override
@@ -42,6 +54,11 @@ public class NewsListFragment extends ItemListFragment<News> {
         getListAdapter()
                 .addHeader(activity.getLayoutInflater()
                         .inflate(R.layout.news_list_item_labels, null));
+    }
+
+    @Override
+    LogoutService getLogoutService() {
+        return logoutService;
     }
 
     @Override
@@ -59,7 +76,12 @@ public class NewsListFragment extends ItemListFragment<News> {
             @Override
             public List<News> loadData() throws Exception {
                 try {
-                    return serviceProvider.getService().getNews();
+                    if(getActivity() != null) {
+                        return serviceProvider.getService(getActivity()).getNews();
+                    } else {
+                        return Collections.emptyList();
+                    }
+
                 } catch (OperationCanceledException e) {
                     Activity activity = getActivity();
                     if (activity != null) {

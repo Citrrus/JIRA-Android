@@ -9,19 +9,35 @@ import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.ListView;
 import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
-import com.google.inject.Inject;
+import com.jondwillis.vapordex.BootstrapApplication;
 import com.jondwillis.vapordex.BootstrapServiceProvider;
 import com.jondwillis.vapordex.R;
+import com.jondwillis.vapordex.authenticator.LogoutService;
 import com.jondwillis.vapordex.core.CheckIn;
 import com.jondwillis.vapordex.ui.view.CheckInsListAdapter;
 import com.jondwillis.vapordex.ui.view.ThrowableLoader;
 
+import javax.inject.Inject;
+import java.util.Collections;
 import java.util.List;
 
 public class CheckInsListFragment extends ItemListFragment<CheckIn> {
 
-    @Inject
-    protected BootstrapServiceProvider serviceProvider;
+    @Inject protected BootstrapServiceProvider serviceProvider;
+    @Inject protected LogoutService logoutService;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        BootstrapApplication.getInstance().inject(this);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+
+    }
 
     @Override
     protected void configureList(Activity activity, ListView listView) {
@@ -33,6 +49,11 @@ public class CheckInsListFragment extends ItemListFragment<CheckIn> {
         getListAdapter()
                 .addHeader(activity.getLayoutInflater()
                         .inflate(R.layout.checkins_list_item_labels, null));
+    }
+
+    @Override
+    LogoutService getLogoutService() {
+        return logoutService;
     }
 
     @Override
@@ -50,7 +71,12 @@ public class CheckInsListFragment extends ItemListFragment<CheckIn> {
             @Override
             public List<CheckIn> loadData() throws Exception {
                 try {
-                    return serviceProvider.getService().getCheckIns();
+                    if(getActivity() != null) {
+                        return serviceProvider.getService(getActivity()).getCheckIns();
+                    } else {
+                        return Collections.emptyList();
+                    }
+
                 } catch (OperationCanceledException e) {
                     Activity activity = getActivity();
                     if (activity != null) {

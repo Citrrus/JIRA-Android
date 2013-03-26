@@ -17,6 +17,7 @@
 
     <properties>
         <abs.version>4.2.0</abs.version>
+        <dagger.version>1.0-SNAPSHOT</dagger.version>
     </properties>
     <dependencies>
         <dependency>
@@ -31,14 +32,20 @@
             <version>2.2.2</version>
         </dependency>
         <dependency>
-            <groupId>com.github.rtyley</groupId>
-            <artifactId>roboguice-sherlock</artifactId>
-            <version>1.5</version>
+            <groupId>com.squareup.dagger</groupId>
+            <artifactId>dagger</artifactId>
+            <version>${dagger.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.roboguice</groupId>
-            <artifactId>roboguice</artifactId>
-            <version>2.0</version>
+            <groupId>com.squareup.dagger</groupId>
+            <artifactId>dagger-compiler</artifactId>
+            <version>${dagger.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.jakewharton</groupId>
+            <artifactId>butterknife</artifactId>
+            <version>1.2.2</version>
         </dependency>
         <dependency>
             <groupId>com.actionbarsherlock</groupId>
@@ -118,6 +125,13 @@
             <plugin>
                 <groupId>com.jayway.maven.plugins.android.generation2</groupId>
                 <artifactId>android-maven-plugin</artifactId>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.squareup.dagger</groupId>
+                        <artifactId>dagger-compiler</artifactId>
+                        <version>${dagger.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>

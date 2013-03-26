@@ -14,14 +14,13 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
 import com.github.kevinsawicki.wishlist.Toaster;
 import com.github.kevinsawicki.wishlist.ViewUtils;
-import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragment;
-import com.google.inject.Inject;
 import com.jondwillis.vapordex.R;
 import com.jondwillis.vapordex.R.id;
 import com.jondwillis.vapordex.R.layout;
@@ -38,11 +37,8 @@ import java.util.List;
  *
  * @param <E>
  */
-public abstract class ItemListFragment<E> extends RoboSherlockFragment
+public abstract class ItemListFragment<E> extends SherlockFragment
         implements LoaderCallbacks<List<E>> {
-
-    @Inject
-    protected LogoutService logoutService;
 
     private static final String FORCE_REFRESH = "forceRefresh";
 
@@ -169,8 +165,10 @@ public abstract class ItemListFragment<E> extends RoboSherlockFragment
         }
     }
 
+    abstract LogoutService getLogoutService();
+
     private void logout() {
-        logoutService.logout(new Runnable() {
+        getLogoutService().logout(new Runnable() {
             @Override
             public void run() {
                 // Calling a refresh will force the service to look for a logged in user

@@ -4,14 +4,13 @@ import android.os.Bundle;
 import android.widget.TextView;
 import com.jondwillis.vapordex.R;
 import com.jondwillis.vapordex.core.News;
-import roboguice.inject.InjectExtra;
-import roboguice.inject.InjectView;
+
+import butterknife.InjectView;
 
 import static com.jondwillis.vapordex.core.Constants.Extra.NEWS_ITEM;
 
 public class NewsActivity extends BootstrapActivity {
 
-    @InjectExtra(NEWS_ITEM)
     protected News newsItem;
 
     @InjectView(R.id.tv_title)
@@ -24,6 +23,10 @@ public class NewsActivity extends BootstrapActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.news);
+
+        if(getIntent() != null && getIntent().getExtras() != null) {
+            newsItem = (News) getIntent().getExtras().getSerializable(NEWS_ITEM);
+        }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);

@@ -10,9 +10,10 @@ import android.util.Log;
 import android.widget.ImageView;
 import com.actionbarsherlock.app.ActionBar;
 import com.github.kevinsawicki.http.HttpRequest;
-import com.google.inject.Inject;
 import com.jondwillis.vapordex.R;
-import roboguice.util.RoboAsyncTask;
+import com.jondwillis.vapordex.util.SafeAsyncTask;
+
+import javax.inject.Inject;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -39,13 +40,13 @@ public class AvatarLoader {
     private static final int CACHE_SIZE = 75;
 
     private static abstract class FetchAvatarTask extends
-            RoboAsyncTask<BitmapDrawable> {
+            SafeAsyncTask<BitmapDrawable> {
 
         private static final Executor EXECUTOR = Executors
                 .newFixedThreadPool(1);
 
         private FetchAvatarTask(Context context) {
-            super(context, EXECUTOR);
+            super(EXECUTOR);
         }
 
         @Override

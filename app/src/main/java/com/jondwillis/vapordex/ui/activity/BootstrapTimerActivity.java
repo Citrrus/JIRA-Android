@@ -7,8 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
-import com.google.inject.Inject;
+import butterknife.InjectView;
 import com.jondwillis.vapordex.R;
 import com.jondwillis.vapordex.event.PauseTimerEvent;
 import com.jondwillis.vapordex.event.ResumeTimerEvent;
@@ -18,12 +17,11 @@ import com.jondwillis.vapordex.event.TimerService;
 import com.jondwillis.vapordex.event.TimerTickEvent;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
-import roboguice.inject.InjectView;
 
-public class BootstrapTimerActivity extends RoboSherlockFragmentActivity implements View.OnClickListener {
+import javax.inject.Inject;
+public class BootstrapTimerActivity extends BootstrapActivity implements View.OnClickListener {
 
-    @Inject
-    protected Bus BUS;
+    @Inject Bus BUS;
 
     @InjectView(R.id.chronometer)
     protected TextView chronometer;

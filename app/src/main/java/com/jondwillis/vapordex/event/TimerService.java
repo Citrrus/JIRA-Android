@@ -3,29 +3,28 @@ package com.jondwillis.vapordex.event;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
-import com.google.inject.Inject;
+import com.jondwillis.vapordex.BootstrapApplication;
 import com.jondwillis.vapordex.R;
 import com.jondwillis.vapordex.ui.activity.BootstrapTimerActivity;
+import com.jondwillis.vapordex.util.Ln;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
-import roboguice.service.RoboService;
-import roboguice.util.Ln;
+
+import javax.inject.Inject;
 
 import static com.jondwillis.vapordex.core.Constants.Notification.TIMER_NOTIFICATION_ID;
 
-public class TimerService extends RoboService {
-
-    @Inject
-    protected Bus BUS;
-    @Inject
-    private NotificationManager notificationManager;
+public class TimerService extends Service {
+    @Inject protected Bus BUS;
+    @Inject NotificationManager notificationManager;
 
     private boolean timerRunning = false;
     private boolean timerStarted;
@@ -44,6 +43,8 @@ public class TimerService extends RoboService {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        BootstrapApplication.getInstance().inject(this);
 
         // Register the bus so we can send notifications.
         BUS.register(this);

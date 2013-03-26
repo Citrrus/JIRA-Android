@@ -51,10 +51,10 @@ The application
 * [Apache Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 
-Copyright 2012 Donn Felker
+Copyright 2013 Donn Felker
 
 
-Copyright 2012 GitHub Inc.
+Copyright 2013 GitHub Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -107,7 +107,9 @@ and uses many great open-source libraries from the Android dev community:
   for swiping between fragments and
   [NineOldAndroids](https://github.com/JakeWharton/NineOldAndroids) for 
   view animations - all from [Jake Wharton](http://jakewharton.com/).
-* [RoboGuice](http://code.google.com/p/roboguice/) for dependency-injection.
+* [Dagger](https://github.com/square/dagger) for dependency-injection.
+* [ButterKnife](https://github.com/JakeWharton/butterknife) for view injection
+* [Otto](https://github.com/square/otto) as the event bus
 * [Robotium](http://code.google.com/p/robotium/)
   for driving our app during integration tests.
 * [android-maven-plugin](https://github.com/jayway/maven-android-plugin)

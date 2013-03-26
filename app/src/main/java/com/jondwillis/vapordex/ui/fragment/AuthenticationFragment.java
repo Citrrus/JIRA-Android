@@ -13,14 +13,14 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.google.inject.Inject;
+import butterknife.InjectView;
 import com.jondwillis.vapordex.R;
 import com.jondwillis.vapordex.event.FlipToSigninEvent;
 import com.jondwillis.vapordex.event.SignInEvent;
 import com.jondwillis.vapordex.ui.view.TextWatcherAdapter;
 import com.squareup.otto.Bus;
-import roboguice.inject.InjectView;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,8 +36,7 @@ import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
  */
 public abstract class AuthenticationFragment extends BootstrapFragment {
 
-    @Inject
-    protected Bus BUS;
+    @Inject protected Bus BUS;
 
     protected TextWatcher watcher = validationTextWatcher();
 

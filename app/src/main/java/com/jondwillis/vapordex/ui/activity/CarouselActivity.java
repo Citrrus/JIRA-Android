@@ -3,24 +3,21 @@ package com.jondwillis.vapordex.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import butterknife.InjectView;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
-import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
 import com.jondwillis.vapordex.R;
-import com.jondwillis.vapordex.R.id;
 import com.jondwillis.vapordex.ui.view.BootstrapPagerAdapter;
 import com.viewpagerindicator.TitlePageIndicator;
-import roboguice.inject.InjectView;
+
 
 /**
  * Activity to view the carousel and view pager indicator with fragments.
  */
-public class CarouselActivity extends RoboSherlockFragmentActivity {
+public class CarouselActivity extends BootstrapActivity {
 
-    @InjectView(id.tpi_header)
-    private TitlePageIndicator indicator;
-    @InjectView(id.vp_pages)
-    private ViewPager pager;
+    @InjectView(R.id.tpi_header) TitlePageIndicator indicator;
+    @InjectView(R.id.vp_pages) ViewPager pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +36,7 @@ public class CarouselActivity extends RoboSherlockFragmentActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case id.timer:
+            case R.id.timer:
                 final Intent i = new Intent(this, BootstrapTimerActivity.class);
                 startActivity(i);
                 return true;

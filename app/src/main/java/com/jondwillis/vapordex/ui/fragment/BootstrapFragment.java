@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.github.kevinsawicki.wishlist.ViewUtils;
-import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockDialogFragment;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,7 +13,7 @@ import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockDialogF
  * Date: 1/31/13
  * Time: 10:28 AM
  */
-public class BootstrapFragment extends RoboSherlockDialogFragment {
+public class BootstrapFragment extends SherlockDialogFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

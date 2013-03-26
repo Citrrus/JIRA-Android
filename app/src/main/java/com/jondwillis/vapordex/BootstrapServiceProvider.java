@@ -1,11 +1,11 @@
 package com.jondwillis.vapordex;
 
 import android.accounts.AccountsException;
-import com.google.inject.Inject;
 import com.jondwillis.vapordex.authenticator.ApiKeyProvider;
 import com.jondwillis.vapordex.core.BootstrapService;
 import com.jondwillis.vapordex.core.UserAgentProvider;
-
+import android.app.Activity;
+import javax.inject.Inject;
 import java.io.IOException;
 
 /**
@@ -13,10 +13,8 @@ import java.io.IOException;
  */
 public class BootstrapServiceProvider {
 
-    @Inject
-    private ApiKeyProvider keyProvider;
-    @Inject
-    private UserAgentProvider userAgentProvider;
+    @Inject ApiKeyProvider keyProvider;
+    @Inject UserAgentProvider userAgentProvider;
 
     /**
      * Get service for configured key provider
@@ -27,7 +25,7 @@ public class BootstrapServiceProvider {
      * @throws IOException
      * @throws AccountsException
      */
-    public BootstrapService getService() throws IOException, AccountsException {
-        return new BootstrapService(keyProvider.getAuthKey(), userAgentProvider);
+    public BootstrapService getService(Activity activity) throws IOException, AccountsException {
+        return new BootstrapService(keyProvider.getAuthKey(activity), userAgentProvider);
     }
 }
