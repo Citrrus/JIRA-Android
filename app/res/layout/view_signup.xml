@@ -16,7 +16,7 @@
         android:gravity="center"
         android:padding="5dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/text"
+        android:textColor="@color/text_on_dark"
         android:textColorLink="@color/text_link" />
 
     <ScrollView
@@ -42,7 +42,7 @@
                 android:paddingRight="5dp"
                 android:text="@string/label_email_address"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/text" />
+                android:textColor="@color/text_on_dark" />
 
             <AutoCompleteTextView
                 android:id="@+id/et_email"
@@ -62,7 +62,7 @@
                 android:paddingTop="10dp"
                 android:text="@string/label_password"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/text" />
+                android:textColor="@color/text_on_dark" />
 
             <EditText
                 android:id="@+id/et_password"
@@ -82,7 +82,7 @@
                 android:onClick="handleLogin"
                 android:padding="10dp"
                 android:text="@string/label_sign_in"
-                android:textColor="@color/text"
+                android:textColor="@color/text_on_dark"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
