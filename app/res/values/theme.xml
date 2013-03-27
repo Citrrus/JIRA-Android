@@ -11,6 +11,8 @@
     <style name="Widget.Styled.ActionBar" parent="Widget.Sherlock.ActionBar.Solid">
         <item name="background">@drawable/actionbar_background</item>
         <item name="android:background">@drawable/actionbar_background</item>
+        <item name="android:logo">@drawable/ic_action_bar_logo</item>
+        <item name="logo">@drawable/ic_action_bar_logo</item>
     </style>
 
 </resources>
