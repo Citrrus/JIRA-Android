@@ -11,13 +11,18 @@
         <item name="android:singleLine">true</item>
         <item name="android:padding">10dp</item>
         <item name="android:textColor">@color/table_text</item>
-        <item name="android:textCursorDrawable">@drawable/edit_text_cursor</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:background">@drawable/edit_text_background</item>
     </style>
 
-    <style name="ShadowText">
-        <item name="android:shadowColor">@color/text_shadow</item>
+    <style name="ShadowTextOnLight">
+        <item name="android:shadowColor">@color/text_shadow_on_light</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1</item>
+    </style>
+
+    <style name="ShadowTextOnDark">
+        <item name="android:shadowColor">@color/text_shadow_on_dark</item>
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">1</item>

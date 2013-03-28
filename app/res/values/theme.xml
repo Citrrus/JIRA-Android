@@ -2,13 +2,13 @@
 
 <resources>
 
-    <style name="Theme.Bootstrap.Dark" parent="@style/Theme.Sherlock">
+    <style name="Theme.Bootstrap.Dark" parent="@style/Holo.Theme.Light.DarkActionBar">
         <item name="android:windowBackground">@color/pager_background</item>
         <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
-        <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar</item>        
+        <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar</item>
     </style>
 
-    <style name="Widget.Styled.ActionBar" parent="Widget.Sherlock.ActionBar.Solid">
+    <style name="Widget.Styled.ActionBar" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
         <item name="background">@drawable/actionbar_background</item>
         <item name="android:background">@drawable/actionbar_background</item>
         <item name="android:logo">@drawable/ic_action_bar_logo</item>

@@ -1,30 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/main_background"
-    android:orientation="vertical"
-    android:id="@android:id/primary">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/main_background"
+            android:orientation="vertical"
+            android:id="@android:id/primary">
 
-    <TextView
-        android:id="@+id/tv_signup"
-        style="@style/ShadowText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/stripe_repeat"
-        android:gravity="center"
-        android:padding="5dp"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/text_on_dark"
-        android:textColorLink="@color/text_link" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
-
-        <LinearLayout
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -33,47 +16,26 @@
             android:paddingRight="15dp"
             android:paddingTop="5dp" >
 
-            <TextView
-                style="@style/ShadowText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="5dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:text="@string/label_email_address"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/text_on_dark" />
-
-            <AutoCompleteTextView
+        <AutoCompleteTextView
                 android:id="@+id/et_email"
                 style="@style/SignInEditText"
                 android:completionThreshold="1"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
-                android:nextFocusDown="@+id/et_password" />
+                android:nextFocusDown="@+id/et_password"
+                android:hint="@string/label_email_address" />
 
-            <TextView
-                style="@style/ShadowText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="5dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="10dp"
-                android:text="@string/label_password"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/text_on_dark" />
-
-            <EditText
+        <EditText
                 android:id="@+id/et_password"
                 style="@style/SignInEditText"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
-                android:password="true" />
+                android:password="true"
+                android:hint="@string/label_password" />
 
-            <Button
+        <Button
                 android:id="@+id/b_signin"
-                style="@style/ShadowText"
+                style="@style/ShadowTextOnDark"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="15dp"
@@ -85,7 +47,5 @@
                 android:textColor="@color/text_on_dark"
                 android:textSize="20sp"
                 android:textStyle="bold" />
-        </LinearLayout>
-    </ScrollView>
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
