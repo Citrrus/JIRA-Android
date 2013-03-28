@@ -125,6 +125,12 @@
             <version>1.5.0</version>
             <type>apklib</type>
         </dependency>
+        <dependency>
+            <groupId>com.atlassian.jira.rest</groupId>
+            <artifactId>client</artifactId>
+            <version>1.0</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
