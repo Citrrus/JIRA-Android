@@ -35,11 +35,11 @@ public class Constants {
         /**
          * Base URL for all requests
          */
-        public static final String URL_BASE = "https://api.parse.com";
+        public static final String URL_BASE = "https://citrrus.atlassian.net/rest/api/2";
         /**
          * Authentication URL
          */
-        public static final String URL_AUTH = URL_BASE + "/1/login";
+        public static final String URL_AUTH = "https://citrrus.atlassian.net/rest/auth/latest/session";
         /**
          * List Users URL
          */
@@ -52,15 +52,8 @@ public class Constants {
          * List Checkin's URL
          */
         public static final String URL_CHECKINS = URL_BASE + "/1/classes/Locations";
-        public static final String PARSE_CLIENT_API_KEY = "BWve0w8nqaSAiy2UNosDRpPHXgql0cAxWSm8e856";
-        public static final String PARSE_APP_ID = "DoXVS12rS9NAhPJYfQYEya7fU7OPGZP79Mdx2qCS";
-        public static final String PARSE_REST_API_KEY = "EMnSZqSluWeP9TXSiBmR14RfJBzcQvy07QWa4yAY";
-        public static final String HEADER_PARSE_REST_API_KEY = "X-Parse-REST-API-Key";
-        public static final String HEADER_PARSE_APP_ID = "X-Parse-Application-Id";
+        public static final String HEADER_AUTH_COOKIE = "JSESSIONID";
         public static final String CONTENT_TYPE_JSON = "application/json";
-        public static final String USERNAME = "username";
-        public static final String PASSWORD = "password";
-        public static final String SESSION_TOKEN = "sessionToken";
 
         private Http() {
         }

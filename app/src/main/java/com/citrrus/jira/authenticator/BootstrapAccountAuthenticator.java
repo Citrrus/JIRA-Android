@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import com.citrrus.jira.core.Constants;
+import com.citrrus.jira.ui.activity.BootstrapAuthenticatorActivity;
 
 import static android.accounts.AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE;
 import static android.accounts.AccountManager.KEY_ACCOUNT_NAME;
@@ -38,7 +39,7 @@ public class BootstrapAccountAuthenticator extends AbstractAccountAuthenticator 
     @Override
     public Bundle addAccount(AccountAuthenticatorResponse response, String accountType, String authTokenType,
                              String[] requiredFeatures, Bundle options) throws NetworkErrorException {
-        final Intent intent = new Intent(context, BootstrapAccountAuthenticator.class);
+        final Intent intent = new Intent(context, BootstrapAuthenticatorActivity.class);
         intent.putExtra(Constants.Auth.AUTHTOKEN_TYPE, authTokenType);
         intent.putExtra(KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
         final Bundle bundle = new Bundle();

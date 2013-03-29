@@ -11,10 +11,7 @@ import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
 
-import static com.citrrus.jira.core.Constants.Http.HEADER_PARSE_APP_ID;
-import static com.citrrus.jira.core.Constants.Http.HEADER_PARSE_REST_API_KEY;
-import static com.citrrus.jira.core.Constants.Http.PARSE_APP_ID;
-import static com.citrrus.jira.core.Constants.Http.PARSE_REST_API_KEY;
+import static com.citrrus.jira.core.Constants.Http.HEADER_AUTH_COOKIE;
 import static com.citrrus.jira.core.Constants.Http.URL_CHECKINS;
 import static com.citrrus.jira.core.Constants.Http.URL_NEWS;
 import static com.citrrus.jira.core.Constants.Http.URL_USERS;
@@ -29,7 +26,7 @@ public class BootstrapService {
     /**
      * GSON instance to use for all request  with date format set up for proper parsing.
      */
-    public static final Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+    public static final Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").create();
 
     /**
      * You can also configure GSON with different naming policies for your API. Maybe your api is Rails
@@ -128,9 +125,10 @@ public class BootstrapService {
         request.userAgent(userAgentProvider.get());
 
         if (isPostOrPut(request)) {
-            request.contentType(Constants.Http.CONTENT_TYPE_JSON); // All PUT & POST requests to Parse.com api must
+            // All PUT & POST requests to Parse.com api must
+            // be in JSON - https://www.parse.com/docs/rest#general-requests
+            request.contentType(Constants.Http.CONTENT_TYPE_JSON);
         }
-        // be in JSON - https://www.parse.com/docs/rest#general-requests
 
         return addCredentialsTo(request);
     }
@@ -144,8 +142,7 @@ public class BootstrapService {
     private HttpRequest addCredentialsTo(HttpRequest request) {
 
         // Required params for
-        request.header(HEADER_PARSE_REST_API_KEY, PARSE_REST_API_KEY);
-        request.header(HEADER_PARSE_APP_ID, PARSE_APP_ID);
+        request.header(HEADER_AUTH_COOKIE, apiKey);
 
         /**
          * NOTE: This may be where you want to add a header for the api token that was saved when you

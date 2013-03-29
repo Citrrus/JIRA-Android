@@ -24,17 +24,18 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import butterknife.InjectView;
 import butterknife.Views;
-import com.github.kevinsawicki.http.HttpRequest;
-import com.github.kevinsawicki.wishlist.Toaster;
-import com.google.gson.Gson;
 import com.citrrus.jira.R;
 import com.citrrus.jira.authenticator.SherlockAccountAuthenticatorActivity;
+import com.citrrus.jira.core.BootstrapService;
 import com.citrrus.jira.core.Constants;
-import com.citrrus.jira.core.User;
+import com.citrrus.jira.model.Auth;
+import com.citrrus.jira.model.AuthResponse;
 import com.citrrus.jira.ui.view.TextWatcherAdapter;
 import com.citrrus.jira.util.Ln;
 import com.citrrus.jira.util.SafeAsyncTask;
 import com.citrrus.jira.util.Strings;
+import com.github.kevinsawicki.http.HttpRequest;
+import com.github.kevinsawicki.wishlist.Toaster;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +48,6 @@ import static android.accounts.AccountManager.KEY_BOOLEAN_RESULT;
 import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.KEYCODE_ENTER;
 import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
-import static com.github.kevinsawicki.http.HttpRequest.get;
 
 /**
  * Activity to authenticate the user against an API (example API on Parse.com)
@@ -230,16 +230,18 @@ public class BootstrapAuthenticatorActivity extends SherlockAccountAuthenticator
 
                 final String query = String.format("%s=%s&%s=%s", PARAM_USERNAME, email, PARAM_PASSWORD, password);
 
-                HttpRequest request = get(Constants.Http.URL_AUTH + "?" + query)
-                        .header(Constants.Http.HEADER_PARSE_APP_ID, Constants.Http.PARSE_APP_ID)
-                        .header(Constants.Http.HEADER_PARSE_REST_API_KEY, Constants.Http.PARSE_REST_API_KEY);
 
+                String jsonAuth = BootstrapService.GSON.toJson(new Auth(email, password));
+                HttpRequest request = HttpRequest.post(Constants.Http.URL_AUTH);
+                request.contentType(Constants.Http.CONTENT_TYPE_JSON);
+                request.send(jsonAuth);
 
                 Log.d("Auth", "response=" + request.code());
 
                 if(request.ok()) {
-                    final User model = new Gson().fromJson(Strings.toString(request.buffer()), User.class);
-                    token = model.getSessionToken();
+                    final AuthResponse authResponsee =
+                            BootstrapService.GSON.fromJson(Strings.toString(request.buffer()), AuthResponse.class);
+                    token = authResponsee.session.value;
                 }
 
                 return request.ok();
