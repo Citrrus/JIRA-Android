@@ -10,8 +10,8 @@ import android.util.Log;
 import static com.donnfelker.android.bootstrap.core.Constants.Auth.*;
 
 import com.donnfelker.android.bootstrap.tests.R;
+import com.donnfelker.android.bootstrap.util.Ln;
 
-import roboguice.util.Ln;
 
 /**
  * Utilities for verifying an account
