@@ -16,7 +16,6 @@ import com.citrrus.jira.R;
 import com.citrrus.jira.authenticator.LogoutService;
 import com.citrrus.jira.core.CheckIn;
 import com.citrrus.jira.ui.view.CheckInsListAdapter;
-
 import javax.inject.Inject;
 import java.util.Collections;
 import java.util.List;

@@ -15,8 +15,7 @@ import javax.inject.Inject;
  */
 public class LogoutService {
 
-    @Inject
-    protected Context context;
+    @Inject protected Context context;
     protected AccountManager accountManager;
 
     @Inject

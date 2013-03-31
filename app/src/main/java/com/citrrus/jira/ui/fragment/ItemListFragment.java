@@ -18,15 +18,13 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.citrrus.jira.R;
 import com.citrrus.jira.authenticator.LogoutService;
+import com.citrrus.jira.core.Toaster;
 import com.citrrus.jira.ui.view.HeaderFooterListAdapter;
 import com.citrrus.jira.ui.view.ThrowableLoader;
 import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
-import com.github.kevinsawicki.wishlist.Toaster;
 import com.github.kevinsawicki.wishlist.ViewUtils;
-import com.citrrus.jira.R;
-import com.citrrus.jira.R.id;
-import com.citrrus.jira.R.layout;
 
 import java.util.Collections;
 import java.util.List;
@@ -90,7 +88,7 @@ public abstract class ItemListFragment<E> extends SherlockFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(layout.item_list, null);
+        return inflater.inflate(R.layout.item_list, null);
     }
 
     /**
@@ -119,7 +117,7 @@ public abstract class ItemListFragment<E> extends SherlockFragment
                 onListItemClick((ListView) parent, view, position, id);
             }
         });
-        progressBar = (ProgressBar) view.findViewById(id.pb_loading);
+        progressBar = (ProgressBar) view.findViewById(R.id.pb_loading);
 
         emptyView = (TextView) view.findViewById(android.R.id.empty);
 
@@ -154,7 +152,7 @@ public abstract class ItemListFragment<E> extends SherlockFragment
             return false;
         }
         switch (item.getItemId()) {
-            case id.refresh:
+            case R.id.refresh:
                 forceRefresh();
                 return true;
             case R.id.logout:

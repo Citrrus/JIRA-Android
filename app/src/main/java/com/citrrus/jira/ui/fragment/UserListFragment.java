@@ -18,19 +18,15 @@ import com.citrrus.jira.R;
 import com.citrrus.jira.core.AvatarLoader;
 import com.citrrus.jira.ui.activity.UserActivity;
 import com.citrrus.jira.ui.view.UserListAdapter;
-
 import javax.inject.Inject;
 import java.util.Collections;
 import java.util.List;
 
 public class UserListFragment extends ItemListFragment<User> {
 
-    @Inject
-    BootstrapServiceProvider serviceProvider;
+    @Inject BootstrapServiceProvider serviceProvider;
     @Inject AvatarLoader avatars;
-    @Inject
-    LogoutService logoutService;
-
+    @Inject LogoutService logoutService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +39,8 @@ public class UserListFragment extends ItemListFragment<User> {
         super.onActivityCreated(savedInstanceState);
 
         setEmptyText(R.string.no_users);
+
+
     }
 
     @Override

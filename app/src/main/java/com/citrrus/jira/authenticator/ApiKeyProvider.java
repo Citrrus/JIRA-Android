@@ -6,7 +6,6 @@ import android.accounts.AccountsException;
 import android.app.Activity;
 import android.os.Bundle;
 import com.citrrus.jira.core.Constants;
-
 import javax.inject.Inject;
 
 import java.io.IOException;
