@@ -26,7 +26,7 @@ import butterknife.InjectView;
 import butterknife.Views;
 import com.citrrus.jira.R;
 import com.citrrus.jira.authenticator.SherlockAccountAuthenticatorActivity;
-import com.citrrus.jira.core.BootstrapService;
+import com.citrrus.jira.core.ApiService;
 import com.citrrus.jira.core.Constants;
 import com.citrrus.jira.model.Auth;
 import com.citrrus.jira.model.AuthResponse;
@@ -231,7 +231,7 @@ public class BootstrapAuthenticatorActivity extends SherlockAccountAuthenticator
                 final String query = String.format("%s=%s&%s=%s", PARAM_USERNAME, email, PARAM_PASSWORD, password);
 
 
-                String jsonAuth = BootstrapService.GSON.toJson(new Auth(email, password));
+                String jsonAuth = ApiService.GSON.toJson(new Auth(email, password));
                 HttpRequest request = HttpRequest.post(Constants.Http.URL_AUTH);
                 request.contentType(Constants.Http.CONTENT_TYPE_JSON);
                 request.send(jsonAuth);
@@ -240,8 +240,10 @@ public class BootstrapAuthenticatorActivity extends SherlockAccountAuthenticator
 
                 if(request.ok()) {
                     final AuthResponse authResponsee =
-                            BootstrapService.GSON.fromJson(Strings.toString(request.buffer()), AuthResponse.class);
-                    token = authResponsee.session.value;
+                            ApiService.GSON.fromJson(Strings.toString(request.buffer()), AuthResponse.class);
+                    token = String.format(
+                            "JSESSIONID=%s; %s",
+                            authResponsee.session.value, request.header("Set-Cookie"));
                 }
 
                 return request.ok();

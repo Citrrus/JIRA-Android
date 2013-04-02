@@ -20,7 +20,7 @@ import static com.citrrus.jira.core.Constants.Http.URL_PROJECT;
 /**
  * Bootstrap API service
  */
-public class BootstrapService {
+public class ApiService {
 
     private UserAgentProvider userAgentProvider;
 
@@ -86,7 +86,7 @@ public class BootstrapService {
      * @param username
      * @param password
      */
-    public BootstrapService(final String username, final String password) {
+    public ApiService(final String username, final String password) {
         this.username = username;
         this.password = password;
         this.apiKey = null;
@@ -98,7 +98,7 @@ public class BootstrapService {
      * @param userAgentProvider
      * @param apiKey
      */
-    public BootstrapService(final String apiKey, final UserAgentProvider userAgentProvider) {
+    public ApiService(final String apiKey, final UserAgentProvider userAgentProvider) {
         this.userAgentProvider = userAgentProvider;
         this.username = null;
         this.password = null;
