@@ -6,9 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.citrrus.jira.R;
-import com.citrrus.jira.ui.fragment.CheckInsListFragment;
-import com.citrrus.jira.ui.fragment.NewsListFragment;
-import com.citrrus.jira.ui.fragment.UserListFragment;
 
 /**
  * Pager adapter
@@ -30,14 +27,14 @@ public class BootstrapPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 0;
     }
 
     @Override
     public Fragment getItem(int position) {
         Bundle bundle = new Bundle();
         switch (position) {
-            case 0:
+            /*case 0:
                 NewsListFragment newsFragment = new NewsListFragment();
                 newsFragment.setArguments(bundle);
                 return newsFragment;
@@ -48,7 +45,7 @@ public class BootstrapPagerAdapter extends FragmentPagerAdapter {
             case 2:
                 CheckInsListFragment checkInsFragment = new CheckInsListFragment();
                 checkInsFragment.setArguments(bundle);
-                return checkInsFragment;
+                return checkInsFragment;*/
             default:
                 return null;
         }

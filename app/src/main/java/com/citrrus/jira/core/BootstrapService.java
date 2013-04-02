@@ -1,20 +1,21 @@
 package com.citrrus.jira.core;
 
+import com.citrrus.jira.model.Project;
+import com.citrrus.jira.util.Strings;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.github.kevinsawicki.http.HttpRequest.HttpRequestException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
-import java.io.Reader;
+import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
 
 import static com.citrrus.jira.core.Constants.Http.HEADER_AUTH_COOKIE;
-import static com.citrrus.jira.core.Constants.Http.URL_CHECKINS;
-import static com.citrrus.jira.core.Constants.Http.URL_NEWS;
-import static com.citrrus.jira.core.Constants.Http.URL_USERS;
+import static com.citrrus.jira.core.Constants.Http.URL_PROJECT;
 
 /**
  * Bootstrap API service
@@ -55,10 +56,8 @@ public class BootstrapService {
         private List<News> results;
     }
 
-    private static class CheckInWrapper {
-
-        private List<CheckIn> results;
-
+    private static class ModelWrapper<T> {
+        private List<T> results;
     }
 
     private static class JsonException extends IOException {
@@ -161,6 +160,40 @@ public class BootstrapService {
     }
 
     private <V> V fromJson(HttpRequest request, Class<V> target) throws IOException {
+        try {
+            // for debugging purposes we save str
+            String str = Strings.toString(request.reader());
+            return GSON.fromJson(str, target);
+        } catch (JsonParseException e) {
+            throw new JsonException(e);
+        } finally {
+        }
+        /*
+        Reader reader = request.bufferedReader();
+
+        try {
+            return GSON.fromJson(reader, target);
+        } catch (JsonParseException e) {
+            throw new JsonException(e);
+        } finally {
+            try {
+                reader.close();
+            } catch (IOException ignored) {
+                // Ignored
+            }
+        }*/
+    }
+
+    private <V> V fromJson(HttpRequest request, Type target) throws IOException {
+        try {
+            // for debugging purposes we save str
+            String str = Strings.toString(request.reader());
+            return GSON.fromJson(str, target);
+        } catch (JsonParseException e) {
+            throw new JsonException(e);
+        } finally {
+        }
+        /*
         Reader reader = request.bufferedReader();
         try {
             return GSON.fromJson(reader, target);
@@ -172,64 +205,32 @@ public class BootstrapService {
             } catch (IOException ignored) {
                 // Ignored
             }
-        }
+        }*/
     }
 
-    /**
-     * Get all bootstrap Users that exist on Parse.com
-     *
-     * @return non-null but possibly empty list of bootstrap
-     * @throws IOException
+    /*
+     _______  _______ _________
+    (  ___  )(  ____ )\__   __/
+    | (   ) || (    )|   ) (
+    | (___) || (____)|   | |
+    |  ___  ||  _____)   | |
+    | (   ) || (         | |
+    | )   ( || )      ___) (___
+    |/     \||/       \_______/
+
      */
-    public List<User> getUsers() throws IOException {
+
+    public List<Project> getProjects() throws IOException {
         try {
-            HttpRequest request = execute(HttpRequest.get(URL_USERS));
-            UsersWrapper response = fromJson(request, UsersWrapper.class);
-            if (response != null && response.results != null) {
-                return response.results;
+            HttpRequest request = execute(HttpRequest.get(URL_PROJECT));
+
+            List<Project> response = fromJson(request, new TypeToken<List<Project>>(){}.getType());
+            if (response != null) {
+                return response;
             }
             return Collections.emptyList();
-        } catch (HttpRequestException e) {
+        } catch(HttpRequestException e) {
             throw e.getCause();
         }
     }
-
-    /**
-     * Get all bootstrap News that exists on Parse.com
-     *
-     * @return non-null but possibly empty list of bootstrap
-     * @throws IOException
-     */
-    public List<News> getNews() throws IOException {
-        try {
-            HttpRequest request = execute(HttpRequest.get(URL_NEWS));
-            NewsWrapper response = fromJson(request, NewsWrapper.class);
-            if (response != null && response.results != null) {
-                return response.results;
-            }
-            return Collections.emptyList();
-        } catch (HttpRequestException e) {
-            throw e.getCause();
-        }
-    }
-
-    /**
-     * Get all bootstrap Checkins that exists on Parse.com
-     *
-     * @return non-null but possibly empty list of bootstrap
-     * @throws IOException
-     */
-    public List<CheckIn> getCheckIns() throws IOException {
-        try {
-            HttpRequest request = execute(HttpRequest.get(URL_CHECKINS));
-            CheckInWrapper response = fromJson(request, CheckInWrapper.class);
-            if (response != null && response.results != null) {
-                return response.results;
-            }
-            return Collections.emptyList();
-        } catch (HttpRequestException e) {
-            throw e.getCause();
-        }
-    }
-
 }

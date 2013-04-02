@@ -3,6 +3,7 @@ package com.citrrus.jira.ui.activity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import butterknife.InjectView;
 import com.citrrus.jira.R;
 import com.citrrus.jira.core.AvatarLoader;
 import com.citrrus.jira.core.Constants;
@@ -10,15 +11,10 @@ import com.citrrus.jira.core.User;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
-
 public class UserActivity extends BootstrapActivity {
 
-    @InjectView(R.id.iv_avatar)
-    protected ImageView avatar;
-    @InjectView(R.id.tv_name)
-    protected TextView name;
-
+    @InjectView(R.id.iv_avatar) protected ImageView avatar;
+    @InjectView(R.id.tv_name) protected TextView name;
     @Inject protected AvatarLoader avatarLoader;
 
     protected User user;

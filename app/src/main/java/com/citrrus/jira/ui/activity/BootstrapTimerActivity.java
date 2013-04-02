@@ -19,19 +19,13 @@ import com.squareup.otto.Subscribe;
 
 import javax.inject.Inject;
 public class BootstrapTimerActivity extends BootstrapActivity implements View.OnClickListener {
-
     @Inject Bus BUS;
 
-    @InjectView(R.id.chronometer)
-    protected TextView chronometer;
-    @InjectView(R.id.start)
-    protected Button start;
-    @InjectView(R.id.stop)
-    protected Button stop;
-    @InjectView(R.id.pause)
-    protected Button pause;
-    @InjectView(R.id.resume)
-    protected Button resume;
+    @InjectView(R.id.chronometer) protected TextView chronometer;
+    @InjectView(R.id.start) protected Button start;
+    @InjectView(R.id.stop) protected Button stop;
+    @InjectView(R.id.pause) protected Button pause;
+    @InjectView(R.id.resume) protected Button resume;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
