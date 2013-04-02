@@ -241,8 +241,9 @@ public class BootstrapAuthenticatorActivity extends SherlockAccountAuthenticator
                 if(request.ok()) {
                     final AuthResponse authResponsee =
                             ApiService.GSON.fromJson(Strings.toString(request.buffer()), AuthResponse.class);
+                    // our "token" is a bunch of mumbo-jumbo cookie trash
                     token = String.format(
-                            "JSESSIONID=%s; %s",
+                            Constants.Http.AUTH_COOKIES,
                             authResponsee.session.value, request.header("Set-Cookie"));
                 }
 

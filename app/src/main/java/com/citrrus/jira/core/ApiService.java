@@ -107,7 +107,7 @@ public class ApiService {
     private HttpRequest configure(final HttpRequest request) {
         request.connectTimeout(TIMEOUT).readTimeout(TIMEOUT);
         request.userAgent(userAgentProvider.get());
-            request.contentType(Constants.Http.CONTENT_TYPE_JSON);
+        request.contentType(Constants.Http.CONTENT_TYPE_JSON);
 
         return addCredentialsTo(request);
     }
@@ -115,7 +115,7 @@ public class ApiService {
     private HttpRequest addCredentialsTo(HttpRequest request) {
 
         // Required params for
-        request.header(HEADER_AUTH_COOKIE, apiKey);
+        request.header("Cookie", String.format(HEADER_AUTH_COOKIE, apiKey));
 
         /**
          * NOTE: This may be where you want to add a header for the api token that was saved when you

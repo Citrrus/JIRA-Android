@@ -46,7 +46,7 @@ public class Constants {
          * List Checkin's URL
          */
         public static final String URL_CHECKINS = URL_BASE + "/1/classes/Locations";
-        public static final String HEADER_AUTH_COOKIE = "JSESSIONID";
+        public static final String AUTH_COOKIES = "JSESSIONID=%s %s";
         public static final String CONTENT_TYPE_JSON = "application/json";
 
         private Http() {
