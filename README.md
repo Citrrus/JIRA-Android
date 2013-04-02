@@ -1,73 +1,17 @@
-# JIRA App
+![Citrrus](http://www.citrrus.com/wp-content/uploads/2012/10/CitrrusOrangeIcon2.png "Citrrus")
 
-This repository contains the source code for the [JIRA](http://www.androidbootstrap.com/)
-Android app available from [Google Play](https://play.google.com/store/apps/details?id=com.citrrus.jira).
+# JIRA for Android
 
-Please see the [issues](https://github.com.citrrus.jira/issues) section
+### Brought to you in part by "20% time" at [Citrrus](http://citrrus.com/)
+
+This repository contains the source code for [JIRA-Android](http://open.citrrus.com/jira), an Android JIRA client that
+Android app that will be available from [Google Play](https://play.google.com/store/apps/details?id=com.citrrus.jira).
+
+Simplicity and minimalism are JIRA-Android's lifeblood. JIRA is immensely extensible, but
+that power does not translate well to smaller screens.
+
+Please see the [issues](https://github.com/Citrrus/Jira-Android/issues) section
 to report any bugs or feature requests and to see the list of known issues.
-
-Have a questions about JIRA? Ask away on the [com.citrrus.jira discussion forum](https://groups.google.com/forum/#!forum/com.citrrus.jira).
-
-<a href="https://play.google.com/store/apps/details?id=com.citrrus.jira" alt="Download from Google Play">
-  <img src="http://f.cl.ly/items/000s3k2I2J1V281X2A1f/bootstrap-image.png">
-</a>
-
-## HOW TO
-Learn how to develop with IntelliJ and Maven. [Watch the how to video](http://www.youtube.com/watch?v=YbyzRNxcvZw&feature=youtube_gdata)
-
-## Authentication
-Log into this demo app with the following credentials:
-
-user: demo@androidbootstrap.com
-
-password: android
-
-
-## Generating your Bootstrap App
-Why generate? Simple ... renaming files, folders, copy and pasting is SUPER error prone and well... it sucks overall. This can easily take a few days with debugging if you run into issues and perform a lot of typo's. Using the generator on [AndroidBootstrap.com](http://www.androidbootstrap.com) you can generate your application with your application name as well as the package (and folder structure) that you want to work with. 
-
-As an example, you know that you want your app name and package to the following: 
-
-  - *App Name*: Notify
-  - *Package Name*: com.notify.app.mobile
-
-After generating the app on [AndroidBootstrap.com](http://www.androidbootstrap.com) the folder structure of the source code for the app will change:
-
-  - From: __com.citrrus.jira__
-  - To: __com/notify/app/mobile__
-
-At that point all the source files that were located in ____com.citrrus.jira__ will be moved to the new folder __com/notify/app/mobile__.
-
-All import statments that reference the old resources (__R.com.citrrus.jira.R__) will now be renamed to the correct package. The artifact id's in the *pom.xml* (and various other places) will be replaced. The App Name will be replaced in the strings/etc.
-
-The end result is that you will be given a zip file with the correct structure. Open the zip and then execute *mvn clean package* and your app should be ready for development. 
-
-Enjoy!
-
-The application 
-
-## License
-
-* [Apache Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
-
-
-Copyright 2013 Donn Felker
-
-
-Copyright 2013 GitHub Inc.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
 
 ## Building
 
@@ -85,20 +29,26 @@ After satisfying those requirements, the build is pretty simple:
   the integration tests, this requires a connected Android device or running
   emulator
 
+The app was primarily developed in [IntelliJ](http://www.jetbrains.com/idea/), and using it is highly recommended
+but it is not required. Safety not guaranteed for other development environments!
+
 You might find that your device doesn't let you install your build if you
 already have the version from the Android Market installed.  This is standard
 Android security as it it won't let you directly replace an app that's been
 signed with a different key.  Manually uninstall JIRA from your device and
 you will then be able to install your own built version.
 
+## Contributing
+
+Please fork this repository and contribute back using
+[pull requests](https://github.com/Citrrus/Jira-Android/pulls).
+
+Any contributions, large or small, major features, bug fixes, additional
+language translations, unit/integration tests are welcomed and appreciated.
+
 ## Acknowledgements
 
-JIRA is a result of a template project I've developed over the years as well as
-a combination of a lot of great work that the [GitHub Gaug.es](http://www.github.com/github/gauges-android)
-app and [GitHub Android](http://www.github.com/github/android) app showcased. Some fo the
-code in this project is based on the GitHub Gaug.es and GitHub Android app.
-
-JIRA is built on the awesome [Parse.com API](http://www.parse.com/)
+JIRA is built on top of the disgustingly helpful [Android Bootstrap](http://androidbootstrap.com/)
 and uses many great open-source libraries from the Android dev community:
 
 * [ActionBarSherlock](https://github.com/JakeWharton/ActionBarSherlock) for a
@@ -118,15 +68,24 @@ and uses many great open-source libraries from the Android dev community:
   remote HTTP resources (API's in this case).
 * [google-gson](http://code.google.com/p/google-gson/) for consuming JSON and hydrating
   POJO's for use in the app.
+* [Holo Everywhere](https://github.com/Prototik/HoloEverywhere)
+
+## License
+
+* [Apache Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 
-## Contributing
+Copyright 2013 Citrrus
 
-Please fork this repository and contribute back using
-[pull requests](https://github.com.citrrus.jira/pulls).
 
-Any contributions, large or small, major features, bug fixes, additional
-language translations, unit/integration tests are welcomed and appreciated
-but will be thoroughly reviewed and discussed.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-I hope this helps you in building your next android app.
+ http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
