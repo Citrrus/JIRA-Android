@@ -45,21 +45,6 @@ public class ApiService {
      */
     private static final int TIMEOUT = 30 * 1000;
 
-
-    private static class UsersWrapper {
-
-        private List<User> results;
-    }
-
-    private static class NewsWrapper {
-
-        private List<News> results;
-    }
-
-    private static class ModelWrapper<T> {
-        private List<T> results;
-    }
-
     private static class JsonException extends IOException {
 
         private static final long serialVersionUID = 3774706606129390273L;
@@ -122,20 +107,9 @@ public class ApiService {
     private HttpRequest configure(final HttpRequest request) {
         request.connectTimeout(TIMEOUT).readTimeout(TIMEOUT);
         request.userAgent(userAgentProvider.get());
-
-        if (isPostOrPut(request)) {
-            // All PUT & POST requests to Parse.com api must
-            // be in JSON - https://www.parse.com/docs/rest#general-requests
             request.contentType(Constants.Http.CONTENT_TYPE_JSON);
-        }
 
         return addCredentialsTo(request);
-    }
-
-    private boolean isPostOrPut(HttpRequest request) {
-        return request.getConnection().getRequestMethod().equals(HttpRequest.METHOD_POST)
-                || request.getConnection().getRequestMethod().equals(HttpRequest.METHOD_PUT);
-
     }
 
     private HttpRequest addCredentialsTo(HttpRequest request) {
