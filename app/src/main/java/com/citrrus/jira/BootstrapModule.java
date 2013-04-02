@@ -7,12 +7,9 @@ import com.citrrus.jira.authenticator.BootstrapAccountAuthenticator;
 import com.citrrus.jira.authenticator.LogoutService;
 import com.citrrus.jira.ui.activity.BootstrapAuthenticatorActivity;
 import com.citrrus.jira.ui.activity.BootstrapTimerActivity;
-import com.citrrus.jira.ui.fragment.CheckInsListFragment;
 import com.citrrus.jira.ui.activity.CarouselActivity;
 import com.citrrus.jira.ui.activity.NewsActivity;
 import com.citrrus.jira.ui.activity.UserActivity;
-import com.citrrus.jira.ui.fragment.NewsListFragment;
-import com.citrrus.jira.ui.fragment.UserListFragment;
 import com.squareup.otto.Bus;
 import dagger.Module;
 import dagger.Provides;
@@ -33,11 +30,8 @@ import javax.inject.Singleton;
                 BootstrapAccountAuthenticator.class,
                 CarouselActivity.class,
                 BootstrapTimerActivity.class,
-                CheckInsListFragment.class,
                 NewsActivity.class,
-                NewsListFragment.class,
                 UserActivity.class,
-                UserListFragment.class,
                 TimerService.class
         }
 

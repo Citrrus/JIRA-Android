@@ -311,6 +311,7 @@ public class BootstrapAuthenticatorActivity extends SherlockAccountAuthenticator
             accountManager.setPassword(account, password);
         final Intent intent = new Intent();
         authToken = token;
+        accountManager.setAuthToken(account, Constants.Auth.AUTHTOKEN_TYPE, authToken);
         intent.putExtra(KEY_ACCOUNT_NAME, email);
         intent.putExtra(KEY_ACCOUNT_TYPE, Constants.Auth.BOOTSTRAP_ACCOUNT_TYPE);
         if (authTokenType != null

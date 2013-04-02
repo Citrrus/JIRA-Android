@@ -40,14 +40,8 @@ public class Constants {
          * Authentication URL
          */
         public static final String URL_AUTH = "https://citrrus.atlassian.net/rest/auth/latest/session";
-        /**
-         * List Users URL
-         */
-        public static final String URL_USERS = URL_BASE + "/1/users";
-        /**
-         * List News URL
-         */
-        public static final String URL_NEWS = URL_BASE + "/1/classes/News";
+
+        public static final String URL_PROJECT = URL_BASE + "/project";
         /**
          * List Checkin's URL
          */
