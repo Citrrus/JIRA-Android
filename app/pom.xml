@@ -10,7 +10,7 @@
     <url>https://github.com.citrrus.jira-android</url>
 
     <parent>
-        <version>1.0</version>
+        <version>0.1</version>
         <groupId>com.citrrus.jira</groupId>
         <artifactId>com.citrrus.jira-parent</artifactId>
     </parent>
