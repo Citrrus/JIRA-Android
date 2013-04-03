@@ -12,7 +12,6 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
@@ -228,15 +227,12 @@ public class BootstrapAuthenticatorActivity extends SherlockAccountAuthenticator
         authenticationTask = new SafeAsyncTask<Boolean>() {
             public Boolean call() throws Exception {
 
-                final String query = String.format("%s=%s&%s=%s", PARAM_USERNAME, email, PARAM_PASSWORD, password);
-
-
                 String jsonAuth = ApiService.GSON.toJson(new Auth(email, password));
                 HttpRequest request = HttpRequest.post(Constants.Http.URL_AUTH);
                 request.contentType(Constants.Http.CONTENT_TYPE_JSON);
                 request.send(jsonAuth);
 
-                Log.d("Auth", "response=" + request.code());
+                Ln.d("Auth response=%s" + request.code());
 
                 if(request.ok()) {
                     final AuthResponse authResponsee =

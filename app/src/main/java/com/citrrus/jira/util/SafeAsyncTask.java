@@ -2,12 +2,15 @@ package com.citrrus.jira.util;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 import java.io.InterruptedIOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 
 /**
  * Originally from RoboGuice: https://github.com/roboguice/roboguice/blob/master/roboguice/src/main/java/roboguice/util/SafeAsyncTask.java
@@ -143,7 +146,7 @@ public abstract class SafeAsyncTask<ResultT> implements Callable<ResultT> {
     }
 
     protected void onThrowable( Throwable t ) throws RuntimeException {
-        Log.e("roboguice", "Throwable caught during background processing", t);
+        Ln.e(t, "Throwable caught during background processing");
     }
 
     /**

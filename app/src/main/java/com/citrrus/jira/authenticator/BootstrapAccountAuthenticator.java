@@ -8,9 +8,9 @@ import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import com.citrrus.jira.core.Constants;
 import com.citrrus.jira.ui.activity.BootstrapAuthenticatorActivity;
+import com.citrrus.jira.util.Ln;
 
 import static android.accounts.AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE;
 import static android.accounts.AccountManager.KEY_ACCOUNT_NAME;
@@ -73,7 +73,7 @@ public class BootstrapAccountAuthenticator extends AbstractAccountAuthenticator 
     public Bundle getAuthToken(AccountAuthenticatorResponse response, Account account, String authTokenType,
                                Bundle options) throws NetworkErrorException {
 
-        Log.d("AccountAuthenticator", "Attempting to get authToken");
+        Ln.d("Attempting to get authToken");
 
         String authToken = AccountManager.get(context).peekAuthToken(account, authTokenType);
         Bundle bundle = new Bundle();

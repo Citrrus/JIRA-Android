@@ -6,15 +6,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.ImageView;
 import com.actionbarsherlock.app.ActionBar;
+import com.citrrus.jira.R;
+import com.citrrus.jira.util.Ln;
 import com.citrrus.jira.util.SafeAsyncTask;
 import com.github.kevinsawicki.http.HttpRequest;
-import com.citrrus.jira.R;
 
 import javax.inject.Inject;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -33,8 +32,6 @@ import static android.view.View.VISIBLE;
  */
 public class AvatarLoader {
 
-    private static final String TAG = "AvatarLoader";
-
     private static final float CORNER_RADIUS_IN_DIP = 3;
 
     private static final int CACHE_SIZE = 75;
@@ -51,7 +48,7 @@ public class AvatarLoader {
 
         @Override
         protected void onException(Exception e) throws RuntimeException {
-            Log.d(TAG, "Avatar load failed", e);
+            Ln.d(e, "Avatar load failed");
         }
     }
 
@@ -194,7 +191,7 @@ public class AvatarLoader {
                 return null;
             }
         } catch (IOException e) {
-            Log.d(TAG, "Exception writing rounded avatar", e);
+            Ln.w(e, "Exception writing rounded avatar");
             return null;
         } finally {
             if (output != null) {
