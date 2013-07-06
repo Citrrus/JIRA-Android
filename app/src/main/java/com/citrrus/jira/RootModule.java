@@ -7,6 +7,7 @@ import dagger.Module;
  */
 @Module
 (
+    library = true,
     includes = {
             AndroidModule.class,
             BootstrapModule.class
