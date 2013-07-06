@@ -23,8 +23,8 @@ import javax.inject.Singleton;
 @Module
 (
         complete = false,
-
-        entryPoints = {
+        library = true,
+        injects = {
                 BootstrapApplication.class,
                 BootstrapAuthenticatorActivity.class,
                 BootstrapAccountAuthenticator.class,
