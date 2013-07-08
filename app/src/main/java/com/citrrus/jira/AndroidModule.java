@@ -20,7 +20,8 @@ import javax.inject.Singleton;
  */
 @Module
 (
-        complete = false
+        complete = false,
+        library = true
 )
 public class AndroidModule {
 
